@@ -2,28 +2,35 @@ import React from 'react'
 import { View, Button, StyleSheet, TouchableOpacity, Text, TextInput } from 'react-native'
 import Logo from './components/Logo'
 
-const StartScreen = ({ navigation }) => (
-  <View style={styles.container}>
-    <Logo />
-    <TextInput style={styles.inputEmailPassword}
-      label="Email"
-      placeholder="Email"
-    />
-    <TextInput style={styles.inputEmailPassword}
-      label="Password"
-      placeholder="Password"
-    />
-    <TouchableOpacity style={styles.loginButton}>
-      <Text style={styles.loginText}> Login </Text>
-    </TouchableOpacity>
-    <TouchableOpacity>
-      <Text style={styles.forgotPasswordRegister}>Forgot Password?</Text>
-    </TouchableOpacity>
-    <TouchableOpacity>
-      <Text style={styles.forgotPasswordRegister}>Register</Text>
-    </TouchableOpacity>
-  </View>
-)
+const StartScreen = ({ navigation }) => {
+  const onLoginPress = () => navigation.navigate("Landing");
+
+  return (
+    <View style={styles.container}>
+      <Logo />
+      <TextInput style={styles.inputEmailPassword}
+        label="Email"
+        placeholder="Email"
+      />
+      <TextInput style={styles.inputEmailPassword}
+        label="Password"
+        placeholder="Password"
+      />
+      <TouchableOpacity
+        style={styles.loginButton}
+        onPress={onLoginPress}
+      >
+        <Text style={styles.loginText}>Login</Text>
+      </TouchableOpacity>
+      <TouchableOpacity>
+        <Text style={styles.forgotPasswordRegister}>Forgot Password?</Text>
+      </TouchableOpacity>
+      <TouchableOpacity>
+        <Text style={styles.forgotPasswordRegister}>Register</Text>
+      </TouchableOpacity>
+    </View>
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
