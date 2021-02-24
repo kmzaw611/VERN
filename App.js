@@ -6,13 +6,30 @@ import StartScreen from './screens/StartScreen'
 import HomeScreen from './screens/HomeScreen'
 import GroupScreen from './screens/GroupScreen'
 import ProfileScreen from './screens/ProfileScreen'
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
 
 const Landing = () => {
   return (
-    <Tab.Navigator initialRouteName="HomeScreen">
+    <Tab.Navigator initialRouteName="HomeScreen"
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+
+          if (route.name === 'Home') {
+            iconName = focused ? 'home' : 'home-outline';
+          } else if (route.name === 'Groups') {
+            iconName = focused ? 'globe' : 'globe-outline';
+          } else if (route.name === 'Profile') {
+            iconName = focused ? 'reorder-three' : 'reorder-three-outline';
+          }
+
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+      })}
+    >
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Groups" component={GroupScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
