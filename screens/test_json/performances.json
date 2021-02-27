@@ -1,30 +1,40 @@
 [
-  {
-    "id": 1,
-    "location": "Hillenbrand Hall",
-    "date": "2-28-2021",
-    "time": "11:30 PM",
-    "artists": ["John Doe"],
-  },
-  {
-    "id": 2,
-    "location": "Earhart Hall",
-    "date": "3-4-2021",
-    "time": "10:00 PM",
-    "artists": ["Mary Jane"],
-  },
-  {
-    "id": 3,
-    "location": "Elliot Concert Hall",
-    "date": "3-6-2021",
-    "time": "8:00 PM",
-    "artists": ["Guy #1", "Guy #2"],
-  },
-  {
-    "id": 4,
-    "location": "Purdue Hotel",
-    "date": "3-7-2021",
-    "time": "6:00 PM",
-    "artists": ["Girl #1", "Girl #2"],
-  },
+   {
+      "id": 1,
+      "location": "Hillenbrand Hall",
+      "date": "2-28-2021",
+      "time": "11:30 PM",
+      "artists": [
+         "John Doe"
+      ]
+   },
+   {
+      "id": 2,
+      "location": "Earhart Hall",
+      "date": "3-4-2021",
+      "time": "10:00 PM",
+      "artists": [
+         "Mary Jane"
+      ]
+   },
+   {
+      "id": 3,
+      "location": "Elliot Concert Hall",
+      "date": "3-6-2021",
+      "time": "8:00 PM",
+      "artists": [
+         "Guy #1",
+         "Guy #2"
+      ]
+   },
+   {
+      "id": 4,
+      "location": "Purdue Hotel",
+      "date": "3-7-2021",
+      "time": "6:00 PM",
+      "artists": [
+         "Girl #1",
+         "Girl #2"
+      ]
+   }
 ]
