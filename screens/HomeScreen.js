@@ -1,29 +1,7 @@
 import React from 'react'
 import { Text, View, FlatList, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
 
-const playlistData = [
-  {
-    id: '1',
-    title: 'Top 50 This Week on Campus',
-  },
-  {
-    id: '2',
-    title: 'Local Artist Corner',
-  },
-  {
-    id: '3',
-    title: 'Playlist #3',
-  },
-  {
-    id: '4',
-    title: 'Playlist #4',
-  },
-  {
-    id: '5',
-    title: 'Playlist #5',
-  },
-];
-
+const playlistData = require('./test_json/playlists.json');
 const performanceData = require('./test_json/performances.json');
 
 const HomeScreen = ({ navigation }) => {
