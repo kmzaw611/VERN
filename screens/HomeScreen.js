@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
   sectionContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 20,
+    margin: 10,
   },
   title: {
     fontSize: 24,
