@@ -1,0 +1,10 @@
+Notes:
+
+	Secrets.js is a private file containing all the spotify credientials 
+	test_server.js is a simple web server
+
+	downloaded expo-cli so that we can do this process through the mobile app
+	inside of SpotifyAPI_request_test_expo is the bundle that is uploaded to the website for building and testing
+	********https://expo.io/@mwithero/SpotifyAPI_request_test_expo********** is the new redirectUri
+	MongoDB is set up and need to add in IP addresses of Carson and Ethan*
+	Axios npm for front end API calls 
