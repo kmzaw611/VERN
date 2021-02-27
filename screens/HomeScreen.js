@@ -24,6 +24,8 @@ const playlistTitles = [
   },
 ];
 
+const performanceData = require('./test_json/performances.json');
+
 const HomeScreen = ({ navigation }) => {
 
   const renderPlaylistItem = ({ item }) => (
@@ -76,8 +78,10 @@ const styles = StyleSheet.create({
   },
   playlistTitle: {
     fontSize: 24,
-    color: 'white',
+    color: 'brown',
     textAlign: 'center',
+    fontWeight: 'bold',
+    fontFamily: '',
   },
   sectionContainer: {
     alignItems: 'center',
