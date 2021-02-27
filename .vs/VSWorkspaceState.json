@@ -2,8 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\MondgoDB",
-    "\\SpotifyAPI"
+    "\\SpotifyAPI",
+    "\\SpotifyAPI_request_test_expo"
   ],
-  "SelectedNode": "\\SpotifyAPI\\auth_check.js",
+  "SelectedNode": "\\SpotifyAPI\\plz_transfer.txt",
   "PreviewInSolutionExplorer": false
 }
