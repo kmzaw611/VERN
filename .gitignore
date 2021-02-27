@@ -35,6 +35,10 @@ node_modules/
 npm-debug.log
 yarn-error.log
 
+#Database fix
+*.opendb
+*.opensdf
+
 # BUCK
 buck-out/
 \.buckd/
@@ -57,3 +61,4 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+
