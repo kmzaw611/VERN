@@ -1,13 +1,15 @@
 var SpotifyWebApi = require('spotify-web-api-node');
 const express = require('express')
 
+//Run this file from console and then visit http://localhost:8888/login to authorize and receive an access and refresh token.
+
 // Pick from 'user-read-currently-playing','user-read-private','playlist-modify-public','playlist-read-private','playlist-modify-private'
 //,'user-library-modify', 'user-library-read','user-top-read','user-read-recently-played','user-follow-read','user-follow-modify'
 const scopes = [
     'user-top-read'
   ];
   
-// credentials are optional
+// SpotifyWebApi object handles all requests and stores tokens.
 var spotifyApi = new SpotifyWebApi({
     clientId: '0e8700b7f71d486bbb7c3bd120e892f8', // App client ID
     clientSecret: '9ffb3fe2081b414e8c520d19805cbf09', //App client secret
@@ -52,6 +54,6 @@ var spotifyApi = new SpotifyWebApi({
     });
 app.listen(8888, () =>
     console.log(
-        'Local Server up, paste http://localhost:8888/callback into a browser'
+        'Local Server up, paste http://localhost:8888/login into a browser'
     )
 );
