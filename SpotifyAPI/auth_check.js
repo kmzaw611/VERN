@@ -29,6 +29,7 @@ var spotifyApi = new SpotifyWebApi({
       const code = req.query.code;    
       const state = req.query.state;
       if (error) { 
+          //console.log("caught in auth_check.js");
           console.error('Callback Error', error);
           res.send('Callback Error: ${error}');
           return;
@@ -45,10 +46,10 @@ var spotifyApi = new SpotifyWebApi({
         spotifyApi.setAccessToken(access_token);
         spotifyApi.setRefreshToken(refresh_token);
 
-        console.log('access_token: ', access_token)
-        console.log('refresh_token: ', refresh_token)
-
-        res.send("Success!")
+        console.log('access_token: ', access_token);
+        console.log('refresh_token: ', refresh_token);
+        console.log('expires in: ', expires_in);
+        res.send("Success!");
 
       });
     });
