@@ -1,10 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\MondgoDB",
     "\\SpotifyAPI",
+    "\\SpotifyAPI\\Examples",
     "\\SpotifyAPI_request_test_expo"
   ],
-  "SelectedNode": "\\SpotifyAPI\\plz_transfer.txt",
+  "SelectedNode": "\\SpotifyAPI\\Examples",
   "PreviewInSolutionExplorer": false
 }
