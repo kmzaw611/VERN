@@ -3,6 +3,7 @@ import { Text, View, FlatList, StyleSheet, TouchableOpacity, ScrollView } from '
 
 const playlistData = require('./test_json/playlists.json');
 const performanceData = require('./test_json/performances.json');
+const groupsData = require('./test_json/groups.json')
 
 const HomeScreen = ({ navigation }) => {
 
@@ -24,6 +25,17 @@ const HomeScreen = ({ navigation }) => {
       <Text>Date: {item.date}</Text>
       <Text>Time: {item.time}</Text>
       <Text>Artists: {item.artists.toString()}</Text>
+    </TouchableOpacity>
+  );
+
+  const renderGroupItem = ({ item }) => (
+    <TouchableOpacity
+      delayPressIn={100}
+      style={styles.groupCard}
+    >
+      <Text>Name: {item.name}</Text>
+      <Text>Members: {item.num_members}</Text>
+      <Text>Description: {item.description}</Text>
     </TouchableOpacity>
   );
 
@@ -50,14 +62,28 @@ const HomeScreen = ({ navigation }) => {
         />
       </View>
       <View style={styles.sectionContainer}>
-        <Text style={styles.title}>Statistics</Text>
+        <Text style={styles.title}>Your Groups</Text>
         <View style={styles.horizontalRule}></View>
+        <FlatList
+          horizontal={true}
+          data={groupsData}
+          renderItem={renderGroupItem}
+          keyExtractor={item => item.id}
+        />
       </View>
     </ScrollView>
   )
 }
 
 const styles = StyleSheet.create({
+  groupCard: {
+    width: 250,
+    height: 350,
+    margin: 10,
+    padding: 20,
+    borderRadius: 25,
+    backgroundColor: '#cfb991',
+  },
   horizontalRule: {
     borderBottomColor: 'black',
     borderBottomWidth: 1.0,

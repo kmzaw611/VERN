@@ -1,0 +1,20 @@
+[
+   {
+      "id":"1",
+      "name":"Purdue Chess Club",
+      "num_members":"23",
+      "description":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus quis viverra leo. Aliquam fringilla id nisi vel luctus. Ut vel neque eu tortor sodales luctus vel ac nisl. Donec quam est, faucibus eget eleifend quis, hendrerit nec diam. Vivamus mollis lobortis nulla. Mauris condimentum elementum pulvinar. Nulla facilisi. Pellentesque nec."
+   },
+   {
+      "id":"2",
+      "name":"Epsilon Fraternity",
+      "num_members":"81",
+      "description":"Duis pellentesque lacus a laoreet placerat. Suspendisse tincidunt pharetra neque, eu luctus ex. Morbi ullamcorper nibh nec mi dapibus, sed gravida ex rhoncus. Nunc a dapibus dolor. Sed ornare tortor vitae ex finibus hendrerit. In viverra in lorem nec sodales. Ut ac libero nec quam elementum euismod. Maecenas eleifend interdum."
+   },
+   {
+      "id":"3",
+      "name":"Purdue CS Majors",
+      "num_members":"387",
+      "description":"Nulla vel pulvinar nulla, ut convallis turpis. Nam ornare sem ut felis fermentum finibus. Donec ante justo, varius eu diam quis, malesuada pulvinar velit. Mauris ac egestas justo, at vestibulum ipsum. In porta erat felis, vitae tincidunt erat venenatis eget. Aliquam eleifend tellus non massa ornare, id sollicitudin turpis maximus."
+   }
+]
