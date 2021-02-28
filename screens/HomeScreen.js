@@ -1,12 +1,11 @@
 import React from 'react'
-import { Text, View, FlatList, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
+import { Text, View, FlatList, StyleSheet, TouchableOpacity, ScrollView, Image } from 'react-native'
 
 const playlistData = require('./test_json/playlists.json');
 const performanceData = require('./test_json/performances.json');
 const groupsData = require('./test_json/groups.json')
 
 const HomeScreen = ({ navigation }) => {
-
   const renderPlaylistItem = ({ item }) => (
     <TouchableOpacity
       delayPressIn={100}
@@ -21,10 +20,18 @@ const HomeScreen = ({ navigation }) => {
       delayPressIn={100}
       style={styles.performanceCard}
     >
-      <Text>Location: {item.location}</Text>
-      <Text>Date: {item.date}</Text>
-      <Text>Time: {item.time}</Text>
-      <Text>Artists: {item.artists.toString()}</Text>
+      <Image
+        source={require('./assets/placeholder.jpg')}
+        style={styles.performanceImage}
+      />
+      <Text style={styles.performanceTitle}>Artists</Text>
+      <Text style={styles.performanceDetail}>{item.artists.toString()}</Text>
+      <Text style={styles.performanceTitle}>Location</Text>
+      <Text style={styles.performanceDetail}>{item.location.toString()}</Text>
+      <Text style={styles.performanceTitle}>Date</Text>
+      <Text style={styles.performanceDetail}>{item.date.toString()}</Text>
+      <Text style={styles.performanceTitle}>Time</Text>
+      <Text style={styles.performanceDetail}>{item.time.toString()}</Text>
     </TouchableOpacity>
   );
 
@@ -33,9 +40,12 @@ const HomeScreen = ({ navigation }) => {
       delayPressIn={100}
       style={styles.groupCard}
     >
-      <Text>Name: {item.name}</Text>
-      <Text>Members: {item.num_members}</Text>
-      <Text>Description: {item.description}</Text>
+      <Text style={styles.groupName}>{item.name}</Text>
+      <Text style={styles.groupMembers}>{item.num_members} members</Text>
+      <Image
+        source={require('./assets/placeholder.jpg')}
+        style={styles.groupImage}
+      />
     </TouchableOpacity>
   );
 
@@ -43,9 +53,8 @@ const HomeScreen = ({ navigation }) => {
     <ScrollView>
       <View style={styles.sectionContainer}>
         <Text style={styles.title}>Curated Playlists</Text>
-        <View style={styles.horizontalRule}></View>
         <FlatList
-          horizontal={true}
+          numColumns={2}
           data={playlistData}
           renderItem={renderPlaylistItem}
           keyExtractor={item => item.id}
@@ -53,7 +62,6 @@ const HomeScreen = ({ navigation }) => {
       </View>
       <View style={styles.sectionContainer}>
         <Text style={styles.title}>Live Performances</Text>
-        <View style={styles.horizontalRule}></View>
         <FlatList
           horizontal={true}
           data={performanceData}
@@ -63,7 +71,6 @@ const HomeScreen = ({ navigation }) => {
       </View>
       <View style={styles.sectionContainer}>
         <Text style={styles.title}>Your Groups</Text>
-        <View style={styles.horizontalRule}></View>
         <FlatList
           horizontal={true}
           data={groupsData}
@@ -78,11 +85,29 @@ const HomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   groupCard: {
     width: 250,
-    height: 350,
+    height: 250,
     margin: 10,
     padding: 20,
     borderRadius: 25,
-    backgroundColor: '#cfb991',
+    backgroundColor: 'white',
+    borderWidth: 2.0,
+    alignItems: 'center',
+  },
+  groupName: {
+    fontFamily: 'sans-serif',
+    fontWeight: 'bold',
+    fontSize: 16,
+    textAlign: 'left',
+  },
+  groupMembers: {
+    fontFamily: 'sans-serif',
+    fontSize: 14,
+  },
+  groupImage: {
+    width: 225,
+    height: 150,
+    borderRadius: 15,
+    marginTop: 15,
   },
   horizontalRule: {
     borderBottomColor: 'black',
@@ -90,39 +115,64 @@ const styles = StyleSheet.create({
     width: 250,
   },
   playlistCard: {
-    width: 200,
+    width: 150,
+    height: 150,
+    borderRadius: 75,
     marginTop: 20,
     margin: 10,
     padding: 20,
-    borderRadius: 15,
     backgroundColor: '#cfb991',
-    justifyContent: 'center',
-  },
-  performanceCard: {
-    width: 250,
-    height: 350,
-    margin: 10,
-    padding: 20,
-    borderRadius: 25,
-    backgroundColor: '#cfb991',
-  },
-  playlistTitle: {
-    fontSize: 24,
-    color: 'brown',
-    textAlign: 'center',
-    fontWeight: 'bold',
-    fontFamily: '',
-  },
-  sectionContainer: {
     alignItems: 'center',
     justifyContent: 'center',
+    borderWidth: 2.0,
+  },
+  performanceCard: {
+    width: 225,
     margin: 10,
+    padding: 10,
+    borderRadius: 25,
+    backgroundColor: 'white',
+    borderWidth: 0.5,
+    alignItems: 'center'
+  },
+  performanceDetail: {
+    color: 'black',
+    fontSize: 16,
+    fontFamily: 'monospace',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  performanceImage: {
+    width: 200,
+    height: 150,
+    borderRadius: 15,
+    marginBottom: 20,
+  },
+  performanceTitle: {
+    color: 'gray',
+    fontSize: 14,
+    fontFamily: 'sans-serif-medium',
+    textAlign: 'center',
+  },
+  playlistTitle: {
+    fontSize: 14,
+    color: 'white',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontFamily: 'monospace',
+  },
+  sectionContainer: {
+    justifyContent: 'center',
+    margin: 10,
+    marginBottom: 5,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     color: '#8e6f3e',
-    textAlign: 'center',
+    margin: 10,
+    marginBottom: 5,
+    fontFamily: 'sans-serif-condensed',
   },
 
 })
