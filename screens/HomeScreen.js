@@ -1,17 +1,31 @@
 import React from 'react'
-import { Text, View, FlatList, StyleSheet, TouchableOpacity, ScrollView, Image } from 'react-native'
+import { Text, View, FlatList, StyleSheet, TouchableOpacity, ScrollView, Image,
+          ImageBackground } from 'react-native'
 
 const playlistData = require('./test_json/playlists.json');
 const performanceData = require('./test_json/performances.json');
-const groupsData = require('./test_json/groups.json')
+const groupsData = require('./test_json/groups.json');
 
 const HomeScreen = ({ navigation }) => {
+  const playlistImages = [
+    require('./assets/playlistCard1.jpg'),
+    require('./assets/playlistCard2.jpg'),
+    require('./assets/playlistCard3.jpg'),
+    require('./assets/playlistCard4.jpg'),
+  ]
   const renderPlaylistItem = ({ item }) => (
     <TouchableOpacity
       delayPressIn={100}
       style={styles.playlistCard}
     >
-      <Text style={styles.playlistTitle}>{item.title}</Text>
+      <ImageBackground
+        source={playlistImages[item.id-1]}
+        style={styles.playlistImage}
+      >
+        <View style={styles.tintDarkContainer}>
+          <Text style={styles.playlistTitle}>{item.title}</Text>
+        </View>
+      </ImageBackground>
     </TouchableOpacity>
   );
 
@@ -123,14 +137,15 @@ const styles = StyleSheet.create({
   playlistCard: {
     width: 150,
     height: 150,
-    borderRadius: 75,
     marginTop: 20,
     margin: 10,
     padding: 20,
-    backgroundColor: '#cfb991',
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 2.0,
+  },
+  playlistImage: {
+    width: 150,
+    height: 150,
   },
   performanceCard: {
     width: 225,
@@ -161,16 +176,22 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   playlistTitle: {
-    fontSize: 14,
+    fontSize: 16,
     color: 'white',
     textAlign: 'center',
     fontWeight: 'bold',
     fontFamily: 'monospace',
+    padding: 10,
   },
   sectionContainer: {
     justifyContent: 'center',
     margin: 10,
     marginBottom: 5,
+  },
+  tintDarkContainer: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center',
   },
   title: {
     fontSize: 24,
