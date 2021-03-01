@@ -76,7 +76,7 @@ const HomeScreen = ({ navigation }) => {
       </View>
       <View style={styles.sectionContainer}>
         <Text style={styles.title}>Live Performances</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("Local Artists")}>
           <Text style={{color: 'brown', marginLeft: 10, fontSize: 14, fontWeight: 'bold', marginLeft: 15,}}>See all local artists ></Text>
         </TouchableOpacity>
         <FlatList
@@ -88,7 +88,7 @@ const HomeScreen = ({ navigation }) => {
       </View>
       <View style={styles.sectionContainer}>
         <Text style={styles.title}>Your Groups</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("Groups")}>
           <Text style={{color: 'brown', marginLeft: 10, fontSize: 14, fontWeight: 'bold', marginLeft: 15,}}>See all groups ></Text>
         </TouchableOpacity>
         <FlatList
