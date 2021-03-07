@@ -1,9 +1,12 @@
 import React from 'react'
-import { Text } from 'react-native'
+import { Text, View } from 'react-native'
 
-const PlaylistScreen = ({ navigation }) => {
+const PlaylistScreen = ({ route, navigation }) => {
+  const { playlistJson, playlistName } = route.params;
   return (
-    <Text>PLAYLIST SCREEN</Text>
+    <View>
+
+    </View>
   )
 }
 

@@ -32,19 +32,27 @@ const HomeScreen = ({ navigation }) => {
 
   getPlaylistScreen = index => () => {
     let playlistJson;
+    let playlistName;
     if (index === 0) {
       playlistJson = "./test_json/top50campus_playlist.json";
+      playlistName = "Top 50 This Week on Campus";
     }
     else if (index === 1) {
       playlistJson = "./test_json/localartist_playlist.json";
+      playlistName = "Local Artist Corner";
     }
     else if (index === 2) {
       playlistJson = "./test_json/topsongs_playlist.json";
+      playlistName = "Your Top Songs";
     }
     else {
-      playlistJson = "./test_json/faketest_playlist.json"
+      playlistJson = "./test_json/faketest_playlist.json";
+      playlistName = "Playlist #4";
     }
-    alert(playlistJson);
+    navigation.navigate("Playlist", {
+      playlistJson: playlistJson,
+      playlistName: playlistName,
+    })
   }
 
   const renderPerformanceItem = ({ item }) => (
