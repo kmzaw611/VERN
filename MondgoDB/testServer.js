@@ -11,26 +11,25 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const User = require('./models/user');
-
-const uri = "mongodb+srv://ec99:verndev123@cluster0.y4whb.mongodb.net/Vern?retryWrites=true&w=majority";
-
+const cluster = require('./clusterConnector');
 
 const server = express();
 server.use(express.json());
-
+const port = '3000';
 /*
  * This is the connection between the script and the db
- * Will likely move this and the uri to different file and call
- * as a function to protect login data
+ * URI and connection function moved to separate script to
+ * provide a bit of extra security
  */
-
-mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then((result) => {
-        console.log("Database connected! Listening on server now...");
-        server.listen('3000');
-    })
-    .catch((err) => console.log(err));
-
+cluster.connect(function (result) {
+    if (result == 200) {
+        server.listen(port);
+        console.log("Listening on port: " + port);
+    }
+    else {
+        console.log("Shit went down idk man");
+    }
+});
 
 // Allows us to use pictures and other local files on server page
 // Probably useless to us but why not
@@ -39,7 +38,7 @@ server.use(express.static('public'));
 
 // This gets called the second the server is created
 // So it pretty much just prints hello world to the html of webpage
-server.get('/', function(req, res) {
+server.get('/', function (req, res) {
     res.send('Hello World!');
 });
 
@@ -53,7 +52,8 @@ server.post('/', function (req, res) {
         username: req.body.username,
         genre: req.body.genre,
         color: req.body.color,
-        bio: req.body.bio
+        bio: req.body.bio,
+        token: req.body.token
     });
 
     user.save()
@@ -71,7 +71,7 @@ server.post('/', function (req, res) {
  * Retrieve user from database with input of json file
  * Prints retrieved json object to console
  */
-server.get('/see-ethan', function (req, res) {
+server.get('/get-user', function (req, res) {
     res.json({ requestBody: req.body })
     const user = new User({
         username: req.body.username,

@@ -1,12 +1,16 @@
 /*
- * This is a basic JSON structure that I made just to test
- * database connection. It is very subject to change.
+ * This is a sandbox for potential user designs.
+ * Will copy over into User and delete when complete.
  */
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
+    numID: {
+        type: Number,
+        required: true;
+    },
     username: {
         type: String,
         required: true
@@ -23,12 +27,15 @@ const userSchema = new Schema({
         type: String,
         required: false
     },
-    token: {
+    followers: {
         type: String,
-        required: true
+        required: false
+    },
+    following: {
+        type: String,
+        require: false
     }
-},
-    { timestamps: true });
+}, { timestamps: true });
 
 const User = mongoose.model('User', userSchema);
 module.exports = User;
