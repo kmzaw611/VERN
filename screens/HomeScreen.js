@@ -70,6 +70,7 @@ const HomeScreen = ({ navigation }) => {
         <FlatList
           numColumns={2}
           data={playlistData}
+          contentContainerStyle={{justifyContent: 'center',}}
           renderItem={renderPlaylistItem}
           keyExtractor={item => item.id}
         />
