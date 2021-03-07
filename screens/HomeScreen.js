@@ -225,7 +225,6 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     fontFamily: 'sans-serif-condensed',
   },
-
 })
 
 export default HomeScreen;

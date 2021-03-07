@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View, FlatList, TouchableOpacity } from 'react-native'
+import { Text, View, FlatList, TouchableOpacity, StyleSheet } from 'react-native'
 
 const PlaylistScreen = ({ route, navigation }) => {
   const { playlistId, playlistName } = route.params;
@@ -18,7 +18,7 @@ const PlaylistScreen = ({ route, navigation }) => {
   }
 
   const renderPlaylistSong = ({ item }) => (
-    <TouchableOpacity>
+    <TouchableOpacity style={styles.song}>
       <Text>{item.name}</Text>
       <Text>{item.duration}</Text>
       <Text>{item.artist}</Text>
@@ -27,7 +27,7 @@ const PlaylistScreen = ({ route, navigation }) => {
 
   return (
     <View>
-      <Text>{playlistName}</Text>
+      <Text style={styles.playlistTitle}>{playlistName}</Text>
       <FlatList
         data={playlistData}
         renderItem={renderPlaylistSong}
@@ -36,5 +36,16 @@ const PlaylistScreen = ({ route, navigation }) => {
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  playlistTitle: {
+    fontSize: 20,
+    padding: 15,
+  },
+  song: {
+    padding: 10,
+    margin: 5,
+  },
+})
 
 export default PlaylistScreen;
