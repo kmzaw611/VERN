@@ -13,10 +13,11 @@ const HomeScreen = ({ navigation }) => {
     require('./assets/playlistCard3.jpg'),
     require('./assets/playlistCard4.jpg'),
   ]
-  const renderPlaylistItem = ({ item }) => (
+  const renderPlaylistItem = ({ item, index }) => (
     <TouchableOpacity
       delayPressIn={100}
       style={styles.playlistCard}
+      onPress={getPlaylistScreen(index)}
     >
       <ImageBackground
         source={playlistImages[item.id-1]}
@@ -28,6 +29,23 @@ const HomeScreen = ({ navigation }) => {
       </ImageBackground>
     </TouchableOpacity>
   );
+
+  getPlaylistScreen = index => () => {
+    let playlistJson;
+    if (index === 0) {
+      playlistJson = "./test_json/top50campus_playlist.json";
+    }
+    else if (index === 1) {
+      playlistJson = "./test_json/localartist_playlist.json";
+    }
+    else if (index === 2) {
+      playlistJson = "./test_json/topsongs_playlist.json";
+    }
+    else {
+      playlistJson = "./test_json/faketest_playlist.json"
+    }
+    alert(playlistJson);
+  }
 
   const renderPerformanceItem = ({ item }) => (
     <TouchableOpacity
