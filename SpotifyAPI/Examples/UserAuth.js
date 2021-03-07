@@ -84,7 +84,7 @@ var spotifyApi = new SpotifyWebApi({
               genre: "Test Genre",
               color: "Test Color",
               bio: "Test Bio",
-              refreshToken: spotifyApi.getRefreshToken()
+              refreshToken: spotifyApi.getRefreshToken().toString()
           });
       
           user.save()
