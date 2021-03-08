@@ -1,0 +1,62 @@
+[
+   {
+      "id": 1,
+      "name": "Song #1",
+      "duration": "2:13",
+      "artist": "John Doe"
+   },
+   {
+      "id": 2,
+      "name": "Song #2",
+      "duration": "5:04",
+      "artist": "The Beatles"
+   },
+   {
+      "id": 3,
+      "name": "Song #3",
+      "duration": "6:48",
+      "artist": "Spiderman"
+   },
+   {
+      "id": 4,
+      "name": "Song #4",
+      "duration": "3:12",
+      "artist": "Jennifer"
+   },
+   {
+      "id": 5,
+      "name": "Song #5",
+      "duration": "4:01",
+      "artist": "Turkey"
+   },
+   {
+      "id": 6,
+      "name": "Song #1",
+      "duration": "2:13",
+      "artist": "John Doe"
+   },
+   {
+      "id": 7,
+      "name": "Song #2",
+      "duration": "5:04",
+      "artist": "The Beatles"
+   },
+   {
+      "id": 8,
+      "name": "Song #3",
+      "duration": "6:48",
+      "artist": "Spiderman"
+   },
+   {
+      "id": 9,
+      "name": "Song #4",
+      "duration": "3:12",
+      "artist": "Jennifer"
+   },
+   {
+      "id": 10,
+      "name": "Song #5",
+      "duration": "4:01",
+      "artist": "Turkey"
+   },
+]
