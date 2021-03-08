@@ -46,24 +46,36 @@ server.get('/', function (req, res) {
  * Places new user into database with input of json file
  * Prints sent json object to console if succeeded
  */
-server.post('/', function (req, res) {
+server.post('/create-user', function (req, res) {
     res.json({ requestBody: req.body })
-    const user = new User({
-        username: req.body.username,
-        genre: req.body.genre,
-        color: req.body.color,
-        bio: req.body.bio,
-        token: req.body.token
-    });
+    User.findOne({ username: req.body.username })
+        .then(result => {
+            if (!result) {
+                const user = new User({
+                    username: req.body.username,
+                    genre: req.body.genre,
+                    color: req.body.color,
+                    bio: req.body.bio,
+                    token: req.body.token,
+                    following: req.body.following,
+                    followers: req.body.followers
+                });
 
-    user.save()
-        .then((result) => {
-            //res.send(result);
-            console.log(result);
+                user.save()
+                    .then((result) => {
+                        //res.send(result);
+                        console.log(result);
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
+                console.log("Valid");
+            }
+            else {
+                console.log("Invalid attempt");
+            }
         })
-        .catch((err) => {
-            console.log(err);
-        });
+        .catch(err => { console.log(err)});
 });
 
 

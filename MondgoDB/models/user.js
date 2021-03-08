@@ -26,9 +26,16 @@ const userSchema = new Schema({
     token: {
         type: String,
         required: true
+    },
+    following: {
+        type: String,
+        required: true
+    },
+    followers: {
+        type: String,
+        required: true
     }
-},
-    { timestamps: true });
+},  { timestamps: true });
 
 const User = mongoose.model('User', userSchema);
 module.exports = User;
