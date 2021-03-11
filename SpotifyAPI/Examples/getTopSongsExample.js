@@ -5,7 +5,7 @@ var spotifyApi = new SpotifyWebApi({
     clientSecret: '9ffb3fe2081b414e8c520d19805cbf09', //App client secret
     redirectUri: 'http://localhost:8888/callback' //Where the user is to be taken after authentication
 });
-spotifyApi.setRefreshToken('AQCR9BNnDBgq-KHpwU6ZT8xY4UTFCW9vDmThGtQY60lnKU-y1YUBWH5NkQKWSf0tJswZQ2qK2nYdQJuAS47fzeH-8U26Udt8VifqslBK98DpgTh6niew7hS1EEpxpDtl21o') // Set refresh token, use auth_check.js to get a refresh token
+spotifyApi.setRefreshToken('AQCzVfJhvvDF8KvxRKP6ANQ_hfmYbqDdsVQ7XR0FlLlA4soBz6CnmK1HUIas6c9hQHpQ2sV_dDkfYApzJlVkoFMeyjsnVj7Kgdzzd4jG8OwUAbKvzPiVaM5ijhxRhkrdeLU') // Set refresh token, use auth_check.js to get a refresh token
 spotifyApi.setAccessToken('BQAaE7GIhcz8R5k5elJQz-nvKuwdlK04RMzr8sfgg9FMlNkyfd_oj2ey1v4xX-nGZtyZSu2CL9FAmwOSGg_ywXT9hGNNLkI2VKeR6I2IhQixAiM8Ud6i-Unf3FpN1g8mJtac3jKlWFoI1kmKdWff34I-vw')
 
 //console.log("after error happ")
