@@ -10,6 +10,7 @@ import ProfileScreen from './screens/ProfileScreen'
 import LocalArtistScreen from './screens/LocalArtistScreen'
 import PlaylistScreen from './screens/PlaylistScreen'
 import Ionicons from 'react-native-vector-icons/Ionicons';
+//testing my push
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
