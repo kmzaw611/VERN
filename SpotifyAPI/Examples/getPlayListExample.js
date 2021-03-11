@@ -1,4 +1,3 @@
-//const { ART } = require('react-native');
 var SpotifyWebApi = require('spotify-web-api-node')
 var spotifyApi = new SpotifyWebApi({
     clientId: '0e8700b7f71d486bbb7c3bd120e892f8', // App client ID
@@ -6,30 +5,26 @@ var spotifyApi = new SpotifyWebApi({
     redirectUri: 'http://localhost:8888/callback' //Where the user is to be taken after authentication
 });
 spotifyApi.setRefreshToken('AQCzVfJhvvDF8KvxRKP6ANQ_hfmYbqDdsVQ7XR0FlLlA4soBz6CnmK1HUIas6c9hQHpQ2sV_dDkfYApzJlVkoFMeyjsnVj7Kgdzzd4jG8OwUAbKvzPiVaM5ijhxRhkrdeLU') // Set refresh token, use auth_check.js to get a refresh token
-spotifyApi.setAccessToken('BQAaE7GIhcz8R5k5elJQz-nvKuwdlK04RMzr8sfgg9FMlNkyfd_oj2ey1v4xX-nGZtyZSu2CL9FAmwOSGg_ywXT9hGNNLkI2VKeR6I2IhQixAiM8Ud6i-Unf3FpN1g8mJtac3jKlWFoI1kmKdWff34I-vw')
-
-//console.log("after error happ")
-
-//Refresh your access token
+//console.log("before error happens 2");
+//spotifyApi.setAccessToken('BQAaE7GIhcz8R5k5elJQz-nvKuwdlK04RMzr8sfgg9FMlNkyfd_oj2ey1v4xX-nGZtyZSu2CL9FAmwOSGg_ywXT9hGNNLkI2VKeR6I2IhQixAiM8Ud6i-Unf3FpN1g8mJtac3jKlWFoI1kmKdWff34I-vw\n')
 spotifyApi.refreshAccessToken()
 .then(function(data) {
     return data.body['access_token']
 })
-//Set the new access token
 .then(function(newResult) {
     spotifyApi.setAccessToken(newResult)
     console.log(spotifyApi.getAccessToken())
 })
-//Get top tracks promise
-.then(function(data) {
-    spotifyApi.getMyTopTracks().then(
-        function(data) {
-            let count = 0
-            for (let topTrack of data.body.items) {
-                console.log("Track #" + count + "----------------------------------------------------")
-                console.log("Track Name: " + topTrack.name + "\n" + "Spotify URI for Track: " + topTrack.id)
-                count += 1
-            }
+.then(function(newestResult) {
+    //Put spotify playlist URI here
+    spotifyApi.getPlaylist('0dQG4uaWBzeITKmHwSl5BL')
+    .then(function(data) {
+        console.log(data.body.tracks.items)
+        for (let entry of data.body.tracks.items) {
+            console.log(entry.track.name)
         }
-    )
-})
+    }, function(err) {
+      console.log('Something went wrong!', err);
+    });
+  })
+//console.log(spotifyApi.getAccessToken())
