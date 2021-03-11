@@ -9,7 +9,13 @@ import GroupScreen from './screens/GroupScreen'
 import ProfileScreen from './screens/ProfileScreen'
 import LocalArtistScreen from './screens/LocalArtistScreen'
 import PlaylistScreen from './screens/PlaylistScreen'
+import RegisterScreen from './screens/RegisterScreen'
+import RegisterScreen2 from './screens/RegisterScreen2'
+import RegisterScreen3 from './screens/RegisterScreen3'
+import RegisterScreenLA from './screens/RegisterScreenLA'
+import RegisterScreenLV from './screens/RegisterScreenLV'
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { registerRootComponent } from 'expo';
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -43,6 +49,46 @@ const Landing = () => {
   );
 }
 
+const Register = () => {
+  return (
+    <Tab.Navigator initialRouteName="RegisterScreen">
+      <Tab.Screen name="Registration" component={RegisterScreen} />
+    </Tab.Navigator>
+  );
+}
+
+const Register2 = () => {
+  return (
+    <Tab.Navigator initialRouteName="RegisterScreen2">
+      <Tab.Screen name="Registration2" component={RegisterScreen2} />
+    </Tab.Navigator>
+  );
+}
+
+const Register3 = () => {
+  return (
+    <Tab.Navigator initialRouteName="RegisterScreen3">
+      <Tab.Screen name="Registration3" component={RegisterScreen3} />
+    </Tab.Navigator>
+  );
+}
+
+const RegisterLA = () => {
+  return (
+    <Tab.Navigator initialRouteName="RegisterScreenLA">
+      <Tab.Screen name="RegistrationLA" component={RegisterScreenLA} />
+    </Tab.Navigator>
+  );
+}
+
+const RegisterLV = () => {
+  return (
+    <Tab.Navigator initialRouteName="RegisterScreenLV">
+      <Tab.Screen name="RegistrationLV" component={RegisterScreenLV} />
+    </Tab.Navigator>
+  );
+}
+
 const App = () => {
   return (
     <NavigationContainer>
@@ -50,9 +96,15 @@ const App = () => {
         <Stack.Screen name="StartScreen" component={StartScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
         <Stack.Screen name="Playlist" component={PlaylistScreen} />
+        <Stack.Screen name="Register" component={Register} options={{ headerShown: false }} />
+        <Stack.Screen name="Register2" component={Register2} options={{ headerShown: false }} />
+        <Stack.Screen name="Register3" component={Register3} options={{ headerShown: false }} />
+        <Stack.Screen name="RegisterLA" component={RegisterLA} options={{ headerShown: false }} />
+        <Stack.Screen name="RegisterLV" component={RegisterLV} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   )
 }
 
 export default App;
+registerRootComponent(App);
