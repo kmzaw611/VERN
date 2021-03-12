@@ -54,3 +54,28 @@ methods.edit_user(function (result) {
 
 // End editUser
 
+// Add Song
+const data = {
+    songID: "random p ID",
+    title: "Song1",
+    artist: "Variable Artist",
+    length: 260
+};
+
+methods.store_song(function (result) {
+    console.log(result);
+}, data);
+
+// End add song
+
+// Find Song
+
+const id = {
+    songID: "random ID"
+};
+
+methods.get_song(function (result) {
+    console.log(result);
+}, id);
+
+// End find song

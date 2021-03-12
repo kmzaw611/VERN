@@ -10,6 +10,8 @@
 
 const express = require('express');
 const User = require('./models/user');
+const Song = require('./models/song');
+const Playlist = require('./models/playlist');
 const cluster = require('./clusterConnector');
 
 const server = express();
@@ -81,6 +83,31 @@ server.post('/create-user', function (req, res) {
         .catch(err => { console.log(err)});
 });
 
+/*
+ * Store a song
+ */
+server.post('/add-song', function (req, res) {
+    //res.json({ requestBody: req.body });
+    const song = new Song({
+        songID: req.body.songID,
+        title: req.body.title,
+        artist: req.body.artist,
+        length: req.body.length
+    });
+
+    song.save()
+        .then((result2) => {
+            //result2.data = result2;
+            console.log(result2);
+            res.send(result2);
+            res.end();
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+    console.log("Song Stored");
+});
+
 
 /*
  * Retrieve user from database with input of json file
@@ -88,6 +115,17 @@ server.post('/create-user', function (req, res) {
  */
 server.post('/get-user', function (req, res) {
     User.findOne({username: req.body.username}
+    ).then((result) => {
+        console.log(result);
+        res.send(result);
+        res.end();
+    }).catch((err) => {
+        console.log(err);
+    });
+});
+
+server.post('/get-song', function (req, res) {
+    Song.findOne({ songID: req.body.songID }
     ).then((result) => {
         console.log(result);
         res.send(result);
