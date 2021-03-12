@@ -27,11 +27,7 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    following: {
-        type: String,
-        required: true
-    },
-    followers: {
+    songID: {
         type: String,
         required: true
     }
