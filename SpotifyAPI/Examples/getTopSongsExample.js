@@ -12,24 +12,65 @@ spotifyApi.setAccessToken('BQAaE7GIhcz8R5k5elJQz-nvKuwdlK04RMzr8sfgg9FMlNkyfd_oj
 
 //Refresh your access token
 spotifyApi.refreshAccessToken()
-.then(function(data) {
-    return data.body['access_token']
-})
-//Set the new access token
-.then(function(newResult) {
-    spotifyApi.setAccessToken(newResult)
-    console.log(spotifyApi.getAccessToken())
-})
-//Get top tracks promise
-.then(function(data) {
-    spotifyApi.getMyTopTracks().then(
-        function(data) {
-            let count = 0
-            for (let topTrack of data.body.items) {
-                console.log("Track #" + count + "----------------------------------------------------")
-                console.log("Track Name: " + topTrack.name + "\n" + "Spotify URI for Track: " + topTrack.id)
-                count += 1
+    .then(function (data) {
+        return data.body['access_token']
+    })
+    //Set the new access token
+    .then(function (newResult) {
+        spotifyApi.setAccessToken(newResult)
+        console.log(spotifyApi.getAccessToken())
+    })
+    //Get top tracks promise
+    .then(function (data) {
+        spotifyApi.getMyTopTracks().then(
+            function (data) {
+                let topTracks = data.body.items;
+                var genSeed = [];
+                //console.log(genSeed.);
+                var songs = []; //Array holding the track names and their ids.
+                var i;
+                //var songArtistName = da;
+                let genreDict = {};
+                //console.log(topTracks)
+                //curl - X "GET" "https://api.spotify.com/v1/artists/137W8MRPWKqSmrBGDBFSop" - H "Accept: application/json" - H "Content-Type: application/json" - H "Authorization: Bearer "
+                //fetch("https://api.spotify.com/v1/artists/137W8MRPWKqSmrBGDBFSop")
+                 //   .then(res => {console.log(res)})
+                for (i = 0; i < topTracks.length; i++) {
+                    songs.push(topTracks[i].name + "    " + topTracks[i].id + "  By: ");
+                    //console.log(spotifyApi.getAvailableGenreSeeds())
+                    for (var j = 0; j < topTracks[i].artists.length; j++) {
+                        songs.push(topTracks[i].artists[j].name);
+                        songs.push(topTracks[i].artists[j].id);
+                        //topTracks.artists.forEach(artist => {
+                        //    genreDict['genre'] = (genreDict['genre'] )
+                        //})
+
+                    }
+                    //console.log(topTracks[i].album.artists[i].);
+                    songs.push("");
+
+                }
+                i = 0;
+                for (i = 0; i < songs.length; i++) {
+                    console.log(songs[i]);
+
+                }
+
+                // return fetch("https://api.spotify.com/v1/artists/?ids=" + topTracks[1].id)
+
             }
-        }
-    )
-})
+        )
+    })
+    .then(function (data) {
+        spotifyApi.getAvailableGenreSeeds().then(
+            function (data) {
+                let genreSeeds = data.body;
+                console.log(genreSeeds);
+            }, function (err) {
+                console.log("something went poor", err);
+            });
+    })
+
+            
+        
+       
