@@ -1,11 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\MondgoDB",
-    "\\MondgoDB\\models",
+    "\\android",
     "\\SpotifyAPI",
     "\\SpotifyAPI\\Examples"
   ],
-  "SelectedNode": "\\SpotifyAPI\\Examples\\UserAuth.js",
+  "SelectedNode": "\\SpotifyAPI\\Examples\\getTopGenres.js",
   "PreviewInSolutionExplorer": false
 }
