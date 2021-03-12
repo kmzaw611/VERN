@@ -19,7 +19,7 @@ const methods = {
             return callback(res.data);
         })
         .catch(error => {
-            return callback("Booty");
+            return callback("post failed");
         });
     },
     //POST call to get a user with input of username
@@ -29,7 +29,7 @@ const methods = {
             return callback(res.data);
         })
         .catch(error => {
-            return callback("Shit!");
+            return callback("post failed");
         });
     },
     //POST call to update user info
@@ -39,7 +39,25 @@ const methods = {
                 return callback(res.data);
             })
             .catch(error => {
-                return callback("ouch");
+                return callback("post failed");
+            });
+    },
+    store_song: function (callback, data) {
+        rh.post(url + "/add-song", data)
+            .then(res => {
+                return callback(res.data);
+            })
+            .catch(error => {
+                return callback("post failed");
+            });
+    },
+    get_song: function (callback, id) {
+        rh.post(url + "/get-song", id)
+            .then(res => {
+                return callback(res.data);
+            })
+            .catch(error => {
+                return callback("post failed");
             });
     }
 };
