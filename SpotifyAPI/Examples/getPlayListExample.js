@@ -19,12 +19,19 @@ spotifyApi.refreshAccessToken()
     //Put spotify playlist URI here
     spotifyApi.getPlaylist('0dQG4uaWBzeITKmHwSl5BL')
     .then(function(data) {
-        console.log(data.body.tracks.items)
+        //console.log(data.body.tracks.items[0].track.artists.name)
+        let count = 0
         for (let entry of data.body.tracks.items) {
+            console.log("------------------------------------------------")
+            console.log("Track #" + count)
             console.log(entry.track.name)
+            count += 1 
+            console.log("By:")
+            for (let artist of entry.track.artists){
+                console.log(artist.name)
+            }
         }
     }, function(err) {
       console.log('Something went wrong!', err);
     });
   })
-//console.log(spotifyApi.getAccessToken())
