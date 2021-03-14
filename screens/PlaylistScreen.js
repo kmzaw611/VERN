@@ -24,14 +24,18 @@ const PlaylistScreen = ({ route, navigation }) => {
 
   const renderPlaylistSong = ({ item }) => (
     <TouchableOpacity style={styles.song}>
-      <Text>{item.name}</Text>
-      <Text>{item.duration}</Text>
-      <Text>{item.artist}</Text>
+      <View style={styles.songcontainer}>
+        <View>
+          <Text style={styles.songtitle}>{item.name}</Text>
+          <Text style={{color: 'gray'}}>{item.duration}</Text>
+        </View>
+        <Text style={{marginLeft: "auto"}}>{item.artist}</Text>
+      </View>
     </TouchableOpacity>
   );
 
   return (
-    <View>
+    <View style={{flex: 1}}>
       <View style={styles.imagetitle_container}>
         <Image source={playlistImage} style={styles.playlistImage} />
         <Text style={styles.playlistTitle}>{playlistName}</Text>
@@ -74,8 +78,19 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   song: {
-    padding: 10,
-    margin: 5,
+    marginLeft: 15,
+    marginRight: 15,
+    marginTop: 5,
+  },
+  songcontainer: {
+    flex: 1,
+    flexDirection: 'row',
+    borderBottomWidth: 0.2,
+    paddingBottom: 5,
+  },
+  songtitle: {
+    fontSize: 18,
+    fontWeight: "bold",
   },
 })
 
