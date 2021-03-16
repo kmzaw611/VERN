@@ -59,9 +59,9 @@ spotifyApi.refreshAccessToken()
         let month = ("0" + (date.getMonth() + 1)).slice(-2);
         let dateNumber = ("0" + date.getDate()).slice(-2);
         let todaysDate = (month + "-" + date + "-" + year)
-        console.log(JSON.stringify(playlist, null, 4))
+        let payload = JSON.stringify(playlist, null, 4)
         i = 0;
-        fs.writeFileSync("data/playlists/playlistExample.json", playlist)
+        fs.writeFileSync("data/playlists/playlistExample.json", payload)
     }, function(err) {
       console.log('Something went wrong!', err);
     });

@@ -77,9 +77,9 @@ spotifyApi.refreshAccessToken()
                     songs: songs,
                     date: todaysDate
                 }
-                console.log(JSON.stringify(topSongs, null, 4))
+                let payload = (JSON.stringify(topSongs, null, 4))
                 i = 0;
-                fs.writeFileSync("data/favoriteSongs/ " + userId + "TopSongs.json", topSongs)
+                fs.writeFileSync("data/favoriteSongs/ " + userId + "TopSongs.json", payload)
     })
 })
     

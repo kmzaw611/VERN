@@ -1,1 +1,226 @@
-[object Object]
+{
+    "user": "",
+    "songs": [
+        {
+            "id": "04UbVgVCVbvz0IslfkZRFh",
+            "name": "Free Jamell (with YNW Melly)",
+            "artists": [
+                "Lil Durk",
+                "YNW Melly"
+            ],
+            "artistIds": [
+                "3hcs9uc56yIGFCSy9leWe7",
+                "1cNDP5yjU5vjeR8qMf4grg"
+            ]
+        },
+        {
+            "id": "4j3BOcD5RBgZ0hIvIWsM4H",
+            "name": "Dog Food",
+            "artists": [
+                "42 Dugg"
+            ],
+            "artistIds": [
+                "45gHcnDnMC15sgx3VL7ROG"
+            ]
+        },
+        {
+            "id": "0vwOWwl785S9EU1wtbeLLJ",
+            "name": "BookBag 2.0 (feat. Polo G)",
+            "artists": [
+                "BigKayBeezy",
+                "Polo G"
+            ],
+            "artistIds": [
+                "4wpwsRGyik5kVa8fG37Q50",
+                "6AgTAQt8XS6jRWi4sX7w49"
+            ]
+        },
+        {
+            "id": "6zvqq50PL7io0rprbkrYc9",
+            "name": "Afterthought",
+            "artists": [
+                "Joji",
+                "BENEE"
+            ],
+            "artistIds": [
+                "3MZsBdqDrRTJihTHQrO6Dq",
+                "0Cp8WN4V8Tu4QJQwCN5Md4"
+            ]
+        },
+        {
+            "id": "0TxPln0uhql4ucFGk1XISM",
+            "name": "Wrong Time",
+            "artists": [
+                "Hippie Sabotage"
+            ],
+            "artistIds": [
+                "4dM6NDYSfLcspt8GLoT5aE"
+            ]
+        },
+        {
+            "id": "0APAKxMXB7jdDs4kw1l30y",
+            "name": "OK",
+            "artists": [
+                "Wallows"
+            ],
+            "artistIds": [
+                "0NIPkIjTV8mB795yEIiPYL"
+            ]
+        },
+        {
+            "id": "4eYrjXGlDycrqg7a0Wgwed",
+            "name": "Crazy Story",
+            "artists": [
+                "King Von"
+            ],
+            "artistIds": [
+                "6QtgPSJPSzcnn7dPZ4VINp"
+            ]
+        },
+        {
+            "id": "1x4UTuG7Jx2ZzWdBJbhMnW",
+            "name": "The Come Up",
+            "artists": [
+                "Polo G"
+            ],
+            "artistIds": [
+                "6AgTAQt8XS6jRWi4sX7w49"
+            ]
+        },
+        {
+            "id": "7GwYENSg87oERcW0Wacd6m",
+            "name": "SKYBOX",
+            "artists": [
+                "Gunna"
+            ],
+            "artistIds": [
+                "2hlmm7s2ICUX0LVIhVFlZQ"
+            ]
+        },
+        {
+            "id": "6w4MlvpuxtbjGdL9YeTx89",
+            "name": "Jazzy Belle",
+            "artists": [
+                "Outkast"
+            ],
+            "artistIds": [
+                "1G9G7WwrXka3Z1r7aIDjI7"
+            ]
+        },
+        {
+            "id": "2NoKRHt8LVpnQMVl3TPwvu",
+            "name": "Tity and Dolla (feat. Hugh Augustine & Jay Rock)",
+            "artists": [
+                "Isaiah Rashad",
+                "Hugh Augustine",
+                "Jay Rock"
+            ],
+            "artistIds": [
+                "6aaMZ3fcfLv4tEbmY7bjRM",
+                "48ehq0jR23nak2ZDDU6uff",
+                "28ExwzUQsvgJooOI0X1mr3"
+            ]
+        },
+        {
+            "id": "1c5CllrZr45UBhWpIqM332",
+            "name": "Funny Thing",
+            "artists": [
+                "Thundercat"
+            ],
+            "artistIds": [
+                "4frXpPxQQZwbCu3eTGnZEw"
+            ]
+        },
+        {
+            "id": "1BheYH1mrH0YaiNpYCWaXM",
+            "name": "Y&T 2",
+            "artists": [
+                "42 Dugg"
+            ],
+            "artistIds": [
+                "45gHcnDnMC15sgx3VL7ROG"
+            ]
+        },
+        {
+            "id": "00CqEmnPLFKDhAb3cuu6Cs",
+            "name": "Halo",
+            "artists": [
+                "Cage The Elephant"
+            ],
+            "artistIds": [
+                "26T3LtbuGT1Fu9m0eRq5X3"
+            ]
+        },
+        {
+            "id": "37lsV513gD04gFvKIPCw4N",
+            "name": "Stuck (feat. Arin Ray)",
+            "artists": [
+                "EARTHGANG",
+                "Arin Ray"
+            ],
+            "artistIds": [
+                "5MbNzCW3qokGyoo9giHA3V",
+                "6TvjXbopXg71XRM9OZWqUc"
+            ]
+        },
+        {
+            "id": "2rPHUAeUPbNgTmK18FPTiZ",
+            "name": "GO (feat. Juice WRLD)",
+            "artists": [
+                "The Kid LAROI",
+                "Juice WRLD"
+            ],
+            "artistIds": [
+                "2tIP7SsRs7vjIcLrU85W8J",
+                "4MCBfE4596Uoi2O4DtmEMz"
+            ]
+        },
+        {
+            "id": "6EKii07Q5FPgd5LVmvtqK4",
+            "name": "Together",
+            "artists": [
+                "Whethan"
+            ],
+            "artistIds": [
+                "0vqJkZ0RpLZixt3lTmD8vP"
+            ]
+        },
+        {
+            "id": "6O04OXXHeOVMbbIIoUBoXR",
+            "name": "She Know (feat. Lil Baby)",
+            "artists": [
+                "Lil Keed",
+                "Lil Baby"
+            ],
+            "artistIds": [
+                "3uJx5SnOM59Li7lCxA3b29",
+                "5f7VJjfbwm532GiveGC0ZK"
+            ]
+        },
+        {
+            "id": "0IJA9KP6rT55jrP1YpTdhx",
+            "name": "Out Of Love (feat. Internet Money)",
+            "artists": [
+                "Lil Tecca",
+                "Internet Money"
+            ],
+            "artistIds": [
+                "4Ga1P7PMIsmqEZqhYZQgDo",
+                "6MPCFvOQv5cIGfw3jODMF0"
+            ]
+        },
+        {
+            "id": "3nS9a01VvXHQriLqJYwRqG",
+            "name": "DOLLAZ ON MY HEAD (feat. Young Thug)",
+            "artists": [
+                "Gunna",
+                "Young Thug"
+            ],
+            "artistIds": [
+                "2hlmm7s2ICUX0LVIhVFlZQ",
+                "50co4Is1HCEo8bhOyUWKpn"
+            ]
+        }
+    ],
+    "date": "03-Tue Mar 16 2021 19:35:10 GMT-0400 (Eastern Daylight Time)-2021"
+}
