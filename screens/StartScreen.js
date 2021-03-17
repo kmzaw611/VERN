@@ -27,7 +27,7 @@ const StartScreen = ({ navigation }) => {
         <Text style={styles.forgotPasswordRegister}>Forgot Password?</Text>
       </TouchableOpacity>
       <TouchableOpacity
-      onPress={onRegisterPress}>
+        onPress={onRegisterPress}>
         <Text style={styles.forgotPasswordRegister}>Register</Text>
       </TouchableOpacity>
     </View>

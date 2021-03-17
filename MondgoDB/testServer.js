@@ -9,8 +9,9 @@
  */
 
 const express = require('express');
-const mongoose = require('mongoose');
 const User = require('./models/user');
+const Song = require('./models/song');
+const Playlist = require('./models/playlist');
 const cluster = require('./clusterConnector');
 
 const server = express();
@@ -27,7 +28,7 @@ cluster.connect(function (result) {
         console.log("Listening on port: " + port);
     }
     else {
-        console.log("Shit went down idk man");
+        console.log("problem with server connection");
     }
 });
 
@@ -40,14 +41,16 @@ server.use(express.static('public'));
 // So it pretty much just prints hello world to the html of webpage
 server.get('/', function (req, res) {
     res.send('Hello World!');
+    res.end();
 });
 
 /*
  * Places new user into database with input of json file
  * Prints sent json object to console if succeeded
+ * *EDIT* checks if username already exists within database
  */
 server.post('/create-user', function (req, res) {
-    res.json({ requestBody: req.body })
+    //res.json({ requestBody: req.body });
     User.findOne({ username: req.body.username })
         .then(result => {
             if (!result) {
@@ -57,14 +60,15 @@ server.post('/create-user', function (req, res) {
                     color: req.body.color,
                     bio: req.body.bio,
                     token: req.body.token,
-                    following: req.body.following,
-                    followers: req.body.followers
+                    songID: req.body.songID
                 });
 
                 user.save()
-                    .then((result) => {
-                        //res.send(result);
-                        console.log(result);
+                    .then((result2) => {
+                        //result2.data = result2;
+                        console.log(result2);
+                        res.send(result2);
+                        res.end();
                     })
                     .catch((err) => {
                         console.log(err);
@@ -72,10 +76,36 @@ server.post('/create-user', function (req, res) {
                 console.log("Valid");
             }
             else {
+                res.send("Username Taken");
                 console.log("Invalid attempt");
             }
         })
         .catch(err => { console.log(err)});
+});
+
+/*
+ * Store a song
+ */
+server.post('/add-song', function (req, res) {
+    //res.json({ requestBody: req.body });
+    const song = new Song({
+        songID: req.body.songID,
+        title: req.body.title,
+        artist: req.body.artist,
+        length: req.body.length
+    });
+
+    song.save()
+        .then((result2) => {
+            //result2.data = result2;
+            console.log(result2);
+            res.send(result2);
+            res.end();
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+    console.log("Song Stored");
 });
 
 
@@ -83,25 +113,65 @@ server.post('/create-user', function (req, res) {
  * Retrieve user from database with input of json file
  * Prints retrieved json object to console
  */
-server.get('/get-user', function (req, res) {
-    res.json({ requestBody: req.body })
-    const user = new User({
-        username: req.body.username,
-        genre: req.body.genre,
-        color: req.body.color,
-        bio: req.body.bio
-    });
-
-    User.findOne(
-        {
-            username: user.username,
-            genre: user.genre,
-            color: user.color,
-            bio: user.bio
-        }
+server.post('/get-user', function (req, res) {
+    User.findOne({username: req.body.username}
     ).then((result) => {
         console.log(result);
+        res.send(result);
+        res.end();
     }).catch((err) => {
         console.log(err);
     });
+});
+
+server.post('/get-song', function (req, res) {
+    Song.findOne({ songID: req.body.songID }
+    ).then((result) => {
+        console.log(result);
+        res.send(result);
+        res.end();
+    }).catch((err) => {
+        console.log(err);
+    });
+});
+
+server.post('/edit-user', function (req, res) {
+    User.findOne({ username: req.body.new_username })
+        .then(result => {
+            if (!result) {
+                //Clear to replace
+                const find = {
+                    username: req.body.current_username
+                }
+
+                const update = {
+                    username: req.body.new_username,
+                    genre: req.body.genre,
+                    color: req.body.color,
+                    bio: req.body.bio,
+                    token: req.body.token,
+                    songID: req.body.songID
+                }
+
+                User.findOneAndUpdate(find, update, { new: true })
+                    .then(result2 => {
+                        console.log(result2);
+                        res.send(result2);
+                        res.end();
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+                console.log("Done!");
+            }
+            else {
+                //Not clear to replace
+                console.log("New username taken");
+                res.send("new username taken");
+                res.end();
+            }
+        })
+        .catch(error => {
+            console.error(error);
+        });
 });
