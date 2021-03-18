@@ -54,12 +54,7 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="StartScreen">
         <Stack.Screen name="StartScreen" component={StartScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }} />
         <Stack.Screen name="ActualRegister" component={ActualRegisterScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Register2" component={RegisterScreen2} options={{ headerShown: false }} />
-        <Stack.Screen name="Register3" component={RegisterScreen3} options={{ headerShown: false }} />
-        <Stack.Screen name="RegisterLA" component={RegisterScreenLA} options={{ headerShown: false }} />
-        <Stack.Screen name="RegisterLV" component={RegisterScreenLV} options={{ headerShown: false }} />
         <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
         <Stack.Screen name="Playlist" component={PlaylistScreen} />
       </Stack.Navigator>
