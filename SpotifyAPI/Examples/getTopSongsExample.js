@@ -79,7 +79,9 @@ spotifyApi.refreshAccessToken()
                 }
                 let payload = (JSON.stringify(topSongs, null, 4))
                 i = 0;
+                console.log(payload)
                 fs.writeFileSync("data/favoriteSongs/ " + userId + "TopSongs.json", payload)
+                console.log("Exported to data/favoriteSongs/")
     })
 })
     
