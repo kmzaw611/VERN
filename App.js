@@ -14,6 +14,7 @@ import RegisterScreen2 from './screens/RegisterScreen2'
 import RegisterScreen3 from './screens/RegisterScreen3'
 import RegisterScreenLA from './screens/RegisterScreenLA'
 import RegisterScreenLV from './screens/RegisterScreenLV'
+import ActualRegisterScreen from './screens/ActualRegisterScreen'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Stack = createStackNavigator()
@@ -54,6 +55,7 @@ const App = () => {
       <Stack.Navigator initialRouteName="StartScreen">
         <Stack.Screen name="StartScreen" component={StartScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="ActualRegister" component={ActualRegisterScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Register2" component={RegisterScreen2} options={{ headerShown: false }} />
         <Stack.Screen name="Register3" component={RegisterScreen3} options={{ headerShown: false }} />
         <Stack.Screen name="RegisterLA" component={RegisterScreenLA} options={{ headerShown: false }} />

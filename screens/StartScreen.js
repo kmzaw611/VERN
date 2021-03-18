@@ -5,6 +5,7 @@ import Logo from './components/Logo'
 const StartScreen = ({ navigation }) => {
   const onLoginPress = () => navigation.navigate("Landing");
   const onRegisterPress = () => navigation.navigate("Register");
+  const onActualRegisterPress = () => navigation.navigate("ActualRegister")
 
   return (
     <View style={styles.container}>
@@ -27,7 +28,7 @@ const StartScreen = ({ navigation }) => {
         <Text style={styles.forgotPasswordRegister}>Forgot Password?</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={onRegisterPress}>
+        onPress={onActualRegisterPress}>
         <Text style={styles.forgotPasswordRegister}>Register</Text>
       </TouchableOpacity>
     </View>
