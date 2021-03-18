@@ -34,6 +34,7 @@ const ActualRegisterScreen = ({ navigation }) => {
           placeholder="Enter your password"
           value={password}
           onChangeText={onChangePassword}
+          secureTextEntry={true}
         />
       </View>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
