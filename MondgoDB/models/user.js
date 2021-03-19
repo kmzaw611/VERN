@@ -4,6 +4,7 @@
  */
 
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
@@ -25,7 +26,7 @@ const userSchema = new Schema({
     },
     color: {
         type: String,
-        required: true
+        required: false
     },
     bio: {
         type: String,
@@ -33,13 +34,29 @@ const userSchema = new Schema({
     },
     token: {
         type: String,
-        required: true
+        required: false
     },
     songID: {
         type: String,
+        required: false
+    },
+    isLocalArtist: {
+        type: Boolean,
         required: true
-    }
+    },
+    isLocalBusiness: {
+        type: Boolean,
+        required: true
+    },
 },  { timestamps: true });
+
+userSchema.methods.generateHash = function(password) {
+  return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+}
+
+userSchema.methods.validPassword = function(password) {
+  return bcrypt.compareSync(password, this.password);
+};
 
 const User = mongoose.model('User', userSchema);
 module.exports = User;
