@@ -2,9 +2,9 @@
  * If you want to play around with this script, you may need to run:
  * npm install mongoose
  * npm install express
- * 
+ *
  * I use postman to test the get/post calls
- * It's pretty easy to use, i honestly recommend 
+ * It's pretty easy to use, i honestly recommend
  * downloading it for testing since we dont have a client atm
  */
 
@@ -56,12 +56,16 @@ server.post('/create-user', function (req, res) {
             if (!result) {
                 const user = new User({
                     username: req.body.username,
+                    email: req.body.email,
                     genre: req.body.genre,
                     color: req.body.color,
                     bio: req.body.bio,
                     token: req.body.token,
-                    songID: req.body.songID
+                    songID: req.body.songID,
+                    isLocalArtist: req.body.isLocalArtist,
+                    isLocalBusiness: req.body.isLocalBusiness, 
                 });
+                user.password = user.generateHash(req.body.password)
 
                 user.save()
                     .then((result2) => {

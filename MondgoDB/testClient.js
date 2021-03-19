@@ -5,21 +5,26 @@
  */
 const axios = require('axios');
 const url = "http://127.0.0.1:3000";
+// If you are testing from an Android emulator use this url instead.
+// Android Studio uses this url to redirect to the localhost if you are
+// running from an emulator.
+const emulator_url = "http://10.0.2.2:3000";
 
 const rh = axios.create({
-    baseURL: 'http://127.0.0.1:3000',
+    // baseURL: url,
+    baseURL: emulator_url,
     proxy: false
 });
 
 const methods = {
     //POST call to create user
     create_user: function (callback, data) {
-        rh.post(url + "/create-user", data)
+        rh.post(emulator_url + "/create-user", data)
         .then(res => {
             return callback(res.data);
         })
         .catch(error => {
-            return callback("post failed");
+            return callback("testClient.js : create user failed");
         });
     },
     //POST call to get a user with input of username

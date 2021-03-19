@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { View, Button, StyleSheet, TouchableOpacity, Text, TextInput, CheckBox } from 'react-native'
+const methods = require('../MondgoDB/testClient');
 
 const ActualRegisterScreen = ({ navigation }) => {
 
@@ -10,7 +11,23 @@ const ActualRegisterScreen = ({ navigation }) => {
   const [isLocalBusiness, setIsLocalBusiness] = useState(false);
 
   const onSignUpPress = () => {
-    console.log("Sign Up pressed")
+
+    const newUser = {
+      username: username,
+      email: email,
+      password: password,
+      genre: "",
+      color: "",
+      bio: "",
+      token: "",
+      songID: "",
+      isLocalArtist: isLocalArtist,
+      isLocalBusiness: isLocalBusiness,
+    };
+    methods.create_user(function(result) {
+      console.log("HIHI");
+      console.log(result);
+    }, newUser );
   }
 
   return (
