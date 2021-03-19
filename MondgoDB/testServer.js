@@ -50,7 +50,7 @@ server.get('/', function (req, res) {
 });
 
 server.get('/top_songs_playlist', function (req, res) {
-    spotifyApi.setRefreshToken(User.token)
+    spotifyApi.setRefreshToken(req.body.token)
     .then(function (data) {
         return data.body['access_token']
     })
