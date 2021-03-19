@@ -25,12 +25,11 @@ const ActualRegisterScreen = ({ navigation }) => {
       isLocalBusiness: isLocalBusiness,
     };
     methods.create_user(function(result) {
-      console.log("BOOMBOOM")
       console.log(result);
-      if (result === "Username Taken") {
+      if (result === "Email Taken") {
         Alert.alert(
-          "Username Taken",
-          "The username you have chosen has been taken by an existing user. Please choose another.",
+          "Email Taken",
+          "The email you have entered has already been used to make a VERN account. Please choose another.",
           [
             { text: "OK" }
           ]

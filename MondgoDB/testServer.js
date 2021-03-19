@@ -51,7 +51,8 @@ server.get('/', function (req, res) {
  */
 server.post('/create-user', function (req, res) {
     //res.json({ requestBody: req.body });
-    User.findOne({ username: req.body.username })
+
+    User.findOne({ email: req.body.email })
         .then(result => {
             if (!result) {
                 const user = new User({
@@ -80,7 +81,7 @@ server.post('/create-user', function (req, res) {
                 console.log("Valid");
             }
             else {
-                res.send("Username Taken");
+                res.send("Email Taken");
                 res.end();
                 console.log("Invalid attempt");
             }
