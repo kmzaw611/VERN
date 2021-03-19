@@ -63,7 +63,7 @@ server.post('/create-user', function (req, res) {
                     token: req.body.token,
                     songID: req.body.songID,
                     isLocalArtist: req.body.isLocalArtist,
-                    isLocalBusiness: req.body.isLocalBusiness, 
+                    isLocalBusiness: req.body.isLocalBusiness,
                 });
                 user.password = user.generateHash(req.body.password)
 
@@ -81,6 +81,7 @@ server.post('/create-user', function (req, res) {
             }
             else {
                 res.send("Username Taken");
+                res.end();
                 console.log("Invalid attempt");
             }
         })

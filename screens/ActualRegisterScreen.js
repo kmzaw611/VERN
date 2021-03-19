@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Button, StyleSheet, TouchableOpacity, Text, TextInput, CheckBox } from 'react-native'
+import { View, Button, StyleSheet, TouchableOpacity, Text, TextInput, CheckBox, Alert } from 'react-native'
 const methods = require('../MondgoDB/testClient');
 
 const ActualRegisterScreen = ({ navigation }) => {
@@ -25,11 +25,31 @@ const ActualRegisterScreen = ({ navigation }) => {
       isLocalBusiness: isLocalBusiness,
     };
     methods.create_user(function(result) {
+      console.log("BOOMBOOM")
       console.log(result);
+      if (result === "Username Taken") {
+        Alert.alert(
+          "Username Taken",
+          "The username you have chosen has been taken by an existing user. Please choose another.",
+          [
+            { text: "OK" }
+          ]
+        );
+      }
+      else {
+        // Send user back to login screen if account creation is valid
+        navigation.navigate("StartScreen");
+        Alert.alert(
+          "Account Created",
+          "Your VERN account has been created. Enter your username and password to login.",
+          [
+            { text: "OK" }
+          ]
+        )
+      }
     }, newUser );
 
-    // Send user back to login screen after creating his account
-    navigation.navigate("StartScreen");
+
   }
 
   return (
