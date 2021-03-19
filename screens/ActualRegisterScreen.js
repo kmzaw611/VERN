@@ -25,9 +25,11 @@ const ActualRegisterScreen = ({ navigation }) => {
       isLocalBusiness: isLocalBusiness,
     };
     methods.create_user(function(result) {
-      console.log("HIHI");
       console.log(result);
     }, newUser );
+
+    // Send user back to login screen after creating his account
+    navigation.navigate("StartScreen");
   }
 
   return (
