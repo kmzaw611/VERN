@@ -44,6 +44,12 @@ server.get('/', function (req, res) {
     res.end();
 });
 
+server.get('/get_top_songs_example', function(req,res) {
+    //FOR MATT
+    //Find the user given the unique identifier from req
+    //Pull the refresh token from MongoDB
+    //Use the logic from getTopSongsExample.js to create the JSON and return it with res.send
+})
 /*
  * Places new user into database with input of json file
  * Prints sent json object to console if succeeded
