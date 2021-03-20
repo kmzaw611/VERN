@@ -104,7 +104,7 @@ server.post('/create-user', function (req, res) {
  * (5) If they do, effectively 'log in' the user by creating a new session for him and adding that to the user_session Mongoose model.
  */
 server.post('/login-user', function (req, res) {
-  const { email, password } = req;
+  const { email, password } = req.body;
   console.log("Login Email: " + email);
   console.log("Login Password: " + password);
 
@@ -114,7 +114,6 @@ server.post('/login-user', function (req, res) {
   if (!password) {
     return res.send("Blank Password");
   }
-  email = email.toLowerCase().trim();
 
   User.find({
     email: email
