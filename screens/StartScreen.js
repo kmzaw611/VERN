@@ -1,21 +1,65 @@
-import React from 'react'
-import { View, Button, StyleSheet, TouchableOpacity, Text, TextInput } from 'react-native'
+import React, { useState } from 'react'
+import { View, Button, StyleSheet, TouchableOpacity, Text, TextInput, Alert, AsyncStorage } from 'react-native'
 import Logo from './components/Logo'
+const methods = require('../MondgoDB/testClient');
 
 const StartScreen = ({ navigation }) => {
-  const onLoginPress = () => navigation.navigate("Landing");
+
+  const [email, onChangeEmail] = useState("");
+  const [password, onChangePassword] = useState("");
+
+  const onLoginPress = () => {
+    const loginInfo = {
+      email: email,
+      password: password,
+    };
+    methods.login_user(function(result) {
+      console.log(result);
+      if (result === "No User With Email") {
+        Alert.alert(
+          "Invalid Email",
+          "There is no VERN account with the email you entered. Please try another.",
+          [
+            { text: "OK" }
+          ]
+        );
+      }
+      else if (result === "Incorrect Password") {
+        Alert.alert(
+          "Incorrect Password",
+          "The password you have entered is incorrect. Please try again.",
+          [
+            { text: "OK" }
+          ]
+        );
+      }
+      else if (result === "Valid Sign In") {
+        // Update local storage => isLoggedIn: true and userID: doc._id
+        
+        // Send user to landing page if he has successfully logged in
+        navigation.navigate("Landing");
+      }
+    }, loginInfo );
+
+  }
   const onRegisterPress = () => navigation.navigate("Register");
+  const onActualRegisterPress = () => navigation.navigate("ActualRegister")
 
   return (
     <View style={styles.container}>
       <Logo />
       <TextInput style={styles.inputEmailPassword}
         label="Email"
-        placeholder="Email"
+        placeholder="Enter your email"
+        value={email}
+        onChangeText={onChangeEmail}
       />
       <TextInput style={styles.inputEmailPassword}
         label="Password"
-        placeholder="Password"
+        placeholder="Enter your password"
+        value={password}
+        onChangeText={onChangePassword}
+        secureTextEntry={true}
       />
       <TouchableOpacity
         style={styles.loginButton}
@@ -27,7 +71,7 @@ const StartScreen = ({ navigation }) => {
         <Text style={styles.forgotPasswordRegister}>Forgot Password?</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={onRegisterPress}>
+        onPress={onActualRegisterPress}>
         <Text style={styles.forgotPasswordRegister}>Register</Text>
       </TouchableOpacity>
     </View>

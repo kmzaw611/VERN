@@ -1,3 +1,4 @@
+const fs = require('fs');
 var SpotifyWebApi = require('spotify-web-api-node')
 var spotifyApi = new SpotifyWebApi({
     clientId: '0e8700b7f71d486bbb7c3bd120e892f8', // App client ID
@@ -19,18 +20,48 @@ spotifyApi.refreshAccessToken()
     //Put spotify playlist URI here
     spotifyApi.getPlaylist('0dQG4uaWBzeITKmHwSl5BL')
     .then(function(data) {
+        songs = []
         //console.log(data.body.tracks.items[0].track.artists.name)
         let count = 0
         for (let entry of data.body.tracks.items) {
-            console.log("------------------------------------------------")
-            console.log("Track #" + count)
-            console.log(entry.track.name)
-            count += 1 
-            console.log("By:")
+            artists = []
+            artistIds = []
             for (let artist of entry.track.artists){
-                console.log(artist.name)
+                artists.push(artist.name)
+                artistIds.push(artist.id)
             }
+            let song = {
+                "id": entry.track.id,
+                "name": entry.track.name,
+                "duration": entry.track.duration,
+                "artists": artists,
+                "artistIds": artistIds
+            }
+            songs.push(song)
+            //console.log("------------------------------------------------")
+            //console.log("Track #" + count)
+            //console.log(entry.track.name)
+            //count += 1 
+            //console.log("By:")
+            //for (let artist of entry.track.artists){
+            //    console.log(artist.name)
+            //}
         }
+        let len = data.body.tracks.length
+        let playlist = {
+            "name": data.body.name,
+            "id": data.body.id,
+            "songs": songs,
+            "noSongs": len
+        }
+        let date = new Date();
+        let year = date.getFullYear();
+        let month = ("0" + (date.getMonth() + 1)).slice(-2);
+        let dateNumber = ("0" + date.getDate()).slice(-2);
+        let todaysDate = (month + "-" + date + "-" + year)
+        let payload = JSON.stringify(playlist, null, 4)
+        i = 0;
+        fs.writeFileSync("data/playlists/playlistExample.json", payload)
     }, function(err) {
       console.log('Something went wrong!', err);
     });
