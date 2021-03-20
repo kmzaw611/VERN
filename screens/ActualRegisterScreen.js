@@ -21,6 +21,11 @@ const ActualRegisterScreen = ({ navigation }) => {
       bio: "",
       token: "",
       songID: "",
+      // The Spotify stuff is by default Matthew's info from SpotifyAPI/secrets.js.
+      // Later on this will be unique for each user when Spotify authentication and linking
+      // is implemented as part of the registration process.
+      spotifyTokenID: "b9d72821ddbe43bbb0a8242c7870c117",
+      spotifyTokenSecret: "301a476e613043d2b9e1753528a746ba",
       isLocalArtist: isLocalArtist,
       isLocalBusiness: isLocalBusiness,
     };

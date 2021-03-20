@@ -64,6 +64,8 @@ server.post('/create-user', function (req, res) {
                     bio: req.body.bio,
                     token: req.body.token,
                     songID: req.body.songID,
+                    spotifyTokenID: req.body.spotifyTokenID,
+                    spotifyTokenSecret: req.body.spotifyTokenSecret,
                     isLocalArtist: req.body.isLocalArtist,
                     isLocalBusiness: req.body.isLocalBusiness,
                 });
@@ -153,7 +155,7 @@ server.post('/login-user', function (req, res) {
 /*
  * Reference: https://keithweaverca.medium.com/building-a-log-in-system-for-a-mern-stack-39411e9513bd
  *
- * For logout, it's simple - just set the user_session object to deleted.
+ * For logout, it's simple - just set the user_session object isDeleted true.
  */
 server.get('/logout-user', function (req, res) {
   const query = { req };
