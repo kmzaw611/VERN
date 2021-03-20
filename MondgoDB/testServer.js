@@ -142,16 +142,35 @@ server.post('/login-user', function (req, res) {
       if (err) {
         return res.send("Server Error");
       }
-
       return res.send({
         message: "Valid Sign In",
         token: doc._id
       });
     });
-
   });
+});
 
+/*
+ * Reference: https://keithweaverca.medium.com/building-a-log-in-system-for-a-mern-stack-39411e9513bd
+ *
+ * For logout, it's simple - just set the user_session object to deleted.
+ */
+server.get('/logout-user', function (req, res) {
+  const query = { req };
+  const token = { query };
 
+  // Verify the token is unique and set is_deleted to true.
+  UserSession.findOneAndUpdate({
+    _id: token,
+    isDeleted: false,
+  }, {
+    $set: { isDeleted: true }
+  }, null, (err) => {
+    if (err) {
+      return res.send("Server Error");
+    }
+    return res.send("Log Out Successful");
+  });
 });
 
 /*
