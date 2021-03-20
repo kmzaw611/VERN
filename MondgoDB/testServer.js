@@ -10,6 +10,7 @@
 
 const express = require('express');
 const User = require('./models/user');
+const UserSession = require('./models/user_session')
 const Song = require('./models/song');
 const Playlist = require('./models/playlist');
 const cluster = require('./clusterConnector');
@@ -87,6 +88,70 @@ server.post('/create-user', function (req, res) {
             }
         })
         .catch(err => { console.log(err)});
+});
+
+/*
+ *
+ * Reference: https://keithweaverca.medium.com/building-a-log-in-system-for-a-mern-stack-39411e9513bd
+ *
+ * POST request for when a user logs in. Handles the following things:
+ * (1) Make sure email and password fields from the front-end are not empty.
+ * (2) Validate email and password. Check the Mongoose model to find a valid user with the given email.
+ * (3) There should be only be ONE valid user, otherwise something is very fucked from registration.
+ * (4) Check if the bcrypt-hashed passwords match.
+ * (5) If they do, effectively 'log in' the user by creating a new session for him and adding that to the user_session Mongoose model.
+ */
+server.post('/login-user', function (req, res) {
+  const { email, password } = req;
+  console.log("Login Email: " + email);
+  console.log("Login Password: " + password);
+
+  if (!email) {
+    return res.send("Blank Email");
+  }
+  if (!password) {
+    return res.send("Blank Password");
+  }
+  email = email.toLowerCase().trim();
+
+  User.find({
+    email: email
+  }, (err, users) => {
+    if (err) {
+      return res.send("Server Error");
+    }
+    if (users.length === 0) {
+      return res.send("No User With Email")
+    }
+    if (users.length > 1) {
+      // This should never happen. Registration should not allow this.
+      // If it does, the bug is with the registration process.
+      return res.send("Multiple Users With Email")
+    }
+
+    // We've made sure that a single valid user exists with that email
+    const user = users[0];
+    // Calls the Bcrypt function implemented for every user
+    if (!user.validPassword(password)) {
+      return res.send("Incorrect Password");
+    }
+    // Password is valid. Start creating a user session.
+    const userSession = new UserSession();
+    userSession.userId = user._id; // Use MongoDB object id as the unique token
+    userSession.save((err, doc) => {
+      if (err) {
+        return res.send("Server Error");
+      }
+
+      return res.send({
+        message: "Valid Sign In",
+        token: doc._id
+      });
+    });
+
+  });
+
+
 });
 
 /*
