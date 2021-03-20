@@ -1,0 +1,11 @@
+[
+   {
+      "id": 1,
+      "name": "Alex Baker",
+      "genre": "Rock",
+      "songID": "My Heart Will Go On",
+      "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam facilisis eros vel metus rhoncus, sit amet ultricies leo pellentesque. Nam non justo vitae magna lobortis laoreet sit amet ac ante. In et finibus ante, non bibendum dolor. Nulla at efficitur diam. Cras ac semper nibh, eu dignissim mauris. Aliquam a.",
+      "color": "green",
+
+   },
+]
