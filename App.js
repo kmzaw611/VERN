@@ -19,6 +19,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
+// Get this from AsyncStorage
+// const isLoggedIn = 
 
 const Landing = () => {
   return (

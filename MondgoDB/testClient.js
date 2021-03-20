@@ -27,6 +27,17 @@ const methods = {
             return callback("testClient.js : create user failed");
         });
     },
+    // GET call to log in a user
+    login_user: function (callback, data) {
+        rh.post(emulator_url + "/login-user", data)
+        .then(res => {
+          return callback(res.data);
+        })
+        .catch(error => {
+            console.log(error);
+            return callback("testClient.js : login user failed");
+        });
+    },
     //POST call to get a user with input of username
     get_user: function (callback, name) {
         rh.post(url + "/get-user", name)
