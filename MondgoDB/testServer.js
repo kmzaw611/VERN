@@ -10,7 +10,6 @@
 
 const express = require('express');
 const User = require('./models/user');
-const UserSession = require('./models/user_session')
 const Song = require('./models/song');
 const Playlist = require('./models/playlist');
 const cluster = require('./clusterConnector');
@@ -101,12 +100,11 @@ server.post('/create-user', function (req, res) {
  * (2) Validate email and password. Check the Mongoose model to find a valid user with the given email.
  * (3) There should be only be ONE valid user, otherwise something is very fucked from registration.
  * (4) Check if the bcrypt-hashed passwords match.
- * (5) If they do, effectively 'log in' the user by creating a new session for him and adding that to the user_session Mongoose model.
  */
 server.post('/login-user', function (req, res) {
   const { email, password } = req.body;
-  console.log("Login Email: " + email);
-  console.log("Login Password: " + password);
+  // console.log("Login Email: " + email);
+  // console.log("Login Password: " + password);
 
   if (!email) {
     return res.send("Blank Email");
@@ -136,42 +134,17 @@ server.post('/login-user', function (req, res) {
     if (!user.validPassword(password)) {
       return res.send("Incorrect Password");
     }
-    // Password is valid. Start creating a user session.
-    const userSession = new UserSession();
-    userSession.userId = user._id; // Use MongoDB object id as the unique token
-    userSession.save((err, doc) => {
-      if (err) {
-        return res.send("Server Error");
-      }
-      return res.send({
-        message: "Valid Sign In",
-        token: doc._id
-      });
-    });
+
+    // If we are here, the sign in is valid
+    res.send("Valid Sign In");
   });
 });
 
 /*
- * Reference: https://keithweaverca.medium.com/building-a-log-in-system-for-a-mern-stack-39411e9513bd
  *
- * For logout, it's simple - just set the user_session object isDeleted true.
  */
 server.get('/logout-user', function (req, res) {
-  const query = { req };
-  const token = { query };
-
-  // Verify the token is unique and set is_deleted to true.
-  UserSession.findOneAndUpdate({
-    _id: token,
-    isDeleted: false,
-  }, {
-    $set: { isDeleted: true }
-  }, null, (err) => {
-    if (err) {
-      return res.send("Server Error");
-    }
-    return res.send("Log Out Successful");
-  });
+  // To be implemented
 });
 
 /*

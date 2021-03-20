@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Button, StyleSheet, TouchableOpacity, Text, TextInput, Alert } from 'react-native'
+import { View, Button, StyleSheet, TouchableOpacity, Text, TextInput, Alert, AsyncStorage } from 'react-native'
 import Logo from './components/Logo'
 const methods = require('../MondgoDB/testClient');
 
@@ -33,7 +33,9 @@ const StartScreen = ({ navigation }) => {
           ]
         );
       }
-      else {
+      else if (result === "Valid Sign In") {
+        // Update local storage => isLoggedIn: true and userID: doc._id
+        
         // Send user to landing page if he has successfully logged in
         navigation.navigate("Landing");
       }
