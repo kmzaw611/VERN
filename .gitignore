@@ -36,8 +36,7 @@ npm-debug.log
 yarn-error.log
 
 #Database fix
-*.vs/VERN/v16/Browse.VC.db
-*.vs/slnx.sqlite
+*.vs
 *.opendb
 *.opensdf
 
