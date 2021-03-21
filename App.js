@@ -15,7 +15,9 @@ import RegisterScreen3 from './screens/RegisterScreen3'
 import RegisterScreenLA from './screens/RegisterScreenLA'
 import RegisterScreenLV from './screens/RegisterScreenLV'
 import ActualRegisterScreen from './screens/ActualRegisterScreen'
+import EditScreen from './screens/EditScreen'
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { registerRootComponent } from 'expo';
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -59,9 +61,10 @@ const App = () => {
         <Stack.Screen name="ActualRegister" component={ActualRegisterScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
         <Stack.Screen name="Playlist" component={PlaylistScreen} />
+        <Stack.Screen name="EditScreen" component={EditScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   )
 }
-
+registerRootComponent(App);
 export default App;

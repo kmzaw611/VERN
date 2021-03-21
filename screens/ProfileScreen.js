@@ -1,17 +1,21 @@
 import React, { useState } from 'react'
-import { Text, View, TouchableOpacity, StyleSheet, Button, Switch } from 'react-native'
+import { Text, View, TouchableOpacity, StyleSheet, TextInput, Switch } from 'react-native'
 
 const ProfileScreen = ({ navigation }) => {
   const onLogoutPress = () => navigation.navigate("StartScreen");
-  const userData = require("./test_json/fake_user.json")[0];
+  const onEditPress = () => navigation.navigate("EditScreen");
+  
+
+  const [userData, setUserData] = useState(require("./test_json/fake_user.json"))[0];
+
   const [darkModeEnabled, setDarkModeEnabled] = useState(false);
     return (
       <View style={styles.container}>
         <View style={styles.nameinfo}>
           <Text style={styles.name}>{userData.name}</Text>
-          <Text style={styles.infotitle}>Favourite Genre</Text>
+          <Text style={styles.infotitle}>Favorite Genre</Text>
           <Text style={styles.infodata}>{userData.genre}</Text>
-          <Text style={styles.infotitle}>Favourite Song</Text>
+          <Text style={styles.infotitle}>Favorite Song</Text>
           <Text style={styles.infodata}>{userData.songID}</Text>
         </View>
 
@@ -51,6 +55,14 @@ const ProfileScreen = ({ navigation }) => {
         >
           <Text style={styles.logoutText}>Logout</Text>
         </TouchableOpacity>
+        
+        <TouchableOpacity
+        onPress={onEditPress}>
+          <Text>Edit Profile</Text>
+          
+          
+        </TouchableOpacity>
+
 
 
       </View>
@@ -121,7 +133,17 @@ const styles = StyleSheet.create({
   infodata: {
     fontSize: 18,
     fontWeight: 'bold',
-  }
+  },
+  input: {
+    fontSize: 16,
+    textAlign: 'justify',
+    borderWidth: 1,
+    padding: 1,
+    margin: 1,
+    borderColor: 'black',
+
+
+  },
 })
 
 export default ProfileScreen
