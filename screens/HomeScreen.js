@@ -13,10 +13,11 @@ const HomeScreen = ({ navigation }) => {
     require('./assets/playlistCard3.jpg'),
     require('./assets/playlistCard4.jpg'),
   ]
-  const renderPlaylistItem = ({ item }) => (
+  const renderPlaylistItem = ({ item, index }) => (
     <TouchableOpacity
       delayPressIn={100}
       style={styles.playlistCard}
+      onPress={getPlaylistScreen(index)}
     >
       <ImageBackground
         source={playlistImages[item.id-1]}
@@ -28,6 +29,28 @@ const HomeScreen = ({ navigation }) => {
       </ImageBackground>
     </TouchableOpacity>
   );
+
+  getPlaylistScreen = index => () => {
+    let playlistId = index;
+    let playlistName;
+    if (index === 0) {
+      playlistName = "Top 50 This Week on Campus";
+    }
+    else if (index === 1) {
+      playlistName = "Local Artist Corner";
+    }
+    else if (index === 2) {
+      playlistName = "Your Top Songs";
+    }
+    else {
+      playlistName = "Playlist #4";
+    }
+
+    navigation.navigate("Playlist", {
+      playlistId: playlistId,
+      playlistName: playlistName,
+    })
+  }
 
   const renderPerformanceItem = ({ item }) => (
     <TouchableOpacity
@@ -70,6 +93,7 @@ const HomeScreen = ({ navigation }) => {
         <FlatList
           numColumns={2}
           data={playlistData}
+          contentContainerStyle={{justifyContent: 'center',}}
           renderItem={renderPlaylistItem}
           keyExtractor={item => item.id}
         />
@@ -201,7 +225,6 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     fontFamily: 'sans-serif-condensed',
   },
-
 })
 
 export default HomeScreen;

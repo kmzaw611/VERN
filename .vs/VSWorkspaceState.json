@@ -1,10 +1,10 @@
 {
   "ExpandedNodes": [
     "",
+    "\\android",
     "\\SpotifyAPI",
-    "\\SpotifyAPI\\Examples",
-    "\\SpotifyAPI_request_test_expo"
+    "\\SpotifyAPI\\Examples"
   ],
-  "SelectedNode": "\\SpotifyAPI\\Examples",
+  "SelectedNode": "\\SpotifyAPI\\Examples\\getTopGenres.js",
   "PreviewInSolutionExplorer": false
 }

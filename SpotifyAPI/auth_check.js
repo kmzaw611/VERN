@@ -6,7 +6,8 @@ const express = require('express')
 // Pick from 'user-read-currently-playing','user-read-private','playlist-modify-public','playlist-read-private','playlist-modify-private'
 //,'user-library-modify', 'user-library-read','user-top-read','user-read-recently-played','user-follow-read','user-follow-modify'
 const scopes = [
-    'user-top-read'
+  'user-read-currently-playing','user-read-private','playlist-modify-public','playlist-read-private','playlist-modify-private'
+  ,'user-library-modify', 'user-library-read','user-top-read','user-read-recently-played','user-follow-read','user-follow-modify'
   ];
   
 // SpotifyWebApi object handles all requests and stores tokens.

@@ -1,12 +1,19 @@
 /*
- * I will use this file to store URI and connection in the future
- * But for now it is useless so dont worry about it
+ * This Script is now in use to connect to the database.
+ * This is the only script with the login uri
  */
-
-var MongoClient = require('mongodb').MongoClient;
-var uri = "mongodb://mwithero:Superaxeman123@<hostname>/test_database?ssl=true&replicaSet=atlas-44m1z8-shard-0&authSource=admin&retryWrites=true&w=majority";
-MongoClient.connect(uri, function (err, client) {
-    const collection = client.db("test").collection("devices");
-    // perform actions on the collection object
-    client.close();
-});
+const mongoose = require('mongoose');
+const uri = "mongodb+srv://ec99:verndev123@cluster0.y4whb.mongodb.net/Vern?retryWrites=true&w=majority";
+const methods = {
+    connect: function (callback) {
+        mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
+            .then((result) => {
+                console.log("Database connected!");
+                return callback(200);
+            }).catch((err) => {
+                console.log(err);
+                return callback(404);
+            });
+    }
+};
+module.exports = methods;
