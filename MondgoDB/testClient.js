@@ -4,17 +4,15 @@
  * for it to work correctly, but try it without first
  */
 const axios = require('axios');
-//var fs = require('fs');
 const url = "http://127.0.0.1:3000";
-const userData = require('./userInfo/allUsers.json');
-//"./../screens/test_json/username.json";
+const uname = require('./uname');
 // If you are testing from an Android emulator use this url instead.
 // Android Studio uses this url to redirect to the localhost if you are
 // running from an emulator.
 const emulator_url = "http://10.0.2.2:3000";
 
 const rh = axios.create({
-    // baseURL: url,
+    // baseURL: url
     baseURL: emulator_url,
     proxy: false
 });
@@ -24,33 +22,16 @@ const methods = {
     create_user: function (callback, data) {
         rh.post(emulator_url + "/create-user", data)
             .then(res => {
-                console.log(res.data);
-                var userD = JSON.stringify(res.data);
-                fs.writeFile(userData, userD, function (err) {
-                    if (err) {
-                        return callback(err);
-                    }
-                });
+                uname.set_username(res.data.username);
                 return callback(res.data);
             })
             .catch(error => {
                 return callback("testClient.js : create user failed");
             });
     },
-    // GET call to log in a user
-    login_user: function (callback, data) {
-        rh.post(emulator_url + "/login-user", data)
-        .then(res => {
-          return callback(res.data);
-        })
-        .catch(error => {
-            console.log(error);
-            return callback("testClient.js : login user failed");
-        });
-    },
     //POST call to get a user with input of username
-    get_user: function (callback, name) {
-        rh.post(url + "/get-user", name)
+    get_user: function (name, callback) {
+        rh.post(emulator_url + "/get-user", name)
             .then(res => {
                 return callback(res.data);
             })
