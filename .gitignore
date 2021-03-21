@@ -36,6 +36,7 @@ npm-debug.log
 yarn-error.log
 
 #Database fix
+*.vs
 *.opendb
 *.opensdf
 
