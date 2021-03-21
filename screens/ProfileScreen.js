@@ -20,13 +20,16 @@ let promise = new Promise((res, rej) => {
 }); */
 const ProfileScreen = /*async*/ ({ navigation }) => {
     const onLogoutPress = () => navigation.navigate("StartScreen");
-    /*userData = await promise;*/
+/*userData = await promise;*/
+    const userData = require("../MondgoDB/for_profile_screen.json");
     console.log(userData);
     const [darkModeEnabled, setDarkModeEnabled] = useState(false);
+    console.log('placement PS')
+    
     return (
         <View style={styles.container}>
             <View style={styles.nameinfo}>
-                <Text style={styles.name}>{userData.name}</Text>
+                <Text style={styles.name}>{userData.username}</Text>
                 <Text style={styles.infotitle}>Favourite Genre</Text>
                 <Text style={styles.infodata}>{userData.genre}</Text>
                 <Text style={styles.infotitle}>Favourite Song</Text>

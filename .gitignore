@@ -63,4 +63,3 @@ buck-out/
 # CocoaPods
 /ios/Pods/
 
-.vs/slnx.sqlite

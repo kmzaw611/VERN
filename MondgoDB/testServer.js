@@ -12,6 +12,7 @@ const Song = require('./models/song');
 const Playlist = require('./models/playlist');
 const cluster = require('./clusterConnector');
 
+const fs = require('fs');
 const server = express();
 server.use(express.json());
 const port = '3000';
@@ -73,6 +74,11 @@ server.post('/create-user', function (req, res) {
                 user.save()
                     .then((result2) => {
                         console.log(result2);
+                        let store_u = JSON.stringify(result2);
+                        fs.writeFileSync('for_profile_screen.json', store_u);
+                        console.log('profile screen json info written');
+
+                        
                         res.send(result2);
                         res.end();
                     })
