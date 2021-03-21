@@ -35,8 +35,8 @@ node_modules/
 npm-debug.log
 yarn-error.log
 
-#Database fix
-*.vs/VERN/v16/Browse.VC.db
+# Visual Studio 2015 cache/options directory
+.vs/
 *.opendb
 *.opensdf
 
