@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
-import { Text, View, TouchableOpacity, StyleSheet, Button, Switch } from 'react-native'
+import React, { useState } from 'react';
+import { Text, View, TouchableOpacity, StyleSheet, Button, Switch } from 'react-native';
+const methods = require('../MondgoDB/testClient');
 
 const ProfileScreen = ({ navigation }) => {
   const onLogoutPress = () => navigation.navigate("StartScreen");
