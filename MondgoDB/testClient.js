@@ -4,7 +4,7 @@
  * for it to work correctly, but try it without first
  */
 const axios = require('axios');
-//const fs_two = require('fs');
+//var fs = require('fs');
 const url = "http://127.0.0.1:3000";
 const userData = require('./userInfo/allUsers.json');
 //"./../screens/test_json/username.json";

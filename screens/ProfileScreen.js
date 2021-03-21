@@ -4,7 +4,7 @@ const methods = require('../MondgoDB/testClient');
 
 const ProfileScreen = ({ navigation }) => {
   const onLogoutPress = () => navigation.navigate("StartScreen");
-  const userData = require("./test_json/fake_user.json")[0];
+  const userData = require("./test_json/username.json")[0];
   const [darkModeEnabled, setDarkModeEnabled] = useState(false);
     return (
       <View style={styles.container}>
