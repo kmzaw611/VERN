@@ -16,11 +16,16 @@ import RegisterScreenLA from './screens/RegisterScreenLA'
 import RegisterScreenLV from './screens/RegisterScreenLV'
 import ActualRegisterScreen from './screens/ActualRegisterScreen'
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
 // Get this from AsyncStorage
-// const isLoggedIn = 
+const isLoggedIn = await AsyncStorage.getItem('isLoggedIn');
+let userID = '';
+if (isLoggedIn === 'true') {
+  userID = await AsyncStorage.getItem('userID');
+}
 
 const Landing = () => {
   return (

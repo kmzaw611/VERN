@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { View, Button, StyleSheet, TouchableOpacity, Text, TextInput, Alert, AsyncStorage } from 'react-native'
 import Logo from './components/Logo'
 const methods = require('../MondgoDB/testClient');
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const StartScreen = ({ navigation }) => {
 
@@ -33,9 +34,17 @@ const StartScreen = ({ navigation }) => {
           ]
         );
       }
-      else if (result === "Valid Sign In") {
-        // Update local storage => isLoggedIn: true and userID: doc._id
-        
+      else if (result.message === "Valid Sign In") {
+        // Update local storage => isLoggedIn: true and userID: user._id
+        const userID = result.userID;
+        const storeLoginInfo = async (token) => {
+          try {
+            await AsyncStorage.setItem('isLoggedIn', 'true');
+            await AsyncStorage.setItem('userID', userID);
+          } catch (err) {
+            console.log(err);
+          }
+        }
         // Send user to landing page if he has successfully logged in
         navigation.navigate("Landing");
       }

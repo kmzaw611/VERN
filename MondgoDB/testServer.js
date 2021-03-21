@@ -136,7 +136,10 @@ server.post('/login-user', function (req, res) {
     }
 
     // If we are here, the sign in is valid
-    res.send("Valid Sign In");
+    return res.send({
+      message: 'Valid Sign In',
+      userID: doc._id
+    });
   });
 });
 
