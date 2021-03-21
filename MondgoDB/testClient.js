@@ -12,7 +12,7 @@ const uname = require('./uname');
 const emulator_url = "http://10.0.2.2:3000";
 
 const rh = axios.create({
-    // baseURL: url,
+    // baseURL: url
     baseURL: emulator_url,
     proxy: false
 });
