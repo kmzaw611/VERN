@@ -24,12 +24,12 @@ const data = {
     songID: "duh",
     isLocalArtist: true,
     isLocalBusiness: false
-};
+};*/
 
 methods.create_user(function (result) {
     console.log(result);
 }, data);
-*/
+
 console.log(user.username);
 // End create user
 

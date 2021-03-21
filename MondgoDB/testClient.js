@@ -4,10 +4,10 @@
  * for it to work correctly, but try it without first
  */
 const axios = require('axios');
-const fs = require('fs');
+//const fs_two = require('fs');
 const url = "http://127.0.0.1:3000";
-const userData = "../screens/username.json";
-
+const userData = require('./userInfo/allUsers.json');
+//"./../screens/test_json/username.json";
 // If you are testing from an Android emulator use this url instead.
 // Android Studio uses this url to redirect to the localhost if you are
 // running from an emulator.
@@ -22,7 +22,7 @@ const rh = axios.create({
 const methods = {
     //POST call to create user
     create_user: function (callback, data) {
-        rh.post(url + "/create-user", data)
+        rh.post(emulator_url + "/create-user", data)
             .then(res => {
                 console.log(res.data);
                 var userD = JSON.stringify(res.data);
