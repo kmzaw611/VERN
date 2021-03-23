@@ -37,6 +37,7 @@ yarn-error.log
 
 # Visual Studio 2015 cache/options directory
 .vs/
+.vs/VERN/v16/Browse.VC.db
 *.opendb
 *.opensdf
 
