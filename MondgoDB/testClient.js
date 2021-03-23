@@ -5,6 +5,8 @@
  */
 const axios = require('axios');
 const url = "http://127.0.0.1:3000";
+const userData = "../screens/username.json";
+
 // If you are testing from an Android emulator use this url instead.
 // Android Studio uses this url to redirect to the localhost if you are
 // running from an emulator.
@@ -19,13 +21,20 @@ const rh = axios.create({
 const methods = {
     //POST call to create user
     create_user: function (callback, data) {
-        rh.post(emulator_url + "/create-user", data)
-        .then(res => {
-            return callback(res.data);
-        })
-        .catch(error => {
-            return callback("testClient.js : create user failed");
-        });
+        rh.post(url + "/create-user", data)
+            .then(res => {
+                console.log(res.data);
+                var userD = JSON.stringify(res.data);
+                fs.writeFile(userData, userD, function (err) {
+                    if (err) {
+                        return callback(err);
+                    }
+                });
+                return callback(res.data);
+            })
+            .catch(error => {
+                return callback("testClient.js : create user failed");
+            });
     },
     // GET call to log in a user
     login_user: function (callback, data) {
@@ -41,12 +50,12 @@ const methods = {
     //POST call to get a user with input of username
     get_user: function (callback, name) {
         rh.post(url + "/get-user", name)
-        .then(res => {
-            return callback(res.data);
-        })
-        .catch(error => {
-            return callback("post failed");
-        });
+            .then(res => {
+                return callback(res.data);
+            })
+            .catch(error => {
+                return callback("post failed");
+            });
     },
     //POST call to update user info
     edit_user: function (callback, data) {
