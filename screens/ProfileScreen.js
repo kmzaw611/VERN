@@ -3,39 +3,38 @@ import { Text, View, TouchableOpacity, StyleSheet, Button, Switch } from 'react-
 const methods = require('../MondgoDB/testClient');
 const uname = require('../MondgoDB/uname');
 //Still Working on this, will implement soon - 3/21/21
-
-/*
-var userData;
-let promise = new Promise((res, rej) => {
-    var name = {
+//var userData;
+console.log(1);
+const ProfileScreen = async ({ navigation }) => {
+    const onLogoutPress = () => navigation.navigate("StartScreen");
+    /*var name = {
         username: "Man7"
     };
+    uname.set_username(name.username);
     uname.get_username(function (result) {
         name.username = result;
     });
-    res(methods.get_user(name, function (result) {
-        console.log(result);
-        return result;
-    }));
-}); */
-const ProfileScreen = /*async*/ ({ navigation }) => {
-    const onLogoutPress = () => navigation.navigate("StartScreen");
-    /*userData = await promise;*/
-    console.log(userData);
+    console.log(name.username);
+    userData = await methods.get_user(name);
+    console.log(userData); */
+    console.log(2);
+
     const [darkModeEnabled, setDarkModeEnabled] = useState(false);
+    console.log(3);
+
     return (
         <View style={styles.container}>
             <View style={styles.nameinfo}>
-                <Text style={styles.name}>{userData.name}</Text>
+                <Text style={styles.name}>{"huh"}</Text>
                 <Text style={styles.infotitle}>Favourite Genre</Text>
-                <Text style={styles.infodata}>{userData.genre}</Text>
+                <Text style={styles.infodata}>{"hmm"}</Text>
                 <Text style={styles.infotitle}>Favourite Song</Text>
-                <Text style={styles.infodata}>{userData.songID}</Text>
+                <Text style={styles.infodata}>{"yuh"}</Text>
             </View>
 
             <View style={styles.biocontainer}>
                 <Text style={{ fontSize: 18, fontWeight: 'bold', }}>Bio</Text>
-                <Text style={{ fontSize: 16, textAlign: 'justify', }}>{userData.bio}</Text>
+                <Text style={{ fontSize: 16, textAlign: 'justify', }}>{"yup"}</Text>
             </View>
 
             <View style={styles.followButtonsContainer}>
@@ -73,6 +72,7 @@ const ProfileScreen = /*async*/ ({ navigation }) => {
         </View>
     )
 }
+console.log(4);
 
 
 const styles = StyleSheet.create({
@@ -139,5 +139,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
     }
-})
+});
+console.log(5);
+
 export default ProfileScreen;

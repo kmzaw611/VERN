@@ -30,14 +30,22 @@ const methods = {
             });
     },
     //POST call to get a user with input of username
-    get_user: function (name, callback) {
-        rh.post(emulator_url + "/get-user", name)
-            .then(res => {
-                return callback(res.data);
+    get_user: function (name) {
+        return new Promise(function (resolve, reject) {
+            rh.post(emulator_url + "/get-user", name)
+                .then(res => {
+                    resolve(res.data);
+                })
+                .catch(error => {
+                    reject("dang, man");
+                });
+        }); 
+            /*.then(res => {
+                return res.data;
             })
             .catch(error => {
-                return callback("post failed");
-            });
+                return "post failed";
+            });*/
     },
     //POST call to update user info
     edit_user: function (callback, data) {
