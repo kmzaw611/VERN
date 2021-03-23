@@ -1,4 +1,6 @@
 const fs = require('fs');
+const express = require('express');
+
 var SpotifyWebApi = require('spotify-web-api-node')
 var spotifyApi = new SpotifyWebApi({
     clientId: '0e8700b7f71d486bbb7c3bd120e892f8', // App client ID
@@ -9,6 +11,7 @@ spotifyApi.setRefreshToken('AQCzVfJhvvDF8KvxRKP6ANQ_hfmYbqDdsVQ7XR0FlLlA4soBz6Cn
 spotifyApi.setAccessToken('BQAaE7GIhcz8R5k5elJQz-nvKuwdlK04RMzr8sfgg9FMlNkyfd_oj2ey1v4xX-nGZtyZSu2CL9FAmwOSGg_ywXT9hGNNLkI2VKeR6I2IhQixAiM8Ud6i-Unf3FpN1g8mJtac3jKlWFoI1kmKdWff34I-vw')
 var userId = ""
 
+var payload = ""
 //Refresh your access token
 spotifyApi.refreshAccessToken()
     .then(function (data) {
@@ -77,25 +80,16 @@ spotifyApi.refreshAccessToken()
                     songs: songs,
                     date: todaysDate
                 }
-                let payload = (JSON.stringify(topSongs, null, 4))
+                payload = (JSON.stringify(topSongs, null, 4))
                 i = 0;
-                fs.writeFileSync("data/favoriteSongs/ " + userId + "TopSongs.json", payload)
+                const app = express();
+                app.get("/top_songs_playlist", (req, res) => {
+                    res.send(payload)
+                })
+                app.listen(3000);
+                console.log("Sent HTTP request to /top_songs_playlist on port 3000")
     })
 })
-    
-    //.then(function (data) {
-    //    spotifyApi.getAvailableGenreSeeds().then(
-    //        function (data) {
-    //            let genreSeeds = data.body;
-    //            //console.log(genreSeeds);
-    //        }, function (err) {
-    //            //console.log("something went poor", err);
-    //        });
-    //})
-
-
-//curl -X "GET" "https://api.spotify.com/v1/artists/137W8MRPWKqSmrBGDBFSop" -H "Accept: application/json" -H "Content-Type: application/json" -H "Authorization: Bearer BQDd5LtpypMznRjIyHbpDPttVs7UwXl4mmFfusMfuLWvyv2IakN-M8uHMd-FmLJ4CGKHUc18vD0kn6UlFL3rmsV-DG4uwEgTMb3k7USP9lNfijbDQ6ZxFDTm_nnny8mDzszUpTyIOgGml1a2nh25g1f3jPTJEiI_J7WxEuQJkRf56Kicu02ejDTF8FIfDerJNmmzgtvcaiVWr60PE__Peba_5SzSpkjRDL42SvIlJU9OyO6xZkg9zcpvWZRPXATuHcfO-mKjhamSTiAOiea0_WGwh3aprQkx"
-//run this command with current Authorization bearer ****** to get song genres 
             
         
        
