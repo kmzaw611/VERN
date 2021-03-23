@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React from 'react'
+import React, { useEffect, useReducer, useMemo, useState } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -20,12 +20,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
-// Get this from AsyncStorage
-const isLoggedIn = await AsyncStorage.getItem('isLoggedIn');
-let userID = '';
-if (isLoggedIn === 'true') {
-  userID = await AsyncStorage.getItem('userID');
-}
+// This context manages what the starting screen is depending on the user's login status
+const AuthContext = React.createContext();
+
 
 const Landing = () => {
   return (
@@ -57,14 +54,78 @@ const Landing = () => {
 }
 
 const App = () => {
+
+  const [loginState, dispatchLoginState] = useReducer(
+    (prevState, action) => {
+      switch (action.type) {
+        case 'GET_USERID':
+          return {
+            ...prevState,
+            userID: action.userID,
+            isLoggedIn: action.isLoggedIn,
+          };
+      }
+    },
+    {
+      isLoggedIn: 'false',
+      userID: null,
+    }
+  )
+
+
+  // Get login status and user id info
+  useEffect(() => {
+    const getLoginInfo = async() => {
+      let isLoggedIn;
+      let userID;
+      try {
+        isLoggedIn = await AsyncStorage.getItem('isLoggedIn');
+        if (isLoggedIn === 'true') {
+          userID = await AsyncStorage.getItem('userID');
+        }
+        else {
+          isLoggedIn = 'false';
+        }
+        // console.log("StartUp Login Info: " + isLoggedIn);
+        // console.log("UserID: " + userID);
+      } catch (err) {
+        console.log(err);
+      }
+      dispatchLoginState({ type: 'GET_USERID', userID: userID, isLoggedIn: isLoggedIn });
+    }
+    getLoginInfo();
+  }, []);
+
+
+  const authContext = useMemo(
+    () => ({
+
+    })
+  )
+
+
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="StartScreen">
-        <Stack.Screen name="StartScreen" component={StartScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="ActualRegister" component={ActualRegisterScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
-        <Stack.Screen name="Playlist" component={PlaylistScreen} />
+      <AuthContext.Provider value={authContext}>
+      <Stack.Navigator>
+        {(loginState.isLoggedIn === 'true') ? (
+          // User is logged in. Start at the landing page.
+          <>
+          <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
+          <Stack.Screen name="Playlist" component={PlaylistScreen} />
+          </>
+
+        ) : (
+          // User not signed in. Start at the StartScreen.
+          <>
+          <Stack.Screen name="StartScreen" component={StartScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="ActualRegister" component={ActualRegisterScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
+          <Stack.Screen name="Playlist" component={PlaylistScreen} />
+          </>
+        )}
       </Stack.Navigator>
+      </AuthContext.Provider>
     </NavigationContainer>
   )
 }
