@@ -5,7 +5,6 @@ const ProfileScreen = ({ navigation }) => {
   const onLogoutPress = () => navigation.navigate("StartScreen");
   const onEditPress = () => navigation.navigate("EditScreen");
   
-
   const [userData, setUserData] = useState(require("./test_json/fake_user.json"))[0];
 
   const [darkModeEnabled, setDarkModeEnabled] = useState(false);

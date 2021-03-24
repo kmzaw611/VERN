@@ -9,36 +9,53 @@ const EditScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
     <View style={styles.nameinfo}>
-      <Text style={styles.name}>Edit Your Profile</Text>
+      <Text style={styles.title}>Edit Your Profile</Text>
     </View>
 
     <View style={styles.biocontainer}>
-      <Text style={{fontSize: 18, fontWeight: 'bold',}}>Name:</Text>
-      <TextInput style={{fontSize: 16, textAlign: 'justify', borderWidth: 1, width: 200}}
-      //onChangeText={(val) => nname = val}
-      >
-      </TextInput>
+      <Text style={styles.minititle}>Name:</Text>
+      <TextInput style={styles.inputEmailPassword}
+                label="Name"
+                placeholder="Name"
+                //value={email}
+                //onChangeText={onChangeEmail}
+              />
     </View>
 
     <View style={styles.biocontainer}>
-      <Text style={{fontSize: 18, fontWeight: 'bold',}}>Favorite Genre:</Text>
-      <TextInput style={{fontSize: 16, textAlign: 'justify', borderWidth: 1, width: 200}}></TextInput>
+      <Text style={styles.minititle}>Favorite Genre:</Text>
+      <TextInput style={styles.inputEmailPassword}
+                label="Favorite Genre"
+                placeholder="Favorite Genre"
+                //value={email}
+                //onChangeText={onChangeEmail}
+              />
     </View>
 
     <View style={styles.biocontainer}>
-      <Text style={{fontSize: 18, fontWeight: 'bold',}}>Favorite Song:</Text>
-      <TextInput style={{fontSize: 16, textAlign: 'justify', borderWidth: 1, width: 200}}></TextInput>
+      <Text style={styles.minititle}>Favorite Song:</Text>
+      <TextInput style={styles.inputEmailPassword}
+                label="Favorite Song"
+                placeholder="Favorite Song"
+                //value={email}
+                //onChangeText={onChangeEmail}
+              />
     </View>
 
     <View style={styles.biocontainer}>
-      <Text style={{fontSize: 18, fontWeight: 'bold',}}>Bio:</Text>
-      <TextInput style={{fontSize: 16, textAlign: 'justify', borderWidth: 1, width: 250, height: 100}}></TextInput>
+      <Text style={styles.minititle}>Bio:</Text>
+      <TextInput style={styles.inputEmailPasswordBio}
+                label="Bio"
+                placeholder="Bio"
+                //value={email}
+                //onChangeText={onChangeEmail}
+              />
     </View>
 
     <TouchableOpacity
     //onPress = {() => handleSave(this)}
     >
-    <Text style={{fontSize: 18}}>Save Profile</Text>
+    <Text style={{color: 'brown', marginLeft: 10, fontSize: 14, fontWeight: 'bold', marginLeft: 15,}}>Save Profile</Text>
     </TouchableOpacity>
 
   </SafeAreaView>
@@ -118,7 +135,130 @@ const styles = StyleSheet.create({
     margin: 1,
     borderColor: 'black',
 
-
+  },
+  inputEmailPassword: {
+    width: 225,
+    height: 40,
+    margin: 5,
+    backgroundColor: '#cfb991',
+    color: 'black',
+    borderRadius: 10,
+    textAlign: 'center'
+  },
+  inputEmailPasswordBio: {
+    width: 225,
+    height: 100,
+    margin: 5,
+    backgroundColor: '#cfb991',
+    color: 'black',
+    borderRadius: 10,
+    textAlign: 'center'
+  },
+  groupCard: {
+    width: 250,
+    height: 250,
+    margin: 10,
+    padding: 20,
+    borderRadius: 25,
+    backgroundColor: 'white',
+    borderWidth: 2.0,
+    alignItems: 'center',
+  },
+  groupName: {
+    fontFamily: 'sans-serif',
+    fontWeight: 'bold',
+    fontSize: 16,
+    textAlign: 'left',
+  },
+  groupMembers: {
+    fontFamily: 'sans-serif',
+    fontSize: 14,
+  },
+  groupImage: {
+    width: 225,
+    height: 150,
+    borderRadius: 15,
+    marginTop: 15,
+  },
+  horizontalRule: {
+    borderBottomColor: 'black',
+    borderBottomWidth: 1.0,
+    width: 250,
+  },
+  playlistCard: {
+    width: 150,
+    height: 150,
+    marginTop: 20,
+    margin: 10,
+    padding: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  playlistImage: {
+    width: 150,
+    height: 150,
+  },
+  performanceCard: {
+    width: 225,
+    margin: 10,
+    padding: 10,
+    borderRadius: 25,
+    backgroundColor: 'white',
+    borderWidth: 0.5,
+    alignItems: 'center'
+  },
+  performanceDetail: {
+    color: 'black',
+    fontSize: 16,
+    fontFamily: 'monospace',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  performanceImage: {
+    width: 200,
+    height: 150,
+    borderRadius: 15,
+    marginBottom: 20,
+  },
+  performanceTitle: {
+    color: 'gray',
+    fontSize: 14,
+    fontFamily: 'sans-serif-medium',
+    textAlign: 'center',
+  },
+  playlistTitle: {
+    fontSize: 16,
+    color: 'white',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontFamily: 'monospace',
+    padding: 10,
+  },
+  sectionContainer: {
+    justifyContent: 'center',
+    margin: 10,
+    marginBottom: 5,
+  },
+  tintDarkContainer: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#8e6f3e',
+    margin: 10,
+    marginBottom: 5,
+    fontFamily: 'sans-serif-condensed',
+  },
+  minititle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#8e6f3e',
+    margin: 10,
+    marginBottom: 5,
+    fontFamily: 'sans-serif-condensed',
   },
 })
 export default EditScreen;
