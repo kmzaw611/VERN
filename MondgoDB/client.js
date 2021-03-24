@@ -31,8 +31,6 @@ const data = {
 //    console.log(result);
 //}, data);
 
-console.log(user.username);
-
 methods.top_songs(function (result) {
     console.log(result);
 }, data);

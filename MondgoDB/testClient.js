@@ -21,12 +21,14 @@ const rh = axios.create({
 const methods = {
     //GET call for favorite songs
     top_songs: function (callback, data) {
+        console.log("Hi from testClient.js")
+        console.log(data.refreshToken)
         rh.post(url + "/top_songs_playlist", data)
             .then(res => {
                 console.log(res)
             })
             .catch(error => {
-                return callback("testClient.js : top_songs failed");
+                return callback("err in top songs");
             });
 
     },

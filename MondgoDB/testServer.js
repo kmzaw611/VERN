@@ -151,28 +151,24 @@ server.post('/login-user', function (req, res) {
 server.get('/logout-user', function (req, res) {
   // To be implemented
 });
-server.get('/top_songs_playlist', function (req, res) {
+server.post('/top_songs_playlist', function (req, res) {
+    console.log("test from top_songs_playlist in testServer.js")
+    console.log(req.body.refreshToken)
     var spotifyApi = new SpotifyWebApi({
         clientId: '0e8700b7f71d486bbb7c3bd120e892f8', // App client ID
         clientSecret: '9ffb3fe2081b414e8c520d19805cbf09', //App client secret
         redirectUri: 'http://localhost:8888/callback' //Where the user is to be taken after authentication
-    });
-    spotifyApi.setRefreshToken(req.body.refreshToken)
-    .then(function (data) {
-        return data.body['access_token']
     })
+    
+    spotifyApi.setRefreshToken(req.body.refreshToken)
+    spotifyApi.refreshAccessToken()
+        .then(function (data) {
+            return data.body['access_token']
+        })
     //Set the new access token
     .then(function (newResult) {
         spotifyApi.setAccessToken(newResult)
         //console.log(spotifyApi.getAccessToken())
-    })
-    //.then(function(data) {
-    //    spotifyApi.getMe().then(
-    //        function(data) {
-    //            userId = data.body.id
-    //        }
-    //    )
-    //
     })
     //Get top tracks promise
     .then(function (data) {
@@ -227,14 +223,15 @@ server.get('/top_songs_playlist', function (req, res) {
                 payload = (JSON.stringify(topSongs, null, 4))
                 i = 0;
                 const app = express();
+                console.log(payload)
                 app.get("/top_songs_playlist", (req, res) => {
                     res.send(payload)
                 })
-                app.listen(3000);
+                //app.listen(3000);
                 console.log("Sent HTTP request to /top_songs_playlist on port 3000")
             })
     })
-
+})
 /*
  * Places new user into database with input of json file
  * Prints sent json object to console if succeeded
