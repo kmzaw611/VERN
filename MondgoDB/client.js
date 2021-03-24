@@ -45,7 +45,7 @@ methods.get_user(function (result) {
 }, name);
 
 // End getUser
-
+*/
 // Example of edit user
 
 prompt.start();
