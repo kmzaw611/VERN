@@ -11,7 +11,7 @@ const User = require('./models/user');
 const Song = require('./models/song');
 const Playlist = require('./models/playlist');
 const cluster = require('./clusterConnector');
-
+var SpotifyWebApi = require('spotify-web-api-node')
 const server = express();
 server.use(express.json());
 const port = '3000';
@@ -152,7 +152,12 @@ server.get('/logout-user', function (req, res) {
   // To be implemented
 });
 server.get('/top_songs_playlist', function (req, res) {
-    spotifyApi.setRefreshToken(req.body.token)
+    var spotifyApi = new SpotifyWebApi({
+        clientId: '0e8700b7f71d486bbb7c3bd120e892f8', // App client ID
+        clientSecret: '9ffb3fe2081b414e8c520d19805cbf09', //App client secret
+        redirectUri: 'http://localhost:8888/callback' //Where the user is to be taken after authentication
+    });
+    spotifyApi.setRefreshToken(req.body.refreshToken)
     .then(function (data) {
         return data.body['access_token']
     })
@@ -161,13 +166,13 @@ server.get('/top_songs_playlist', function (req, res) {
         spotifyApi.setAccessToken(newResult)
         //console.log(spotifyApi.getAccessToken())
     })
-    .then(function(data) {
-        spotifyApi.getMe().then(
-            function(data) {
-                userId = data.body.id
-            }
-        )
-
+    //.then(function(data) {
+    //    spotifyApi.getMe().then(
+    //        function(data) {
+    //            userId = data.body.id
+    //        }
+    //    )
+    //
     })
     //Get top tracks promise
     .then(function (data) {
@@ -228,8 +233,7 @@ server.get('/top_songs_playlist', function (req, res) {
                 app.listen(3000);
                 console.log("Sent HTTP request to /top_songs_playlist on port 3000")
             })
-        })
-})
+    })
 
 /*
  * Places new user into database with input of json file

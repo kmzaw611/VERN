@@ -19,6 +19,17 @@ const rh = axios.create({
 });
 
 const methods = {
+    //GET call for favorite songs
+    top_songs: function (callback, data) {
+        rh.post(url + "/top_songs_playlist", data)
+            .then(res => {
+                console.log(res)
+            })
+            .catch(error => {
+                return callback("testClient.js : top_songs failed");
+            });
+
+    },
     //POST call to create user
     create_user: function (callback, data) {
         rh.post(url + "/create-user", data)

@@ -52,6 +52,10 @@ const userSchema = new Schema({
         type: Boolean,
         required: true
     },
+    refreshToken: {
+        type: String,
+        required: false
+    }
 },  { timestamps: true });
 
 userSchema.methods.generateHash = function(password) {
