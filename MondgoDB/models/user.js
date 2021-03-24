@@ -6,7 +6,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const Schema = mongoose.Schema;
-const Song = require('./models/song');
+const Song = require('./song');
 const userSchema = new Schema({
     username: {
         type: String,
@@ -56,10 +56,14 @@ const userSchema = new Schema({
         type: String,
         required: false
     },
+    /*
+    I commented this part out because type was not accepting "Song" as a valid type.
+
     favoriteSong: {
         type: Song,
         required: false
     }
+    */
 },  { timestamps: true });
 
 userSchema.methods.generateHash = function(password) {
