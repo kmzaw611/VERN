@@ -35,15 +35,19 @@ const methods = {
     },
     //POST call to create user
     create_user: function (callback, data) {
-        rh.post(url + "/create-user", data)
+        rh.post(emulator_url + "/create-user", data)
             .then(res => {
                 console.log(res.data);
+                /*
+                Commented out because it breaks the code.
+                And I think we no longer need this after AsyncStorage implementation?
                 var userD = JSON.stringify(res.data);
                 fs.writeFile(userData, userD, function (err) {
                     if (err) {
                         return callback(err);
                     }
                 });
+                */
                 return callback(res.data);
             })
             .catch(error => {

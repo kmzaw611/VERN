@@ -3,7 +3,19 @@ import { Text, View, TouchableOpacity, StyleSheet, Button, Switch } from 'react-
 const methods = require('../MondgoDB/testClient');
 
 const ProfileScreen = ({ navigation }) => {
-  const onLogoutPress = () => navigation.navigate("StartScreen");
+  const onLogoutPress = () => {
+    const deleteLoginInfo = async() => {
+      try {
+        await AsyncStorage.setItem('isLoggedIn', 'false');
+        await AsyncStorage.setItem('userID', '');
+        console.log("AsyncStorage Logging Out")
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    navigation.navigate("StartScreen");
+  }
+
   const userData = require("./test_json/fake_user.json")[0];
   const [darkModeEnabled, setDarkModeEnabled] = useState(false);
     return (
