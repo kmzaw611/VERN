@@ -151,6 +151,16 @@ server.post('/login-user', function (req, res) {
 server.get('/logout-user', function (req, res) {
   // To be implemented
 });
+
+server.post('/get_favorite_song', function (req,res) {
+    //To be implemented
+    if (req.body.favoriteSong == null) {
+        res.send("No favorite song set, please call the /edit_user endpoint first.")
+    }
+    else {
+        res.send(req.body.favoriteSong)
+    }
+})
 server.post('/top_songs_playlist', function (req, res) {
     console.log("test from top_songs_playlist in testServer.js")
     console.log(req.body.refreshToken)

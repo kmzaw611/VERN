@@ -6,7 +6,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const Schema = mongoose.Schema;
-
+const Song = require('./models/song');
 const userSchema = new Schema({
     username: {
         type: String,
@@ -54,6 +54,10 @@ const userSchema = new Schema({
     },
     refreshToken: {
         type: String,
+        required: false
+    },
+    favoriteSong: {
+        type: Song,
         required: false
     }
 },  { timestamps: true });
