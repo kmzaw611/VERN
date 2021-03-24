@@ -223,10 +223,12 @@ server.post('/top_songs_playlist', function (req, res) {
                 payload = (JSON.stringify(topSongs, null, 4))
                 i = 0;
                 const app = express();
-                console.log(payload)
-                app.get("/top_songs_playlist", (req, res) => {
-                    res.send(payload)
-                })
+                //console.log(payload)
+                res.send(payload)
+                res.end()
+                //app.post("/top_songs_playlist", (req, res) => {
+                //    res.send(payload)
+                //})
                 //app.listen(3000);
                 console.log("Sent HTTP request to /top_songs_playlist on port 3000")
             })

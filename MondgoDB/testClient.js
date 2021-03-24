@@ -19,16 +19,17 @@ const rh = axios.create({
 });
 
 const methods = {
-    //GET call for favorite songs
+    //POST call for favorite songs
     top_songs: function (callback, data) {
         console.log("Hi from testClient.js")
         console.log(data.refreshToken)
         rh.post(url + "/top_songs_playlist", data)
             .then(res => {
-                console.log(res)
+                console.log(res.data)
+                return callback(res.data)
             })
             .catch(error => {
-                return callback("err in top songs");
+                return callback("Error in top songs");
             });
 
     },
