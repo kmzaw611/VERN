@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useState } from 'react';
 import { Text, View, TouchableOpacity, StyleSheet, Button, Switch } from 'react-native';
 const methods = require('../MondgoDB/testClient');
@@ -15,8 +16,10 @@ const ProfileScreen = ({ navigation }) => {
     }
     navigation.navigate("StartScreen");
   }
-
-  const userData = require("./test_json/fake_user.json")[0];
+  //const uName = 
+    const userData = AsyncStorage.getItem('username');
+    console.log(userData.bio);
+  //const userData = require("./test_json/fake_user.json")[0];
   const [darkModeEnabled, setDarkModeEnabled] = useState(false);
     return (
       <View style={styles.container}>

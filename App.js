@@ -78,16 +78,19 @@ const App = () => {
     const getLoginInfo = async() => {
       let isLoggedIn;
       let userID;
+      //let userBio;
       try {
         isLoggedIn = await AsyncStorage.getItem('isLoggedIn');
         if (isLoggedIn === 'true') {
-          userID = await AsyncStorage.getItem('userID');
+            userID = await AsyncStorage.getItem('userID');
+            //userBio = await AsyncStorage.getItem('userBio')
         }
         else {
           isLoggedIn = 'false';
         }
         console.log("StartUp Login Info: " + isLoggedIn);
         console.log("UserID: " + userID);
+        //  console.log("UserBio: " + userBio);
         dispatchLoginState({ type: 'GET_USERID', userID: userID, isLoggedIn: isLoggedIn });
       } catch (err) {
         console.log(err);
@@ -121,8 +124,6 @@ const App = () => {
         ) : (
           // User not signed in. Start at the StartScreen.
           <>
-          <Stack.Screen name="StartScreen" component={StartScreen} options={{ headerShown: false }} />
-          <Stack.Screen name="ActualRegister" component={ActualRegisterScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
           <Stack.Screen name="Playlist" component={PlaylistScreen} />
           </>
