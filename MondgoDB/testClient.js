@@ -69,6 +69,7 @@ const methods = {
     get_user: function (callback, name) {
         rh.post(url + "/get-user", name)
             .then(res => {
+                console.log(res.data);
                 return callback(res.data);
             })
             .catch(error => {

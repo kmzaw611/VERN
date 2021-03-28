@@ -90,6 +90,7 @@ const App = () => {
         }
         console.log("StartUp Login Info: " + isLoggedIn);
         console.log("UserID: " + userID);
+          console.log("from app.js");
         //  console.log("UserBio: " + userBio);
         dispatchLoginState({ type: 'GET_USERID', userID: userID, isLoggedIn: isLoggedIn });
       } catch (err) {

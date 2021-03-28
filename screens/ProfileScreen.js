@@ -1,7 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { useState } from 'react';
+import React, { Component, useState } from 'react';
 import { Text, View, TouchableOpacity, StyleSheet, Button, Switch } from 'react-native';
 const methods = require('../MondgoDB/testClient');
+
 
 const ProfileScreen = ({ navigation }) => {
   const onLogoutPress = () => {
@@ -16,10 +17,20 @@ const ProfileScreen = ({ navigation }) => {
     }
     navigation.navigate("StartScreen");
   }
-  //const uName = 
-    const userData = AsyncStorage.getItem('username');
-    console.log(userData.bio);
-  //const userData = require("./test_json/fake_user.json")[0];
+    let uName;
+    AsyncStorage.getItem('userID', (err, result) => {
+        console.log("Profile screen " + result);
+        //uName = JSON.stringify(result);
+        //console.log(uName);
+        //console.log(methods.get_user(err, result));
+    });
+    //console.log(userData);
+    //const ud = AsyncStorage.
+    //methods.get_user()
+    //console.log();
+    const userData = require("./test_json/fake_user.json")[0];
+    // old first text style           <Text style={styles.name}>{userData.name}</Text>
+    //console.log("hi" + uName);
   const [darkModeEnabled, setDarkModeEnabled] = useState(false);
     return (
       <View style={styles.container}>
