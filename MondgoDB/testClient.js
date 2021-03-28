@@ -5,15 +5,13 @@
  */
 const axios = require('axios');
 const url = "http://127.0.0.1:3000";
-const userData = "../screens/username.json";
-
 // If you are testing from an Android emulator use this url instead.
 // Android Studio uses this url to redirect to the localhost if you are
 // running from an emulator.
 const emulator_url = "http://10.0.2.2:3000";
 
 const rh = axios.create({
-    // baseURL: url,
+    // baseURL: url
     baseURL: emulator_url,
     proxy: false
 });
@@ -61,13 +59,12 @@ const methods = {
           return callback(res.data);
         })
         .catch(error => {
-            console.log(error);
             return callback("testClient.js : login user failed");
         });
     },
     //POST call to get a user with input of username
-    get_user: function (callback, name) {
-        rh.post(url + "/get-user", name)
+    get_user: function (id, callback) {
+        rh.post(emulator_url + "/get-user", id)
             .then(res => {
                 return callback(res.data);
             })
@@ -77,7 +74,7 @@ const methods = {
     },
     //POST call to update user info
     edit_user: function (callback, data) {
-        rh.post(url + "/edit-user", data)
+        rh.post(emulator_url + "/edit-user", data)
             .then(res => {
                 return callback(res.data);
             })

@@ -9,11 +9,7 @@ import GroupScreen from './screens/GroupScreen'
 import ProfileScreen from './screens/ProfileScreen'
 import LocalArtistScreen from './screens/LocalArtistScreen'
 import PlaylistScreen from './screens/PlaylistScreen'
-import RegisterScreen from './screens/RegisterScreen'
-import RegisterScreen2 from './screens/RegisterScreen2'
-import RegisterScreen3 from './screens/RegisterScreen3'
-import RegisterScreenLA from './screens/RegisterScreenLA'
-import RegisterScreenLV from './screens/RegisterScreenLV'
+import EditScreen from './screens/EditScreen'
 import ActualRegisterScreen from './screens/ActualRegisterScreen'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -113,16 +109,19 @@ const App = () => {
           // User is logged in. Start at the landing page.
           <>
           <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
-          <Stack.Screen name="Playlist" component={PlaylistScreen} />
-          <Stack.Screen name="StartScreen" component={StartScreen} options={{ headerShown: false }} />
-          <Stack.Screen name="ActualRegister" component={ActualRegisterScreen} options={{ headerShown: false }} />
+                          <Stack.Screen name="Playlist" component={PlaylistScreen} />
+                          <Stack.Screen name="EditScreen" component={EditScreen} />
+                          <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+                          <Stack.Screen name="StartScreen" component={StartScreen} options={{ headerShown: false }} />
+                          <Stack.Screen name="ActualRegister" component={ActualRegisterScreen} options={{ headerShown: false }} />
           </>
 
         ) : (
           // User not signed in. Start at the StartScreen.
           <>
           <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
-          <Stack.Screen name="Playlist" component={PlaylistScreen} />
+            <Stack.Screen name="Playlist" component={PlaylistScreen} />
+            
           </>
         )}
       </Stack.Navigator>
