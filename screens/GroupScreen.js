@@ -11,20 +11,19 @@ import {Text, StyleSheet, View, TouchableOpacity, Modal, TextInput} from 'react-
   {
     super();
     this.state={
-      show: false
+      show: false,
+      names: []
     }
+    
   }
 
-  addUser()
-  {
-    <TextInput style={styles.inputEmailPassword}
-                label="New User"
-                placeholder="New User..."
-                //value={email}
-                //onChangeText={onChangeEmail}
-              />
+  addName(newName) {
+    this.setState({names: newName})
   }
-
+  
+  addName2 = (newName) => {
+    this.setState({names: newName})
+  }
  //}= ({ navigation }) => {
    render() {
 
@@ -41,6 +40,10 @@ import {Text, StyleSheet, View, TouchableOpacity, Modal, TextInput} from 'react-
         </TouchableOpacity>
         
         <Text style={styles.title}>Groups</Text>
+
+        <TouchableOpacity>
+          <Text style={{borderRadius: 20, backgroundColor: 'green', alignItems: 'center', justifyContent: 'center', marginBottom: 40}}>Sample Group</Text>
+        </TouchableOpacity>
         <Modal
           transparent={true}
           visible={this.state.show}
@@ -51,7 +54,8 @@ import {Text, StyleSheet, View, TouchableOpacity, Modal, TextInput} from 'react-
               <View style={{backgroundColor: "#ffffff", margin: 50, padding: 40, borderRadius: 10, flex: 1}}>
               <Text style={styles.title}>Create a Group</Text>
 
-              <TextInput style={styles.inputEmailPassword}
+              <TextInput 
+                style={styles.inputEmailPassword}
                 label="Group Name"
                 placeholder="Enter your Group Name"
                 //value={email}
@@ -70,10 +74,14 @@ import {Text, StyleSheet, View, TouchableOpacity, Modal, TextInput} from 'react-
                 label="New User"
                 placeholder="New User..."
                 //value={email}
-                //onChangeText={onChangeEmail}
+                onChangeText={this.addName2}
               />
 
-              <TouchableOpacity onPress={()=>{this.addUser}}>
+              <View>
+                <Text>{this.state.names}</Text>
+              </View>
+
+              <TouchableOpacity onPress={()=>{this.addName2({names})}}>
                 <Text style={{color: 'brown', marginTop: 15, fontSize: 14, fontWeight: 'bold', marginLeft: 15, textAlign: 'center', borderRadius: 10}}>Add User</Text>
               </TouchableOpacity>
 

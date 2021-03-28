@@ -53,7 +53,7 @@ const EditScreen = ({ navigation }) => {
     </View>
 
     <TouchableOpacity
-    //onPress = {() => handleSave(this)}
+    //onPress = choose color
     >
     <Text style={{color: 'brown', marginLeft: 10, fontSize: 14, fontWeight: 'bold', marginLeft: 15,}}>Save Profile</Text>
     </TouchableOpacity>
