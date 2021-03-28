@@ -5,7 +5,6 @@
  */
 const axios = require('axios');
 const url = "http://127.0.0.1:3000";
-const uname = require('./uname');
 // If you are testing from an Android emulator use this url instead.
 // Android Studio uses this url to redirect to the localhost if you are
 // running from an emulator.
@@ -22,16 +21,25 @@ const methods = {
     create_user: function (callback, data) {
         rh.post(emulator_url + "/create-user", data)
             .then(res => {
-                uname.set_username(res.data.username);
                 return callback(res.data);
             })
             .catch(error => {
                 return callback("testClient.js : create user failed");
             });
     },
+    // GET call to log in a user
+    login_user: function (callback, data) {
+        rh.post(emulator_url + "/login-user", data)
+        .then(res => {
+          return callback(res.data);
+        })
+        .catch(error => {
+            return callback("testClient.js : login user failed");
+        });
+    },
     //POST call to get a user with input of username
-    get_user: function (name, callback) {
-        rh.post(emulator_url + "/get-user", name)
+    get_user: function (id, callback) {
+        rh.post(emulator_url + "/get-user", id)
             .then(res => {
                 return callback(res.data);
             })
@@ -41,7 +49,7 @@ const methods = {
     },
     //POST call to update user info
     edit_user: function (callback, data) {
-        rh.post(url + "/edit-user", data)
+        rh.post(emulator_url + "/edit-user", data)
             .then(res => {
                 return callback(res.data);
             })

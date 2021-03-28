@@ -1,80 +1,104 @@
-import React, { useState } from 'react';
-import { Text, View, TouchableOpacity, StyleSheet, Button, Switch } from 'react-native';
+import React, { useState, Component } from 'react';
+import { Text, View, TouchableOpacity, StyleSheet, TextInput, Switch } from 'react-native';
 const methods = require('../MondgoDB/testClient');
-const uname = require('../MondgoDB/uname');
-//Still Working on this, will implement soon - 3/21/21
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-/*
-var userData;
-let promise = new Promise((res, rej) => {
-    var name = {
-        username: "Man7"
-    };
-    uname.get_username(function (result) {
-        name.username = result;
-    });
-    res(methods.get_user(name, function (result) {
-        console.log(result);
-        return result;
-    }));
-}); */
-const ProfileScreen = /*async*/ ({ navigation }) => {
-    const onLogoutPress = () => navigation.navigate("StartScreen");
-    /*userData = await promise;*/
-    console.log(userData);
-    const [darkModeEnabled, setDarkModeEnabled] = useState(false);
-    return (
-        <View style={styles.container}>
-            <View style={styles.nameinfo}>
-                <Text style={styles.name}>{userData.name}</Text>
-                <Text style={styles.infotitle}>Favourite Genre</Text>
-                <Text style={styles.infodata}>{userData.genre}</Text>
-                <Text style={styles.infotitle}>Favourite Song</Text>
-                <Text style={styles.infodata}>{userData.songID}</Text>
-            </View>
 
-            <View style={styles.biocontainer}>
-                <Text style={{ fontSize: 18, fontWeight: 'bold', }}>Bio</Text>
-                <Text style={{ fontSize: 16, textAlign: 'justify', }}>{userData.bio}</Text>
-            </View>
+export default class ProfileScreen extends Component {
+    // Defining states and variables
+    constructor() {
+        super();
+        this.state = {
+            darkModeEnabled: false,
+            dataIsReturned: false
+        };
+        this.id = {
+            _id: ""
+        };
+        this.userData = null;
+    }
 
-            <View style={styles.followButtonsContainer}>
-                <TouchableOpacity
-                    style={styles.followButton}
-                >
-                    <Text style={styles.followText}>Follow</Text>
-                </TouchableOpacity>
+    //Where I get the data and change states
+    componentDidMount() {
+        AsyncStorage.getItem('userID')
+            .then(result => {
+                this.id._id = ("" + result);
+                methods.get_user(this.id, (res) => {
+                    this.userData = res;
+                    this.setState({ dataIsReturned: true });
+                });
+            })
+            .catch(err => {
+                console.error(err);
+            });
+    }
 
-                <TouchableOpacity
-                    style={styles.followButton}
-                >
-                    <Text style={styles.followText}>Unfollow</Text>
-                </TouchableOpacity>
-            </View>
+    //Where i put the render function
+    render() {
+        //changes to true when data is retrieved from server
+        if (this.state.dataIsReturned === true) {
+            return (
+                <View style={styles.container}>
+                    <View style={styles.nameinfo}>
+                        <Text style={styles.name}>{this.userData.username}</Text>
+                        <Text style={styles.infotitle}>Favourite Genre</Text>
+                        <Text style={styles.infodata}>{this.userData.genre}</Text>
+                        <Text style={styles.infotitle}>Favourite Song</Text>
+                        <Text style={styles.infodata}>{this.userData.songID}</Text>
+                    </View>
 
-            <Text>Enable Dark Mode</Text>
-            <Switch
-                trackColor={{ false: "#767577", true: "#81b0ff" }}
-                thumbColor={darkModeEnabled ? "#f5dd4b" : "#f4f3f4"}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={() => {
-                    setDarkModeEnabled(previousState => !previousState)
-                }}
-                value={darkModeEnabled}
-            />
+                    <View style={styles.biocontainer}>
+                        <Text style={{ fontSize: 18, fontWeight: 'bold', }}>Bio</Text>
+                        <Text style={{ fontSize: 16, textAlign: 'justify', }}>{this.userData.bio}</Text>
+                    </View>
 
-            <TouchableOpacity
-                style={styles.logoutButton}
-                onPress={onLogoutPress}
-            >
-                <Text style={styles.logoutText}>Logout</Text>
-            </TouchableOpacity>
+                    <View style={styles.followButtonsContainer}>
+                        <TouchableOpacity
+                            style={styles.followButton}
+                        >
+                            <Text style={styles.followText}>Follow</Text>
+                        </TouchableOpacity>
 
-        </View>
-    )
+                        <TouchableOpacity
+                            style={styles.followButton}
+                        >
+                            <Text style={styles.followText}>Unfollow</Text>
+                        </TouchableOpacity>
+                    </View>
+
+                    <Text>Enable Dark Mode</Text>
+                    <Switch
+                        trackColor={{ false: "#767577", true: "#81b0ff" }}
+                        thumbColor={this.state.darkModeEnabled ? "#f5dd4b" : "#f4f3f4"}
+                        ios_backgroundColor="#3e3e3e"
+                        onValueChange={() => {
+                            this.setState({ darkModeEnabled: !darkModeEnabled })
+                        }}
+                        value={this.state.darkModeEnabled}
+                    />
+
+                    <TouchableOpacity
+                        style={styles.logoutButton}
+                        onPress={() => this.props.navigation.push("StartScreen")}
+                    >
+                        <Text style={styles.logoutText}>Logout</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => this.props.navigation.push("EditScreen")}
+                    >
+                        <Text>Edit Profile</Text>
+
+
+                    </TouchableOpacity>
+                </View>
+            );
+        } else {
+            return (<Text> Loading </Text>);
+        }
+    }
 }
 
-
+//Style Sheet
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -140,4 +164,3 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     }
 })
-export default ProfileScreen;

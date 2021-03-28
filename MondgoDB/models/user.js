@@ -32,9 +32,13 @@ const userSchema = new Schema({
         type: String,
         required: false
     },
-    token: {
+    spotifyTokenID: {
         type: String,
-        required: false
+        required: true
+    },
+    spotifyTokenSecret: {
+        type: String,
+        required: true
     },
     songID: {
         type: String,
