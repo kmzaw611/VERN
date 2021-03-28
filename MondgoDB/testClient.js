@@ -17,10 +17,35 @@ const rh = axios.create({
 });
 
 const methods = {
+    //POST call for favorite songs
+    top_songs: function (callback, data) {
+        console.log("Hi from testClient.js")
+        console.log(data.refreshToken)
+        rh.post(url + "/top_songs_playlist", data)
+            .then(res => {
+                console.log(res.data)
+                return callback(res.data)
+            })
+            .catch(error => {
+                return callback("Error in top songs");
+            });
+
+    },
     //POST call to create user
     create_user: function (callback, data) {
         rh.post(emulator_url + "/create-user", data)
             .then(res => {
+                console.log(res.data);
+                /*
+                Commented out because it breaks the code.
+                And I think we no longer need this after AsyncStorage implementation?
+                var userD = JSON.stringify(res.data);
+                fs.writeFile(userData, userD, function (err) {
+                    if (err) {
+                        return callback(err);
+                    }
+                });
+                */
                 return callback(res.data);
             })
             .catch(error => {

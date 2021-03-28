@@ -43,14 +43,19 @@ const data = {
     token: "duh",
     songID: "duh",
     isLocalArtist: true,
-    isLocalBusiness: false
+    isLocalBusiness: false,
+    refreshToken: "AQCzVfJhvvDF8KvxRKP6ANQ_hfmYbqDdsVQ7XR0FlLlA4soBz6CnmK1HUIas6c9hQHpQ2sV_dDkfYApzJlVkoFMeyjsnVj7Kgdzzd4jG8OwUAbKvzPiVaM5ijhxRhkrdeLU"
 };
 
-methods.create_user(function (result) {
+//methods.create_user(function (result) {
+//    console.log(result);
+//}, data);
+
+methods.top_songs(function (result) {
     console.log(result);
 }, data);
+
 */
-//console.log(user.username);
 // End create user
 
 

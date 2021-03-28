@@ -3,7 +3,32 @@ import { Text, View, TouchableOpacity, StyleSheet, TextInput, Switch } from 'rea
 const methods = require('../MondgoDB/testClient');
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+const ProfileScreen = ({ navigation }) => {
+  const onLogoutPress = () => {
+    const deleteLoginInfo = async() => {
+      try {
+        await AsyncStorage.setItem('isLoggedIn', 'false');
+        await AsyncStorage.setItem('userID', '');
+        console.log("AsyncStorage Logging Out")
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    navigation.navigate("StartScreen");
+  }
 
+  const userData = require("./test_json/fake_user.json")[0];
+  const [darkModeEnabled, setDarkModeEnabled] = useState(false);
+    return (
+      <View style={styles.container}>
+        <View style={styles.nameinfo}>
+          <Text style={styles.name}>{userData.name}</Text>
+          <Text style={styles.infotitle}>Favourite Genre</Text>
+          <Text style={styles.infodata}>{userData.genre}</Text>
+          <Text style={styles.infotitle}>Favourite Song</Text>
+          <Text style={styles.infodata}>{userData.songID}</Text>
+        </View>
+// Ethan code for fetching db info before render
 export default class ProfileScreen extends Component {
     // Defining states and variables
     constructor() {
