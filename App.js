@@ -82,13 +82,14 @@ const App = () => {
         else {
           isLoggedIn = 'false';
         }
-        // console.log("StartUp Login Info: " + isLoggedIn);
-        // console.log("UserID: " + userID);
+        console.log("StartUp Login Info: " + isLoggedIn);
+        console.log("UserID: " + userID);
+        dispatchLoginState({ type: 'GET_USERID', userID: userID, isLoggedIn: isLoggedIn });
       } catch (err) {
         console.log(err);
       }
-      dispatchLoginState({ type: 'GET_USERID', userID: userID, isLoggedIn: isLoggedIn });
     }
+
     getLoginInfo();
   }, []);
 
@@ -118,8 +119,6 @@ const App = () => {
         ) : (
           // User not signed in. Start at the StartScreen.
           <>
-          <Stack.Screen name="StartScreen" component={StartScreen} options={{ headerShown: false }} />
-          <Stack.Screen name="ActualRegister" component={ActualRegisterScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
                               <Stack.Screen name="Playlist" component={PlaylistScreen} />
                               <Stack.Screen name="ProfileScreen" component={ProfileScreen} />

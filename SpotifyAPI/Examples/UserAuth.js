@@ -76,7 +76,7 @@ var spotifyApi = new SpotifyWebApi({
         //console.log('refresh_token: ', refresh_token)
         console.log(spotifyApi.getRefreshToken())
         res.send("Success!")
-        //Test for making a post request to MongoDB that includes storing the User's refreshToken.
+        //Test for making a post request to MongoDB that includes storing the User's refreshToken. Use Postman for now.
         server.post('/', function (req, res) {
           res.json({ requestBody: req.body })
           const user = new User({

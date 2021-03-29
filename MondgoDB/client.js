@@ -10,12 +10,32 @@
 const methods = require('./testClient');
 const prompt = require('prompt');
 const user = require('./userInfo/allUsers.json');
+const uname = require('./uname');
 
 // Example of create user method call
+
+var s = "Kyle";
+uname.set_username(s);
+uname.get_username(function (result) {
+    console.log(result);
+});
+
+var name = {
+    username: "Man7"
+};
+uname.get_username(function (result) {
+    name.username = result;
+});
+var userData;
+methods.get_user(name, function (result) {
+    console.log(result);
+});
+
+//console.log(userData);
 /*
 const data = {
-    username: "Duh the um the duh",
-    email: "hmm",
+    username: "Duh",
+    email: "new email23",
     password: "huh",
     genre: "duh",
     color: "duh",
@@ -23,14 +43,19 @@ const data = {
     token: "duh",
     songID: "duh",
     isLocalArtist: true,
-    isLocalBusiness: false
+    isLocalBusiness: false,
+    refreshToken: "AQCzVfJhvvDF8KvxRKP6ANQ_hfmYbqDdsVQ7XR0FlLlA4soBz6CnmK1HUIas6c9hQHpQ2sV_dDkfYApzJlVkoFMeyjsnVj7Kgdzzd4jG8OwUAbKvzPiVaM5ijhxRhkrdeLU"
 };
 
-methods.create_user(function (result) {
+//methods.create_user(function (result) {
+//    console.log(result);
+//}, data);
+
+methods.top_songs(function (result) {
     console.log(result);
 }, data);
+
 */
-console.log(user.username);
 // End create user
 
 

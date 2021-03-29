@@ -3,7 +3,32 @@ import { Text, View, TouchableOpacity, StyleSheet, TextInput, Switch } from 'rea
 const methods = require('../MondgoDB/testClient');
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+const ProfileScreen = ({ navigation }) => {
+  const onLogoutPress = () => {
+    const deleteLoginInfo = async() => {
+      try {
+        await AsyncStorage.setItem('isLoggedIn', 'false');
+        await AsyncStorage.setItem('userID', '');
+        console.log("AsyncStorage Logging Out")
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    navigation.navigate("StartScreen");
+  }
 
+  const userData = require("./test_json/fake_user.json")[0];
+  const [darkModeEnabled, setDarkModeEnabled] = useState(false);
+    return (
+      <View style={styles.container}>
+        <View style={styles.nameinfo}>
+          <Text style={styles.name}>{userData.name}</Text>
+          <Text style={styles.infotitle}>Favourite Genre</Text>
+          <Text style={styles.infodata}>{userData.genre}</Text>
+          <Text style={styles.infotitle}>Favourite Song</Text>
+          <Text style={styles.infodata}>{userData.songID}</Text>
+        </View>
+// Ethan code for fetching db info before render
 export default class ProfileScreen extends Component {
     // Defining states and variables
     constructor() {
@@ -100,67 +125,67 @@ export default class ProfileScreen extends Component {
 
 //Style Sheet
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  biocontainer: {
-    margin: 10,
-    marginBottom: 20,
-  },
-  logoutButton: {
-    alignItems: 'center',
-    backgroundColor: '#8e6f3e',
-    padding: 10,
-    margin: 10,
-    marginTop: 5,
-    marginBottom: 30,
-    borderRadius: 10,
-  },
-  logoutText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: 'white',
-  },
-  followButtonsContainer: {
-    justifyContent: 'center',
-    flexDirection: 'row',
-    marginBottom: 40,
-  },
-  followButton: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#0095ff',
-    borderRadius: 10,
-    padding: 15,
-    margin: 10,
-  },
-  followText: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: 'white',
-  },
-  nameinfo: {
-    alignItems: 'center',
-    borderWidth: 0.5,
-    borderRadius: 15,
-    borderColor: 'gray',
-    margin: 20,
-    padding: 10,
-    paddingLeft: 50,
-    paddingRight: 50,
-    alignSelf: 'center',
-  },
-  name: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  infotitle: {
-    fontSize: 14,
-  },
-  infodata: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  }
+    container: {
+        flex: 1,
+        alignItems: 'center',
+    },
+    biocontainer: {
+        margin: 10,
+        marginBottom: 20,
+    },
+    logoutButton: {
+        alignItems: 'center',
+        backgroundColor: '#8e6f3e',
+        padding: 10,
+        margin: 10,
+        marginTop: 5,
+        marginBottom: 30,
+        borderRadius: 10,
+    },
+    logoutText: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: 'white',
+    },
+    followButtonsContainer: {
+        justifyContent: 'center',
+        flexDirection: 'row',
+        marginBottom: 40,
+    },
+    followButton: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#0095ff',
+        borderRadius: 10,
+        padding: 15,
+        margin: 10,
+    },
+    followText: {
+        fontSize: 14,
+        fontWeight: 'bold',
+        color: 'white',
+    },
+    nameinfo: {
+        alignItems: 'center',
+        borderWidth: 0.5,
+        borderRadius: 15,
+        borderColor: 'gray',
+        margin: 20,
+        padding: 10,
+        paddingLeft: 50,
+        paddingRight: 50,
+        alignSelf: 'center',
+    },
+    name: {
+        fontSize: 28,
+        fontWeight: 'bold',
+        marginBottom: 10,
+    },
+    infotitle: {
+        fontSize: 14,
+    },
+    infodata: {
+        fontSize: 18,
+        fontWeight: 'bold',
+    }
 })
