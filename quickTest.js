@@ -1,4 +1,2 @@
-import authHandler from "./SpotifyAPI/mobileAuth.js"
-asdf = authHandler.onLogin()
-console.log(asdf)
-//const authHandler = require("./SpotifyAPI/mobileAuth")
+import authHandler from "SpotifyAPI/mobileAuth"
+//const authHandler = require("SpotifyAPI/mobileAuth")

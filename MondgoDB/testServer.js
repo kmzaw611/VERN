@@ -41,6 +41,7 @@ server.get('/', function (req, res) {
     res.send('Hello World!');
     res.end();
 });
+
 /*
  * Places new user into database with input of json file
  * Prints sent json object to console if succeeded
@@ -91,6 +92,7 @@ server.post('/create-user', function (req, res) {
 });
 
 /*
+ *
  * Reference: https://keithweaverca.medium.com/building-a-log-in-system-for-a-mern-stack-39411e9513bd
  *
  * POST request for when a user logs in. Handles the following things:
@@ -110,19 +112,20 @@ server.post('/login-user', function (req, res) {
   if (!password) {
     return res.send("Blank Password");
   }
+
   User.find({
     email: email
   }, (err, users) => {
     if (err) {
       return res.send("Server Error");
     }
-    if (users.length === 0) {
-        return res.send("No User With Email");
+    else if (users.length === 0) {
+      return res.send("No User With Email")
     }
     else if (users.length > 1) {
       // This should never happen. Registration should not allow this.
       // If it does, the bug is with the registration process.
-        return res.send("Multiple Users With Email");
+      return res.send("Multiple Users With Email")
     }
     else {
       // We've made sure that a single valid user exists with that email
@@ -311,14 +314,10 @@ server.post('/add-song', function (req, res) {
  * Prints retrieved json object to console
  */
 server.post('/get-user', function (req, res) {
-    console.log(req.body._id);
-    User.findOne({ _id: req.body._id }
+    User.findOne({ username: req.body.username }
     ).then((result) => {
         console.log(result);
-        if (result == null)
-            res.send("Server: No User Found");
-        else
-            res.send(result);
+        res.send(result);
         res.end();
     }).catch((err) => {
         console.log(err);
@@ -328,10 +327,8 @@ server.post('/get-user', function (req, res) {
 server.post('/get-song', function (req, res) {
     Song.findOne({ songID: req.body.songID }
     ).then((result) => {
-        if (result == null)
-            res.send("Server: No Song Found");
-        else
-            res.send(result);
+        console.log(result);
+        res.send(result);
         res.end();
     }).catch((err) => {
         console.log(err);
@@ -339,36 +336,66 @@ server.post('/get-song', function (req, res) {
 });
 
 server.post('/edit-user', function (req, res) {
-    User.findOne({ _id: req.body._id })
-        .then(result => {
-            if (result != null) {
-                const find = {
-                    _id: req.body._id
+    if (!req.body.current_username.normalize() === req.body.new_username.normalize()) {
+        User.findOne({ username: req.body.new_username })
+            .then(result => {
+                if (!result) {
+                    const find = {
+                        username: req.body.current_username
+                    }
+
+                    const update = {
+                        username: req.body.new_username,
+                        genre: req.body.genre,
+                        color: req.body.color,
+                        bio: req.body.bio,
+                        songID: req.body.songID
+                    }
+
+                    User.findOneAndUpdate(find, update, { new: true })
+                        .then(result2 => {
+                            console.log(result2);
+                            res.send(result2);
+                            res.end();
+                        })
+                        .catch(error => {
+                            console.error(error);
+                        });
+                    console.log("Done!"); c
                 }
+                else {
+                    //Not clear to replace
+                    console.log("New username taken");
+                    res.send("new username taken");
+                    res.end();
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }
+    else {
+        const find = {
+            username: req.body.current_username
+        }
 
-                var update = req.body;
-                delete update["_id"];
-                console.log(update);
+        const update = {
+            username: req.body.new_username,
+            genre: req.body.genre,
+            color: req.body.color,
+            bio: req.body.bio,
+            songID: req.body.songID
+        }
 
-                User.findOneAndUpdate(find, update, { new: true })
-                    .then(result2 => {
-                        console.log(result2);
-                        res.send(result2);
-                        res.end();
-                    })
-                    .catch(error => {
-                        console.error(error);
-                    });
-            }
-            else {
-                //Not clear to replace
-                console.log(result);
-                res.send("Couldnt find them");
+        User.findOneAndUpdate(find, update, { new: true })
+            .then(result2 => {
+                console.log(result2);
+                res.send(result2);
                 res.end();
-            }
-        })
-        .catch(error => {
-            console.log("Shit");
-            console.error(error);
-        });
+            })
+            .catch(error => {
+                console.error(error);
+            });
+        console.log("Done!");
+    }
 });
