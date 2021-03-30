@@ -3,6 +3,7 @@ import { Text, View, TouchableOpacity, StyleSheet, TextInput, Switch } from 'rea
 const methods = require('../MondgoDB/testClient');
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+/*
 const ProfileScreen = ({ navigation }) => {
   const onLogoutPress = () => {
     const deleteLoginInfo = async() => {
@@ -27,10 +28,12 @@ const ProfileScreen = ({ navigation }) => {
           <Text style={styles.infodata}>{userData.genre}</Text>
           <Text style={styles.infotitle}>Favourite Song</Text>
           <Text style={styles.infodata}>{userData.songID}</Text>
-        </View>
-// Ethan code for fetching db info before render
+            </View>
+          
+         /*/
+
+
 export default class ProfileScreen extends Component {
-    // Defining states and variables
     constructor() {
         super();
         this.state = {
@@ -109,7 +112,7 @@ export default class ProfileScreen extends Component {
                         <Text style={styles.logoutText}>Logout</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => this.props.navigation.push("EditScreen")}
+                        onPress={() => this.props.navigation.navigate("EditScreen")}
                     >
                         <Text>Edit Profile</Text>
 

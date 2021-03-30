@@ -45,6 +45,7 @@ export default class ProfileScreen extends Component {
 
     handleSave() {
         var count = 0;
+        //this.setState = false;
         var editjson = {
             _id: this.id._id
         };
@@ -68,13 +69,18 @@ export default class ProfileScreen extends Component {
         if (count > 0) {
             methods.edit_user((result) => {
                 console.log(result);
-                this.props.navigation.navigate("ProfileScreen");
+                //this.setState({ dataIsReturned: false });
+                //need a refresh() call here from profilescreen to change states to update
+                this.props.navigation.goBack();
+                
             }, editjson);
         }
         else {
-            this.props.navigation.navigate("ProfileScreen");
+            this.props.navigation.goBack();
         }
     }
+
+    
 
     render() {
         //changes to true when data is retrieved from server
@@ -126,7 +132,7 @@ export default class ProfileScreen extends Component {
                     </View>
 
                     <TouchableOpacity
-                    onPress = {this.handleSave.bind(this)}
+                        onPress={this.handleSave.bind(this)}   /*  right here is the issue with saving info editscreen->profilescreen  */
                     >
                         <Text style={{ color: 'brown', marginLeft: 10, fontSize: 14, fontWeight: 'bold', marginLeft: 15, }}>Save Profile</Text>
                     </TouchableOpacity>

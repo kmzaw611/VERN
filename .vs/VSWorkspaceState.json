@@ -4,8 +4,9 @@
     "\\MondgoDB",
     "\\MondgoDB\\models",
     "\\screens",
+    "\\SpotifyAPI",
     "\\SpotifyAPI\\Examples"
   ],
-  "SelectedNode": "\\MondgoDB\\client.js",
+  "SelectedNode": "\\screens\\ProfileScreen.js",
   "PreviewInSolutionExplorer": false
 }
