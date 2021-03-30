@@ -10,6 +10,61 @@
 const methods = require('./testClient');
 const prompt = require('prompt');
 
+/*
+//Add new Users
+const user = {
+    username: "TestPerson3",
+    email: "newmail3",
+    password: "huh",
+    genre: "",
+    color: "",
+    bio: "",
+    following: [],
+    followers: [],
+    groups: [],
+    spotifyTokenID: "sumn",
+    spotifyTokenSecret: "sumn",
+    token: "duh",
+    songID: "duh",
+    isLocalArtist: true,
+    isLocalBusiness: false,
+    refreshToken: "AQCzVfJhvvDF8KvxRKP6ANQ_hfmYbqDdsVQ7XR0FlLlA4soBz6CnmK1HUIas6c9hQHpQ2sV_dDkfYApzJlVkoFMeyjsnVj7Kgdzzd4jG8OwUAbKvzPiVaM5ijhxRhkrdeLU"
+}
+methods.create_user(function (result) {
+    console.log(result);
+}, user);
+
+const user2 = {
+    username: "TestPerson4",
+    email: "newmail4",
+    password: "huh",
+    genre: "",
+    color: "",
+    bio: "",
+    following: [],
+    followers: [],
+    groups: [],
+    spotifyTokenID: "sumn",
+    spotifyTokenSecret: "sumn",
+    token: "duh",
+    songID: "duh",
+    isLocalArtist: true,
+    isLocalBusiness: false,
+    refreshToken: "AQCzVfJhvvDF8KvxRKP6ANQ_hfmYbqDdsVQ7XR0FlLlA4soBz6CnmK1HUIas6c9hQHpQ2sV_dDkfYApzJlVkoFMeyjsnVj7Kgdzzd4jG8OwUAbKvzPiVaM5ijhxRhkrdeLU"
+}
+methods.create_user(function (result) {
+    console.log(result);
+}, user2);
+*/
+
+
+const data = {
+    _id: "606265574ded5926b0fbdeb2",
+    userID: "6062b12f43a0ad02805f72ae"
+}
+methods.group_remove(function (result) {
+    console.log(result);
+}, data);
 
 
 //Group Testing
@@ -61,7 +116,7 @@ prompt.get(['userID', 'color', 'bio'], function (err, result) {
     }, data2);
 });
 
-*/
+
 
 data2 = {
     title: "First Ever Group"
@@ -71,7 +126,7 @@ methods.group_users(function (result) {
     console.log(result);
 }, data2);
 
-/*                      -----------------------------------------------------------------Start Comment
+                      -----------------------------------------------------------------Start Comment
 const user = require('./userInfo/allUsers.json');
 const uname = require('./uname');
 

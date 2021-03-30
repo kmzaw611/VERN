@@ -64,6 +64,24 @@ const methods = {
                 return callback("post failed");
             });
     },
+    follow_user: function (callback, data) {
+        rh.post(url + "/follow-user", data)
+            .then(res => {
+                return callback(res.data);
+            })
+            .catch(error => {
+                return callback("follow post failed");
+            });
+    },
+    unfollow_user: function (callback, data) {
+        rh.post(url + "/unfollow-user", data)
+            .then(res => {
+                return callback(res.data);
+            })
+            .catch(error => {
+                return callback("follow post failed");
+            });
+    },
 
     // GET call to log in a user
     login_user: function (callback, data) {
@@ -131,6 +149,7 @@ const methods = {
                 return callback("get users failed");
             });
     },
+
     // POST calls for Store/Get song
     store_song: function (callback, data) {
         rh.post(url + "/add-song", data)
