@@ -2,7 +2,6 @@ import React, { useState, Component } from 'react';
 import { Text, View, TouchableOpacity, StyleSheet, TextInput, Switch } from 'react-native';
 const methods = require('../MondgoDB/testClient');
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 /*
 const ProfileScreen = ({ navigation }) => {
   const onLogoutPress = () => {
@@ -29,11 +28,11 @@ const ProfileScreen = ({ navigation }) => {
           <Text style={styles.infotitle}>Favourite Song</Text>
           <Text style={styles.infodata}>{userData.songID}</Text>
             </View>
-          
-         /*/
 
-
+            */
+// Ethan code for fetching db info before render
 export default class ProfileScreen extends Component {
+    // Defining states and variables
     constructor() {
         super();
         this.state = {
@@ -112,7 +111,7 @@ export default class ProfileScreen extends Component {
                         <Text style={styles.logoutText}>Logout</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => this.props.navigation.navigate("EditScreen")}
+                        onPress={() => this.props.navigation.push("EditScreen")}
                     >
                         <Text>Edit Profile</Text>
 

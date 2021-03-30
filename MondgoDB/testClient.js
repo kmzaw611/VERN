@@ -1,39 +1,33 @@
 /*
  * method list for client requests
- * You might have to run "npm i axios"
- * for it to work correctly, but try it without first
+ * need to install "npm i axios" first
  */
 const axios = require('axios');
-const url = "http://127.0.0.1:3000";
+
+/* Use 0 for local testing (client.js), and 1 for Emulator testing */
+const urlCode = 0;
+
+var url = "";
+
+if (urlCode === 0)
+    url = "http://127.0.0.1:3000";
+else
+    url = "http://10.0.2.2:3000";
 // If you are testing from an Android emulator use this url instead.
 // Android Studio uses this url to redirect to the localhost if you are
 // running from an emulator.
-const emulator_url = "http://10.0.2.2:3000";
 
 const rh = axios.create({
     // baseURL: url
-    baseURL: emulator_url,
+    baseURL: url,
     proxy: false
 });
 
 const methods = {
-    //POST call for favorite songs
-    top_songs: function (callback, data) {
-        console.log("Hi from testClient.js")
-        console.log(data.refreshToken)
-        rh.post(url + "/top_songs_playlist", data)
-            .then(res => {
-                console.log(res.data)
-                return callback(res.data)
-            })
-            .catch(error => {
-                return callback("Error in top songs");
-            });
-
-    },
-    //POST call to create user
+    
+    //POST calls for create, get, and edit user
     create_user: function (callback, data) {
-        rh.post(emulator_url + "/create-user", data)
+        rh.post(url + "/create-user", data)
             .then(res => {
                 console.log(res.data);
                 /*
@@ -52,9 +46,28 @@ const methods = {
                 return callback("testClient.js : create user failed");
             });
     },
+    get_user: function (id, callback) {
+        rh.post(url + "/get-user", id)
+            .then(res => {
+                return callback(res.data);
+            })
+            .catch(error => {
+                return callback("post failed");
+            });
+    },
+    edit_user: function (callback, data) {
+        rh.post(url + "/edit-user", data)
+            .then(res => {
+                return callback(res.data);
+            })
+            .catch(error => {
+                return callback("post failed");
+            });
+    },
+
     // GET call to log in a user
     login_user: function (callback, data) {
-        rh.post(emulator_url + "/login-user", data)
+        rh.post(url + "/login-user", data)
         .then(res => {
           return callback(res.data);
         })
@@ -62,26 +75,63 @@ const methods = {
             return callback("testClient.js : login user failed");
         });
     },
-    //POST call to get a user with input of username
-    get_user: function (id, callback) {
-        rh.post(emulator_url + "/get-user", id)
+
+    //POST calls for create, get, and edit group
+    create_group: function (callback, data) {
+        rh.post(url + "/create-group", data)
             .then(res => {
                 return callback(res.data);
             })
             .catch(error => {
-                return callback("post failed");
+                return callback("testClient.js : create group failed");
             });
     },
-    //POST call to update user info
-    edit_user: function (callback, data) {
-        rh.post(emulator_url + "/edit-user", data)
+    get_group: function (callback, name) {
+        rh.post(url + "/get-group", name)
             .then(res => {
                 return callback(res.data);
             })
             .catch(error => {
-                return callback("post failed");
+                return callback("get group failed");
             });
     },
+    edit_group: function (callback, data) {
+        rh.post(url + "/edit-group", data)
+            .then(res => {
+                return callback(res.data);
+            })
+            .catch(error => {
+                return callback("edit group failed");
+            });
+    },
+    group_add: function (callback, data) {
+        rh.post(url + "/group-add-user", data)
+            .then(res => {
+                return callback(res.data);
+            })
+            .catch(error => {
+                return callback("add user failed");
+            });
+    },
+    group_remove: function (callback, data) {
+        rh.post(url + "/group-remove-user", data)
+            .then(res => {
+                return callback(res.data);
+            })
+            .catch(error => {
+                return callback("remove user failed");
+            });
+    },
+    group_users: function (callback, data) {
+        rh.post(url + "/get-group-users", data)
+            .then(res => {
+                return callback(res.data);
+            })
+            .catch(error => {
+                return callback("get users failed");
+            });
+    },
+    // POST calls for Store/Get song
     store_song: function (callback, data) {
         rh.post(url + "/add-song", data)
             .then(res => {
@@ -99,6 +149,21 @@ const methods = {
             .catch(error => {
                 return callback("post failed");
             });
-    }
+    },
+
+    //POST call for favorite songs
+    top_songs: function (callback, data) {
+        console.log("Hi from testClient.js")
+        console.log(data.refreshToken)
+        rh.post(url + "/top_songs_playlist", data)
+            .then(res => {
+                console.log(res.data)
+                return callback(res.data)
+            })
+            .catch(error => {
+                return callback("Error in top songs");
+            });
+
+    },
 };
 module.exports = methods;
