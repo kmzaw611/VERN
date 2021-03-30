@@ -6,11 +6,75 @@
  * to use it too.
  */
 
-//If server file is outside the MondgoDB directory, change it to './MondgoDB/testClient'
+//If server file is outside the MondgoDB directory, need to change the path
 const methods = require('./testClient');
 const prompt = require('prompt');
+
+
+
+//Group Testing
+/*
+const data = {
+    creatorID: "123456789",
+    title: "4th Ever Group",
+    color: "#FFFFFF",
+    bio: "For testing",
+    private: false,
+    password: "",
+    users: [
+        "9634209323",
+        "23749638472",
+        "324878927349"
+    ],
+    numUsers: 3
+};
+
+methods.create_group(function (result) {
+    console.log(result);
+}, data);
+*/
+
+
+/*
+const name = {
+    title: "First Ever Group"
+};
+
+methods.get_group(name, function (result) {
+    console.log(result);
+});
+*/
+
+/* Requires group ID (_id) and currents user's _id (userID) */
+/* followed by the fields you want to edit */
+/*
+prompt.start();
+prompt.get(['userID', 'color', 'bio'], function (err, result) {
+    const data2 = {};
+    data2._id = "606265574ded5926b0fbdeb2"; // I aint typin that in every time
+    data2.userID = result.userID;
+    data2.color = result.color;
+    data2.bio = result.bio;
+
+    methods.edit_group(function (result) {
+        console.log(result);
+    }, data2);
+});
+
+*/
+
+data2 = {
+    title: "First Ever Group"
+}
+
+methods.group_users(function (result) {
+    console.log(result);
+}, data2);
+
+/*                      -----------------------------------------------------------------Start Comment
 const user = require('./userInfo/allUsers.json');
 const uname = require('./uname');
+
 
 // Example of create user method call
 
@@ -26,13 +90,13 @@ var name = {
 uname.get_username(function (result) {
     name.username = result;
 });
-var userData;
+
 methods.get_user(name, function (result) {
     console.log(result);
 });
 
 //console.log(userData);
-/*
+
 const data = {
     username: "Duh",
     email: "new email23",
@@ -55,12 +119,11 @@ methods.top_songs(function (result) {
     console.log(result);
 }, data);
 
-*/
+                 
 // End create user
 
 
 // Example of get user
-/*
 const name = {
     username: "Man7"
 };
@@ -70,9 +133,9 @@ methods.get_user(function (result) {
 }, name);
 
 // End getUser
-*/
+                       --------------------------------------------------------------------- End Comment */
 // Example of edit user
-
+/*
 prompt.start();
 prompt.get(['name', 'nname', 'genres', 'color', 'bio', 'songID'], function (err, result) {
     //
@@ -91,31 +154,5 @@ prompt.get(['name', 'nname', 'genres', 'color', 'bio', 'songID'], function (err,
         console.log(result);
     }, data2);
 });
-// End editUser
-/*
-// Add Song
-const data = {
-    songID: "random p ID",
-    title: "Song1",
-    artist: "Variable Artist",
-    length: 260
-};
-
-methods.store_song(function (result) {
-    console.log(result);
-}, data);
-
-// End add song
-
-// Find Song
-
-const id = {
-    songID: "random ID"
-};
-
-methods.get_song(function (result) {
-    console.log(result);
-}, id);
-
-// End find song
 */
+// End editUser
