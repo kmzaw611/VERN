@@ -418,8 +418,8 @@ server.post('/top_songs_playlist', function (req, res) {
                             "id": topTracks[i].id,
                             "name": topTracks[i].name,
                             "duration": topTracks[i].duration,
-                            "artists": currentArtists,
-                            "artistIds": currentIds
+                            "artists": currentArtists.join(),
+                            "artistIds": currentIds.join()
                         }
                         songs.push(song)
                     }
