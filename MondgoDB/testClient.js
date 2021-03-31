@@ -15,7 +15,7 @@ else
     url = "http://10.0.2.2:3000";
 // If you are testing from an Android emulator use this url instead.
 // Android Studio uses this url to redirect to the localhost if you are
-// running from an emulator.
+// running from an emulator
 
 const rh = axios.create({
     // baseURL: url
