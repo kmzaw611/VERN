@@ -1,62 +1,122 @@
 [
-   {
-      "id": 1,
-      "name": "Song #1",
-      "duration": "2:13",
-      "artist": "John Doe"
-   },
-   {
-      "id": 2,
-      "name": "Song #2",
-      "duration": "5:04",
-      "artist": "The Beatles"
-   },
-   {
-      "id": 3,
-      "name": "Song #3",
-      "duration": "6:48",
-      "artist": "Spiderman"
-   },
-   {
-      "id": 4,
-      "name": "Song #4",
-      "duration": "3:12",
-      "artist": "Jennifer"
-   },
-   {
-      "id": 5,
-      "name": "Song #5",
-      "duration": "4:01",
-      "artist": "Turkey"
-   },
-   {
-      "id": 6,
-      "name": "Song #1",
-      "duration": "2:13",
-      "artist": "John Doe"
-   },
-   {
-      "id": 7,
-      "name": "Song #2",
-      "duration": "5:04",
-      "artist": "The Beatles"
-   },
-   {
-      "id": 8,
-      "name": "Song #3",
-      "duration": "6:48",
-      "artist": "Spiderman"
-   },
-   {
-      "id": 9,
-      "name": "Song #4",
-      "duration": "3:12",
-      "artist": "Jennifer"
-   },
-   {
-      "id": 10,
-      "name": "Song #5",
-      "duration": "4:01",
-      "artist": "Turkey"
-   },
+  {
+    "artist": "Lil Durk,YNW Melly",
+    "length": 61,
+    "songID": "04UbVgVCVbvz0IslfkZRFh",
+    "title": "Free Jamell (with YNW Melly)"
+  },
+  {
+    "artist": "42 Dugg",
+    "length": 61,
+    "songID": "4j3BOcD5RBgZ0hIvIWsM4H",
+    "title": "Dog Food"
+  },
+  {
+    "artist": "BigKayBeezy,Polo G",
+    "length": 68,
+    "songID": "0vwOWwl785S9EU1wtbeLLJ",
+    "title": "BookBag 2.0 (feat. Polo G)"
+  },
+  {
+    "artist": "Joji,BENEE",
+    "length": 70,
+    "songID": "6zvqq50PL7io0rprbkrYc9",
+    "title": "Afterthought"
+  },
+  {
+    "artist": "Hippie Sabotage",
+    "length": 63,
+    "songID": "0TxPln0uhql4ucFGk1XISM",
+    "title": "Wrong Time"
+  },
+  {
+    "artist": "Wallows",
+    "length": 72,
+    "songID": "0APAKxMXB7jdDs4kw1l30y",
+    "title": "OK"
+  },
+  {
+    "artist": "Empire of the Sun",
+    "length": 78,
+    "songID": "5r5cp9IpziiIsR6b93vcnQ",
+    "title": "Walking On A Dream"
+  },
+  {
+    "artist": "King Von",
+    "length": 67,
+    "songID": "4eYrjXGlDycrqg7a0Wgwed",
+    "title": "Crazy Story"
+  },
+  {
+    "artist": "Polo G",
+    "length": 62,
+    "songID": "1x4UTuG7Jx2ZzWdBJbhMnW",
+    "title": "The Come Up"
+  },
+  {
+    "artist": "Cage The Elephant",
+    "length": 52,
+    "songID": "00CqEmnPLFKDhAb3cuu6Cs",
+    "title": "Halo"
+  },
+  {
+    "artist": "Gunna",
+    "length": 63,
+    "songID": "7GwYENSg87oERcW0Wacd6m",
+    "title": "SKYBOX"
+  },
+  {
+    "artist": "Outkast",
+    "length": 59,
+    "songID": "6w4MlvpuxtbjGdL9YeTx89",
+    "title": "Jazzy Belle"
+  },
+  {
+    "artist": "Isaiah Rashad,Hugh Augustine,Jay Rock",
+    "length": 55,
+    "songID": "2NoKRHt8LVpnQMVl3TPwvu",
+    "title": "Tity and Dolla (feat. Hugh Augustine & Jay Rock)"
+  },
+  {
+    "artist": "Whethan",
+    "length": 44,
+    "songID": "6EKii07Q5FPgd5LVmvtqK4",
+    "title": "Together"
+  },
+  {
+    "artist": "Thundercat",
+    "length": 77,
+    "songID": "1c5CllrZr45UBhWpIqM332",
+    "title": "Funny Thing"
+  },
+  {
+    "artist": "Lil Keed,Lil Baby",
+    "length": 56,
+    "songID": "6O04OXXHeOVMbbIIoUBoXR",
+    "title": "She Know (feat. Lil Baby)"
+  },
+  {
+    "artist": "42 Dugg",
+    "length": 42,
+    "songID": "1BheYH1mrH0YaiNpYCWaXM",
+    "title": "Y&T 2"
+  },
+  {
+    "artist": "EARTHGANG,Arin Ray",
+    "length": 56,
+    "songID": "37lsV513gD04gFvKIPCw4N",
+    "title": "Stuck (feat. Arin Ray)"
+  },
+  {
+    "artist": "The Kid LAROI,Juice WRLD",
+    "length": 82,
+    "songID": "2rPHUAeUPbNgTmK18FPTiZ",
+    "title": "GO (feat. Juice WRLD)"
+  },
+  {
+    "artist": "Maxo Kream",
+    "length": 35,
+    "songID": "3ECrEMHOiOYlqCSVdDyuQQ",
+    "title": "Astrodome, Pt. 2"
+  }
 ]

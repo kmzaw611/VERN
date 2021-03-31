@@ -218,14 +218,14 @@ server.post('/top_songs_playlist', function (req, res) {
             )
             spotifyApi.getMyTopTracks()                 //************************** change structs so we don't pass in any arrays ******unless react can handle those for display*/
                      //*******added async below*/
-                .then(async function (data) {             
+                .then(function (data) {             
                     userId = ""
                     let topTracks = data.body.items;
                     var genSeed = [];
                     var i;
                     let genreDict = {};
                     var currentArtists = [];
-                    var duration_ms;
+                    //var duration_ms;
                     currentIds = [];
                     songs = [];
                     for (i = 0; i < topTracks.length; i++) {
@@ -235,17 +235,18 @@ server.post('/top_songs_playlist', function (req, res) {
                         currentIds = []
                         for (var j = 0; j < topTracks[i].artists.length; j++) {
                             currentArtists.push(topTracks[i].artists[j].name);
-                           // console.log(currentArtists);
+                            //console.log(currentArtists);
                             //currentIds.push(topTracks[i].artists[j].id);
                         }
                         //console.log(currentArtists[0]);
                         let song = {
-                            "id": topTracks[i].id,
-                            "name": topTracks[i].name,
-                            "duration": topTracks[i].duration,
-                            "artists": currentArtists.join(),
-                            "artistIds": currentIds.join()
+                            "songID": topTracks[i].id,
+                            "title": topTracks[i].name,
+                            "artist": currentArtists.join(),
+                            "length": topTracks[i].popularity
+                            //"artistIds": currentIds.join()
                         }
+                        //console.log(song.duration)
                         songs.push(song)
                     }
                     //Creating the JSON file to save
@@ -260,15 +261,15 @@ server.post('/top_songs_playlist', function (req, res) {
                     //differences with the one returned from testServer : user: '', songs: [ and ] w/date at bottom
                     let topSongs = {
                         //user: userId,
-                        id: songs.id,
-                        songs: songs,
+                        songs: songs
+                        //date: todaysDate
                         
                         //date: todaysDate
                     }
-                    payload = (JSON.stringify(topSongs, null, 4))       //modify for proper struct
+                    payload = (JSON.stringify(songs, null, 4))       //modify for proper struct
                     i = 0;
                     const app = express();
-                    //console.log(payload)
+                    console.log(payload)
                     res.send(payload)
                     res.end()
                     //app.post("/top_songs_playlist", (req, res) => {

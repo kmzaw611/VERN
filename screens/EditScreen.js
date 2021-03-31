@@ -71,11 +71,14 @@ export default class ProfileScreen extends Component {
                 console.log(result);
                 //this.setState({ dataIsReturned: false });
                 //need a refresh() call here from profilescreen to change states to update
+                //this.props.navigation.state.params.refresh();
                 this.props.navigation.goBack();
                 
             }, editjson);
         }
         else {
+            //this.props.navigation.state.params.refresh();
+            //this.props.navigation.state.params.forceUpdate();
             this.props.navigation.goBack();
         }
     }

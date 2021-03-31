@@ -20,11 +20,11 @@ const PlaylistScreen = ({ route, navigation }) => {
     playlistImage = require("./assets/playlistCard2.jpg")
   }
   else if (playlistId === 2) { //here is for the linking between -> server for grabbing top_songs json
-      playlistData = methods.top_songs(function (result) {
+      playlistData = require("./test_json/topsongs_playlist.json");/*methods.top_songs(async function (result) {
           console.log("PlaylistScreen");
           console.log(result);
           console.log("PostPlaylistScreen");
-      }, data1);
+      }, data1);*/
     playlistImage = require("./assets/playlistCard3.jpg")
   }
   else {
@@ -37,8 +37,8 @@ const PlaylistScreen = ({ route, navigation }) => {
     <TouchableOpacity style={styles.song}>
       <View style={styles.songcontainer}>
         <View>
-          <Text style={styles.songtitle}>{item.name}</Text>
-          <Text style={{color: 'gray'}}>{item.duration}</Text>
+          <Text style={styles.songtitle}>{item.title}</Text>
+          <Text style={{color: 'gray'}}>{"Popularity: "+item.length}</Text>
         </View>
         <Text style={{marginLeft: "auto"}}>{item.artist}</Text>
       </View>
@@ -60,7 +60,7 @@ const PlaylistScreen = ({ route, navigation }) => {
       <FlatList
         data={playlistData}
         renderItem={renderPlaylistSong}
-        keyExtractor={item => item.id}
+        keyExtractor={(item,index) => item.title}
       />
     </View>
   )
