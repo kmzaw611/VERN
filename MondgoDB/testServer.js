@@ -216,30 +216,34 @@ server.post('/top_songs_playlist', function (req, res) {
                     userId = data.body.id
                 }
             )
-            spotifyApi.getMyTopTracks()
-                .then(function (data) {
+            spotifyApi.getMyTopTracks()                 //************************** change structs so we don't pass in any arrays ******unless react can handle those for display*/
+                     //*******added async below*/
+                .then(async function (data) {             
                     userId = ""
                     let topTracks = data.body.items;
                     var genSeed = [];
                     var i;
                     let genreDict = {};
-                    currentArtists = [];
+                    var currentArtists = [];
+                    var duration_ms;
                     currentIds = [];
                     songs = [];
                     for (i = 0; i < topTracks.length; i++) {
                         //A list of ALL artists featured on the current song
-                        currentArtists = []
+                        currentArtists[]
                         //A list of ALL artist IDs featured on the current song
                         currentIds = []
                         for (var j = 0; j < topTracks[i].artists.length; j++) {
                             currentArtists.push(topTracks[i].artists[j].name);
-                            currentIds.push(topTracks[i].artists[j].id);
+                           // console.log(currentArtists);
+                            //currentIds.push(topTracks[i].artists[j].id);
                         }
+                        //console.log(currentArtists[0]);
                         let song = {
                             "id": topTracks[i].id,
                             "name": topTracks[i].name,
                             "duration": topTracks[i].duration,
-                            "artists": currentArtists,
+                            "artists": currentArtists.toString(),
                             "artistIds": currentIds
                         }
                         songs.push(song)
@@ -252,12 +256,16 @@ server.post('/top_songs_playlist', function (req, res) {
                     let month = ("0" + (date.getMonth() + 1)).slice(-2);
                     let dateNumber = ("0" + date.getDate()).slice(-2);
                     let todaysDate = (month + "-" + date + "-" + year)
+                    //******************** something with the song.js & playlist.js schema's being intereperted in PlaylistScreen.js w/react
+                    //differences with the one returned from testServer : user: '', songs: [ and ] w/date at bottom
                     let topSongs = {
-                        user: userId,
+                        //user: userId,
+                        id: songs.id,
                         songs: songs,
-                        date: todaysDate
+                        
+                        //date: todaysDate
                     }
-                    payload = (JSON.stringify(topSongs, null, 4))
+                    payload = (JSON.stringify(topSongs, null, 4))       //modify for proper struct
                     i = 0;
                     const app = express();
                     //console.log(payload)

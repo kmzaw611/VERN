@@ -1,5 +1,11 @@
 import React from 'react'
 import { Text, View, FlatList, TouchableOpacity, StyleSheet, Image } from 'react-native'
+const methods = require('../MondgoDB/testClient');
+//const prompt = require('prompt');
+
+data1 = {
+    refreshToken: "AQCzVfJhvvDF8KvxRKP6ANQ_hfmYbqDdsVQ7XR0FlLlA4soBz6CnmK1HUIas6c9hQHpQ2sV_dDkfYApzJlVkoFMeyjsnVj7Kgdzzd4jG8OwUAbKvzPiVaM5ijhxRhkrdeLU"
+}
 
 const PlaylistScreen = ({ route, navigation }) => {
   const { playlistId, playlistName } = route.params;
@@ -13,8 +19,12 @@ const PlaylistScreen = ({ route, navigation }) => {
     playlistData = require("./test_json/localartist_playlist.json");
     playlistImage = require("./assets/playlistCard2.jpg")
   }
-  else if (playlistId === 2) {
-    playlistData = require("./test_json/topsongs_playlist.json");
+  else if (playlistId === 2) { //here is for the linking between -> server for grabbing top_songs json
+      playlistData = methods.top_songs(function (result) {
+          console.log("PlaylistScreen");
+          console.log(result);
+          console.log("PostPlaylistScreen");
+      }, data1);
     playlistImage = require("./assets/playlistCard3.jpg")
   }
   else {
@@ -22,6 +32,7 @@ const PlaylistScreen = ({ route, navigation }) => {
     playlistImage = require("./assets/playlistCard4.jpg")
   }
 
+    //style={styles.song} how is rendering done
   const renderPlaylistSong = ({ item }) => (
     <TouchableOpacity style={styles.song}>
       <View style={styles.songcontainer}>
@@ -34,6 +45,9 @@ const PlaylistScreen = ({ route, navigation }) => {
     </TouchableOpacity>
   );
 
+
+
+    //FlatList how its used
   return (
     <View style={{flex: 1}}>
       <View style={styles.imagetitle_container}>
