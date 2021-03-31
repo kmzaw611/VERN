@@ -230,7 +230,7 @@ server.post('/top_songs_playlist', function (req, res) {
                     songs = [];
                     for (i = 0; i < topTracks.length; i++) {
                         //A list of ALL artists featured on the current song
-                        currentArtists[]
+                        currentArtists = []
                         //A list of ALL artist IDs featured on the current song
                         currentIds = []
                         for (var j = 0; j < topTracks[i].artists.length; j++) {
@@ -243,8 +243,8 @@ server.post('/top_songs_playlist', function (req, res) {
                             "id": topTracks[i].id,
                             "name": topTracks[i].name,
                             "duration": topTracks[i].duration,
-                            "artists": currentArtists.toString(),
-                            "artistIds": currentIds
+                            "artists": currentArtists.join(),
+                            "artistIds": currentIds.join()
                         }
                         songs.push(song)
                     }
