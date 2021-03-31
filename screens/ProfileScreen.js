@@ -111,7 +111,7 @@ export default class ProfileScreen extends Component {
                         <Text style={styles.logoutText}>Logout</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => this.props.navigation.push("EditScreen")}
+                        onPress={() => this.props.navigation.navigate("EditScreen")}
                     >
                         <Text>Edit Profile</Text>
 
