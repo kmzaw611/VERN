@@ -16,10 +16,6 @@ import {Text, StyleSheet, View, TouchableOpacity, Modal, TextInput} from 'react-
     }
     
   }
-
-  addName(newName) {
-    this.setState({names: newName})
-  }
   
   addName2 = (newName) => {
     this.setState({names: newName})
@@ -43,7 +39,7 @@ import {Text, StyleSheet, View, TouchableOpacity, Modal, TextInput} from 'react-
         
         <Text style={styles.title}>Groups</Text>
 
-        <TouchableOpacity onPress={this.onGroupPress}
+        <TouchableOpacity onPress={() => this.props.navigation.navigate("MyGroupScreen")}
         style={styles.sampleGroup}>
           <Text style={styles.sampleGroupText}>Sample Group Name</Text>
         </TouchableOpacity>
