@@ -3,6 +3,7 @@ import { Text, View, TouchableOpacity, StyleSheet, TextInput, Switch } from 'rea
 const methods = require('../MondgoDB/testClient');
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { DarkTheme } from '@react-navigation/native';
+import { Avatar, Button } from 'react-native-elements';
 
 /*
 const ProfileScreen = ({ navigation }) => {
@@ -41,17 +42,24 @@ export default class ProfileScreen extends Component {
         this.state = {
             darkModeEnabled: false,
             dataIsReturned: false,
-            backgroundColor: 'white'
+            isbackgroundColordef: true,
+            avatarColor : 'black'
         };
         this.id = {
             _id: ""
         };
         this.userData = null;
     }
-   // onChange = () => {
-  //      this.setState({ backgroundColor: '#3e3e3e' });
-  //  }
 
+    onAvatarblue = () => {
+        //if(avatarColor ===)
+        this.setState({ avatarColor: 'blue' });
+        this.setState({ isbackgroundColordef: false });
+    }
+    onAvatardef = () => {
+        this.setState({ avatarColor: 'black' });
+        this.setState({ isbackgroundColordef: true });
+    }
     //Where I get the data and change states
     componentDidMount() {
         //const { navigation } = this.props;
@@ -80,7 +88,19 @@ export default class ProfileScreen extends Component {
         //const [darkModeEnabled, setDarkModeEnabled] = useState(false);
         if (this.state.dataIsReturned === true) {
             return (
-                <View style={styles.container}>
+                <View style={styles.container}>             
+                    <Avatar
+                        size="large"
+                        overlayContainerStyle={{ backgroundColor: this.state.avatarColor }}
+                        icon={{ name: 'rocket', color: 'white', type: 'font-awesome' }}
+                        //{isbackgroundColordef
+                       //     ? onPress={ onAvatarblue }
+                      //      : onPress = {onAvatardef}
+                     //   }
+                        onPress={this.state.isbackgroundColordef ? this.onAvatarblue : this.onAvatardef}
+                        activeOpacity={0.7}
+                        containerStyle={{marginTop:10}}
+                    />
                     <View style={styles.nameinfo}>
                         <Text style={styles.name}>{this.userData.username}</Text>
                         <Text style={styles.infotitle}>Favourite Genre</Text>
@@ -103,11 +123,6 @@ export default class ProfileScreen extends Component {
                             <Text style={styles.followText}>Add Favorite Song?</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity
-                            style={styles.followButton}
-                        >
-                            <Text style={styles.followText}>Unfollow</Text>
-                        </TouchableOpacity>
                     </View>
 
                     <Text>Enable Dark Mode</Text>

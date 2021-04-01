@@ -15,6 +15,7 @@ import ActualRegisterScreen from './screens/ActualRegisterScreen'
 import MyGroupScreen from './screens/MyGroupScreen'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Avatar } from 'react-native-elements';
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
