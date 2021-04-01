@@ -7,10 +7,12 @@ import StartScreen from './screens/StartScreen'
 import HomeScreen from './screens/HomeScreen'
 import GroupScreen from './screens/GroupScreen'
 import ProfileScreen from './screens/ProfileScreen'
+import UserProfileScreen from './screens/UserProfileScreen'
 import LocalArtistScreen from './screens/LocalArtistScreen'
 import PlaylistScreen from './screens/PlaylistScreen'
 import EditScreen from './screens/EditScreen'
 import ActualRegisterScreen from './screens/ActualRegisterScreen'
+import MyGroupScreen from './screens/MyGroupScreen'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -111,6 +113,8 @@ const App = () => {
           <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
                           <Stack.Screen name="Playlist" component={PlaylistScreen} />
                           <Stack.Screen name="EditScreen" component={EditScreen} />
+                          <Stack.Screen name="MyGroupScreen" component={MyGroupScreen} />
+                          <Stack.Screen name="UserProfileScreen" component={UserProfileScreen} />
                           <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
                           <Stack.Screen name="StartScreen" component={StartScreen} options={{ headerShown: false }} />
                           <Stack.Screen name="ActualRegister" component={ActualRegisterScreen} options={{ headerShown: false }} />
@@ -119,7 +123,7 @@ const App = () => {
         ) : (
           // User not signed in. Start at the StartScreen.
           <>
-          
+          <Stack.Screen name="StartScreen" component={StartScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
                               <Stack.Screen name="Playlist" component={PlaylistScreen} />
                               <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
