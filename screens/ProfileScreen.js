@@ -37,7 +37,8 @@ export default class ProfileScreen extends Component {
         super();
         this.state = {
             darkModeEnabled: false,
-            dataIsReturned: false
+            dataIsReturned: false,
+            backgroundColor: 'white'
         };
         this.id = {
             _id: ""
@@ -117,6 +118,22 @@ export default class ProfileScreen extends Component {
 
 
                     </TouchableOpacity>
+
+                    <TouchableOpacity>
+                        <Text>White</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity>
+                        <Text>Red</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity>
+                        <Text>Blue</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity>
+                        <Text>Green</Text>
+                    </TouchableOpacity>
                 </View>
             );
         } else {
@@ -130,6 +147,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
+        backgroundColor: 'white'
     },
     biocontainer: {
         margin: 10,
