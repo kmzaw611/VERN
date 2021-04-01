@@ -53,9 +53,6 @@ server.post('/create-user', function (req, res) {
                     genre: req.body.genre,
                     color: req.body.color,
                     bio: req.body.bio,
-                    following: req.body.following,
-                    followers: req.body.followers,
-                    groups: req.body.groups,
                     token: req.body.token,
                     songID: req.body.songID,
                     spotifyTokenID: req.body.spotifyTokenID,
@@ -130,182 +127,6 @@ server.post('/edit-user', function (req, res) {
         })
         .catch(error => {
             console.log("Shit");
-            console.error(error);
-        });
-});
-server.post('/follow-user', function (req, res) {
-    //Get user
-    User.findOne({ _id: req.body.their_id })
-        .then(result => {
-            //Found other user
-            if (result != null) {
-                //Check if already following
-                var check = 0;
-                var follows = result.followers;
-                for (var i = 0; i < follows.length; i++) {
-                    if (follows[i] === (req.body.my_id))
-                        check = 1;
-                }
-                if (check == 0) {
-                    //If follow connection already exists
-                    User.findOne({ _id: req.body.my_id })
-                        .then(result2 => {
-                            if (result != null) {
-                                //Found me
-                                var find = {
-                                    _id: req.body.their_id
-                                }
-                                var update = {};
-                                follows.push(req.body.my_id);
-                                update["followers"] = follows;
-
-                                User.findOneAndUpdate(find, update, { new: true })
-                                    .then(result3 => {
-                                        console.log(result3);
-                                    })
-                                    .catch(error => {
-                                        console.error(error);
-                                        res.send("add Error (them)");
-                                        res.end();
-                                    });
-
-                                find = {
-                                    _id: req.body.my_id
-                                }
-                                delete update.followers;
-                                follows = result2.following;
-                                follows.push(req.body.their_id);
-                                update["following"] = follows;
-
-                                User.findOneAndUpdate(find, update, { new: true })
-                                    .then(result3 => {
-                                        console.log(result3);
-                                    })
-                                    .catch(error => {
-                                        console.error(error);
-                                        res.send("add Error (me)");
-                                        res.end();
-                                    });
-                                console.log("SUCCESS");
-                                res.send("SUCCESS");
-                                res.end();
-                            }
-                            else {
-                                //Cound not find my profile
-                                console.log(result);
-                                res.send("Couldnt find this user (me)");
-                                res.end();
-                            }
-                        })
-                        .catch(error => {
-                            console.error(error);
-                        });
-                }
-                else {
-                    console.log("Already following");
-                    res.send("Already following");
-                    res.end();
-                }
-            }
-            else {
-                // Could not find this user
-                console.log(result);
-                res.send("Couldnt find this user");
-                res.end();
-            }
-        })
-        .catch(error => {
-            console.error(error);
-        });
-});
-server.post('/unfollow-user', function (req, res) {
-    //Get user
-    User.findOne({ _id: req.body.their_id })
-        .then(result => {
-            //Found other user
-            if (result != null) {
-                //Check if already following
-                var check = -1;
-                var followers = result.followers;
-                for (var i = 0; i < followers.length; i++) {
-                    if (followers[i] === (req.body.my_id))
-                        check = i;
-                }
-                if (check >= 0) {
-                    //If follow connection already exists
-                    User.findOne({ _id: req.body.my_id })
-                        .then(result2 => {
-                            var check2 = -1;
-                            var following = result2.following;
-                            for (var i = 0; i < following.length; i++) {
-                                if (following[i] === (req.body.their_id))
-                                    check2 = i;
-                            }
-                            if (result != null) {
-                                //Found me
-                                var find = {
-                                    _id: req.body.their_id
-                                }
-                                var update = {};
-                                followers.splice(check, 1);
-                                update["followers"] = followers;
-
-                                User.findOneAndUpdate(find, update, { new: true })
-                                    .then(result3 => {
-                                        console.log(result3);
-                                    })
-                                    .catch(error => {
-                                        console.error(error);
-                                        res.send("add Error (them)");
-                                        res.end();
-                                    });
-
-                                find = {
-                                    _id: req.body.my_id
-                                }
-                                delete update.followers;
-                                following = result2.following;
-                                following.splice(check2, 1);
-                                update["following"] = following;
-
-                                User.findOneAndUpdate(find, update, { new: true })
-                                    .then(result3 => {
-                                        console.log(result3);
-                                    })
-                                    .catch(error => {
-                                        console.error(error);
-                                        res.send("add Error (me)");
-                                        res.end();
-                                    });
-                                console.log("SUCCESS");
-                                res.send("SUCCESS");
-                                res.end();
-                            }
-                            else {
-                                //Cound not find my profile
-                                console.log(result);
-                                res.send("Couldnt find this user (me)");
-                                res.end();
-                            }
-                        })
-                        .catch(error => {
-                            console.error(error);
-                        });
-                }
-                else {
-                    console.log("Not Following");
-                    res.send("Not Following");
-                    res.end();
-                }
-            }
-            else {
-                // Could not find this user
-                console.log(result);
-                res.send("Couldnt find this user");
-                res.end();
-            }
-        })
-        .catch(error => {
             console.error(error);
         });
 });
@@ -395,14 +216,16 @@ server.post('/top_songs_playlist', function (req, res) {
                     userId = data.body.id
                 }
             )
-            spotifyApi.getMyTopTracks()
-                .then(function (data) {
+            spotifyApi.getMyTopTracks()                 //************************** change structs so we don't pass in any arrays ******unless react can handle those for display*/
+                     //*******added async below*/
+                .then(function (data) {             
                     userId = ""
                     let topTracks = data.body.items;
                     var genSeed = [];
                     var i;
                     let genreDict = {};
-                    currentArtists = [];
+                    var currentArtists = [];
+                    //var duration_ms;
                     currentIds = [];
                     songs = [];
                     for (i = 0; i < topTracks.length; i++) {
@@ -412,15 +235,18 @@ server.post('/top_songs_playlist', function (req, res) {
                         currentIds = []
                         for (var j = 0; j < topTracks[i].artists.length; j++) {
                             currentArtists.push(topTracks[i].artists[j].name);
-                            currentIds.push(topTracks[i].artists[j].id);
+                            //console.log(currentArtists);
+                            //currentIds.push(topTracks[i].artists[j].id);
                         }
+                        //console.log(currentArtists[0]);
                         let song = {
-                            "id": topTracks[i].id,
-                            "name": topTracks[i].name,
-                            "duration": topTracks[i].duration,
-                            "artists": currentArtists,
-                            "artistIds": currentIds
+                            "songID": topTracks[i].id,
+                            "title": topTracks[i].name,
+                            "artist": currentArtists.join(),
+                            "length": topTracks[i].popularity
+                            //"artistIds": currentIds.join()
                         }
+                        //console.log(song.duration)
                         songs.push(song)
                     }
                     //Creating the JSON file to save
@@ -431,15 +257,19 @@ server.post('/top_songs_playlist', function (req, res) {
                     let month = ("0" + (date.getMonth() + 1)).slice(-2);
                     let dateNumber = ("0" + date.getDate()).slice(-2);
                     let todaysDate = (month + "-" + date + "-" + year)
+                    //******************** something with the song.js & playlist.js schema's being intereperted in PlaylistScreen.js w/react
+                    //differences with the one returned from testServer : user: '', songs: [ and ] w/date at bottom
                     let topSongs = {
-                        user: userId,
-                        songs: songs,
-                        date: todaysDate
+                        //user: userId,
+                        songs: songs
+                        //date: todaysDate
+                        
+                        //date: todaysDate
                     }
-                    payload = (JSON.stringify(topSongs, null, 4))
+                    payload = (JSON.stringify(songs, null, 4))       //modify for proper struct
                     i = 0;
                     const app = express();
-                    //console.log(payload)
+                    console.log(payload)
                     res.send(payload)
                     res.end()
                     //app.post("/top_songs_playlist", (req, res) => {
@@ -588,181 +418,116 @@ server.post('/edit-group', function (req, res) {
             console.error(error);
         });
 });
-//Need to add/remove group from user data upon addition/removal 
 server.post('/group-add-user', function (req, res) {
-    User.findOne({ _id: req.body.userID })
-        .then(result1 => {
-            Group.findOne({ _id: req.body._id })
-                .then(result => {
-                    if (result != null) {
-                        //Check if they have access
-                        if (result.private == false) {
-                            //Check if user is already in the list or if group is full
-                            var check = 0;
-                            var users = result.users;
-                            for (var i = 0; i < users.length; i++) {
-                                if (users[i] === (req.body.userID))
-                                    check = 1;
-                            }
-                            if (check == 0 && result.numUsers < 25) {
-                                //Add the user
-                                var find = {
-                                    _id: req.body._id
-                                }
-                                var update = {};
-                                users.push(req.body.userID);
-                                update["users"] = users;
-                                update["numUsers"] = result.numUsers + 1;
-
-                                Group.findOneAndUpdate(find, update, { new: true })
-                                    .then(result2 => {
-                                        //SUCCESS CASE
-                                        console.log(result2);
-                                    })
-                                    .catch(error => {
-                                        console.error(error);
-                                    });
-
-                                find = {
-                                    _id: req.body.userID
-                                }
-                                delete update.users;
-                                delete update.numUsers;
-                                result1.groups.push(req.body._id);
-                                update["groups"] = result1.groups;
-
-                                User.findOneAndUpdate(find, update, { new: true })
-                                    .then(result2 => {
-                                        //SUCCESS CASE
-                                        console.log(result2);
-                                    })
-                                    .catch(error => {
-                                        console.error(error);
-                                    });
-                                console.log("SUCCESS");
-                                res.send("SUCCESS");
-                                res.end();
-                            }
-                            else {
-                                console.log("User already in group");
-                                res.send("You are already in this group");
-                                res.end();
-                            }
+    Group.findOne({ _id: req.body._id })
+        .then(result => {
+            if (result != null) {
+                //Check if they have access
+                if (result.private == false) {
+                    //Check if user is already in the list or if group is full
+                    var check = 0;
+                    var users = result.users;
+                    for (var i = 0; i < users.length; i++) {
+                        if (users[i] === (req.body.userID))
+                            check = 1;
+                    }
+                    if (check == 0 && result.numUsers < 25) {
+                        //Add the user
+                        const find = {
+                            _id: req.body._id
                         }
-                        else {
-                            console.log("Not allowed in");
-                            res.send("You cannot join this group");
-                            res.end();
-                        }
+                        var update = {};
+                        users.push(req.body.userID);
+                        update["users"] = users;
+                        update["numUsers"] = result.numUsers + 1;
+
+                        Group.findOneAndUpdate(find, update, { new: true })
+                            .then(result2 => {
+                                //SUCCESS CASE
+                                console.log(result2);
+                                res.send(result2);
+                                res.end();
+                            })
+                            .catch(error => {
+                                console.error(error);
+                            });
                     }
                     else {
-                        //Not clear to replace
-                        console.log(result);
-                        res.send(result);
+                        console.log("User already in group");
+                        res.send("You are already in this group");
                         res.end();
                     }
-                })
-                .catch(error => {
-                    console.log("add user error");
-                    console.error(error);
-                });
-        })
-        .catch(error => {
-            //Couldnt find user
-            console.log("Couldnt find user");
-            console.error(error);
-        })
-});
-server.post('/group-remove-user', function (req, res) {
-    User.findOne({ _id: req.body.userID })
-        .then(result1 => {
-            var check1 = -1;
-            var groups = result1.groups;
-            for (var i = 0; i < groups.length; i++) {
-                if (groups[i] === (req.body._id))
-                    check1 = i;
-            }
-            if (check1 >= 0) {
-                Group.findOne({ _id: req.body._id })
-                    .then(result => {
-                        if (result != null) {
-                            //Find user
-                            var check = -1;
-                            var users = result.users;
-                            for (var i = 0; i < users.length; i++) {
-                                if (users[i] === (req.body.userID))
-                                    check = i;
-                            }
-                            if (check >= 0) {
-
-                                var find = {
-                                    _id: req.body._id
-                                }
-
-                                var update = {};
-                                users.splice(check, 1);
-                                update["users"] = users;
-                                update["numUsers"] = result.numUsers - 1;
-
-                                Group.findOneAndUpdate(find, update, { new: true })
-                                    .then(result2 => {
-                                        console.log(result2);
-                                    })
-                                    .catch(error => {
-                                        console.error(error);
-                                    });
-
-                                find = {
-                                    _id: req.body.userID
-                                }
-
-                                groups.splice(check1, 1);
-                                delete update.users;
-                                delete update.numUsers;
-                                update["groups"] = groups;
-
-                                User.findOneAndUpdate(find, update, { new: true })
-                                    .then(result2 => {
-                                        console.log(result2);
-                                    })
-                                    .catch(error => {
-                                        console.error(error);
-                                    });
-                                console.log("SUCCESS");
-                                res.send("SUCCESS");
-                                res.end();
-                            }
-                            else {
-                                console.log("Group doesnt have user");
-                                res.send("Group doesnt have user");
-                                res.end();
-                            }
-                        }
-                        else {
-                            //Not clear to replace
-                            console.log(result);
-                            res.send(result);
-                            res.end();
-                        }
-                    })
-                    .catch(error => {
-                        console.log("Group remove user error");
-                        console.error(error);
-                    });
+                }
+                else {
+                    console.log("Not allowed in");
+                    res.send("You cannot join this group");
+                    res.end();
+                }
             }
             else {
-                console.log("Not in this group");
-                res.send("Not in group");
+                //Not clear to replace
+                console.log(result);
+                res.send(result);
                 res.end();
             }
         })
         .catch(error => {
-            //Couldnt find user
-            console.log("Couldnt find user");
+            console.log("add user error");
             console.error(error);
-        })
+        });
 });
-//All Good
+server.post('/group-remove-user', function (req, res) {
+    Group.findOne({ _id: req.body._id })
+        .then(result => {
+            if (result != null) {
+                //Find user
+                var check = -1;
+                var users = result.users;
+                for (var i = 0; i < users.length; i++) {
+                    if (users[i] === (req.body.userID))
+                        check = i;
+                }
+                if (check >= 0) {
+
+                    const find = {
+                        _id: req.body._id
+                    }
+                    
+                    var update = {};
+                    users.splice(check, 1);
+                    console.log(check);
+                    console.log(users);
+                    update["users"] = users;
+                    update["numUsers"] = result.numUsers - 1;
+
+                    Group.findOneAndUpdate(find, update, { new: true })
+                        .then(result2 => {
+                            console.log(result2);
+                            res.send(result2);
+                            res.end();
+                        })
+                        .catch(error => {
+                            console.error(error);
+                        });
+                }
+                else {
+                    console.log("User is not in this group");
+                    res.send("User is not in this group");
+                    res.end();
+                }
+            }
+            else {
+                //Not clear to replace
+                console.log(result);
+                res.send(result);
+                res.end();
+            }
+        })
+        .catch(error => {
+            console.log("Group remove user error");
+            console.error(error);
+        });
+});
 server.post('/get-group-users', function (req, res) {
     console.log(req.body.title);
     Group.findOne({ title: req.body.title }
