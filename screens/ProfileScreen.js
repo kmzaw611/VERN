@@ -2,6 +2,7 @@ import React, { useState, Component } from 'react';
 import { Text, View, TouchableOpacity, StyleSheet, TextInput, Switch } from 'react-native';
 const methods = require('../MondgoDB/testClient');
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { color } from 'react-native-reanimated';
 /*
 const ProfileScreen = ({ navigation }) => {
   const onLogoutPress = () => {
@@ -31,6 +32,8 @@ const ProfileScreen = ({ navigation }) => {
 
             */
 // Ethan code for fetching db info before render
+
+//const color = 'white'
 export default class ProfileScreen extends Component {
     // Defining states and variables
     constructor() {
@@ -38,7 +41,7 @@ export default class ProfileScreen extends Component {
         this.state = {
             darkModeEnabled: false,
             dataIsReturned: false,
-            backgroundColor: 'white'
+            color: 'white'
         };
         this.id = {
             _id: ""
@@ -66,7 +69,7 @@ export default class ProfileScreen extends Component {
         //changes to true when data is retrieved from server
         if (this.state.dataIsReturned === true) {
             return (
-                <View style={styles.container}>
+                <View style={{flex: 1, alignItems: 'center', backgroundColor: this.state.color}}>
                     <View style={styles.nameinfo}>
                         <Text style={styles.name}>{this.userData.username}</Text>
                         <Text style={styles.infotitle}>Favourite Genre</Text>
@@ -116,24 +119,28 @@ export default class ProfileScreen extends Component {
                     >
                         <Text>Edit Profile</Text>
 
-
                     </TouchableOpacity>
 
-                    <TouchableOpacity>
-                        <Text>White</Text>
+                    <Text style={styles.minititle}>Background Color</Text>
+
+                    <View style={styles.followButtonsContainer}> 
+                    <TouchableOpacity style={styles.colorButton}
+                    onPress={()=>{this.setState({color: 'white'})}}>
+                        <Text style={{color: 'white', fontWeight: 'bold'}}>White</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity>
-                        <Text>Red</Text>
+                    <TouchableOpacity style={styles.colorButton}
+                    onPress={()=>{this.setState({color: 'red'})}}>
+                        <Text style={{color: 'red', fontWeight: 'bold'}}>Red</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity>
-                        <Text>Blue</Text>
+                    <TouchableOpacity style={styles.colorButton}
+                    onPress={()=>{this.setState({color: 'green'})}}>
+                        <Text style={{color: 'green', fontWeight: 'bold'}}>Green</Text>
                     </TouchableOpacity>
+                    </View>
 
-                    <TouchableOpacity>
-                        <Text>Green</Text>
-                    </TouchableOpacity>
+                   
                 </View>
             );
         } else {
@@ -147,8 +154,25 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        backgroundColor: 'white'
+       // backgroundColor: 
     },
+    colorButton: {
+        alignItems: 'center',
+        backgroundColor: 'black',
+        padding: 10,
+        marginTop: 15,
+        margin: 10,
+        borderRadius: 10,
+    },
+    minititle: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: 'black',
+        margin: 10,
+        marginBottom: 5,
+        fontFamily: 'sans-serif-condensed',
+        textAlign: 'center'
+      },
     biocontainer: {
         margin: 10,
         marginBottom: 20,
