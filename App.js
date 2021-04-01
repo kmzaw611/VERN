@@ -110,10 +110,10 @@ const App = () => {
           <>
           <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
                           <Stack.Screen name="Playlist" component={PlaylistScreen} />
-                          <Stack.Screen name="EditScreen" component={EditScreen} />
                           <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
                           <Stack.Screen name="StartScreen" component={StartScreen} options={{ headerShown: false }} />
                           <Stack.Screen name="ActualRegister" component={ActualRegisterScreen} options={{ headerShown: false }} />
+                          <Stack.Screen name="EditScreen" component={EditScreen} />
           </>
 
         ) : (
@@ -122,6 +122,7 @@ const App = () => {
           <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
                               <Stack.Screen name="Playlist" component={PlaylistScreen} />
                               <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+                              <Stack.Screen name="EditScreen" component={EditScreen} />
             
           </>
         )}
