@@ -1,12 +1,18 @@
 {
   "ExpandedNodes": [
     "",
-    "\\MondgoDB",
-    "\\MondgoDB\\models",
+    "\\android\\app",
+    "\\android\\app\\src",
+    "\\android\\app\\src\\main",
+    "\\android\\app\\src\\main\\java",
+    "\\android\\app\\src\\main\\java\\com",
+    "\\android\\app\\src\\main\\java\\com\\vern",
+    "\\android\\app\\src\\main\\res",
+    "\\android\\app\\src\\main\\res\\values",
     "\\screens",
-    "\\SpotifyAPI",
-    "\\SpotifyAPI\\Examples"
+    "\\screens\\test_json",
+    "\\screens\\utils"
   ],
-  "SelectedNode": "\\screens\\ProfileScreen.js",
+  "SelectedNode": "\\MondgoDB\\testClient.js",
   "PreviewInSolutionExplorer": false
 }
