@@ -37,7 +37,6 @@ export default class ProfileScreen extends Component {
     // Defining states and variables
     constructor() {
         super();
-        //this.props.navigation.addListener()
         this.state = {
             darkModeEnabled: false,
             dataIsReturned: false,
@@ -48,14 +47,9 @@ export default class ProfileScreen extends Component {
         };
         this.userData = null;
     }
-   // onChange = () => {
-  //      this.setState({ backgroundColor: '#3e3e3e' });
-  //  }
 
     //Where I get the data and change states
     componentDidMount() {
-        //const { navigation } = this.props;
-        //navigation.addListener ('willFocus', () =>
         this.onLoad();
         AsyncStorage.getItem('userID')
             .then(result => {
@@ -68,7 +62,6 @@ export default class ProfileScreen extends Component {
             .catch(err => {
                 console.error(err);
             });
-        //);
     }
     onLoad = () => {
         this.props.navigation.addListener('didFocus',() => console.log('x'))
@@ -83,8 +76,6 @@ export default class ProfileScreen extends Component {
 
     //Where i put the render function
     render() {
-        //changes to true when data is retrieved from server
-        //const [darkModeEnabled, setDarkModeEnabled] = useState(false);
         if (this.state.dataIsReturned === true) {
             return (
                 <View style={styles.container}>
@@ -142,15 +133,16 @@ export default class ProfileScreen extends Component {
                     <TouchableOpacity
                         style={styles.logoutButton}
                         onPress={() => {
-                            const deleteLoginInfo = async () => {
-                                try {
-                                    await AsyncStorage.setItem('isLoggedIn', 'false');
-                                    await AsyncStorage.setItem('userID', '');
+                            //const deleteLoginInfo = async () => {
+                              //  try {
+                                    AsyncStorage.setItem('isLoggedIn', 'false');
+                                    AsyncStorage.setItem('userID', '');
+                                    AsyncStorage.setItem('GroupID', '');
                                     console.log("AsyncStorage Logging Out")
-                                } catch (err) {
-                                    console.log(err);
-                                }
-                            }
+                               // } catch (err) {
+                                 //   console.log(err);
+                                //}
+                            //}
                             this.props.navigation.navigate("StartScreen");
                         }}
                     >
