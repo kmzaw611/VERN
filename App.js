@@ -13,6 +13,7 @@ import PlaylistScreen from './screens/PlaylistScreen'
 import EditScreen from './screens/EditScreen'
 import MyGroupScreen from './screens/MyGroupScreen'
 import ActualRegisterScreen from './screens/ActualRegisterScreen'
+import MyGroupScreen from './screens/MyGroupScreen'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 

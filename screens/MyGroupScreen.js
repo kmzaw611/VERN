@@ -1,3 +1,4 @@
+
 import React, { useState, Component } from 'react'
 import { Text, StyleSheet, View, TouchableOpacity, FlatList } from 'react-native'
 const methods = require('../MondgoDB/testClient');
@@ -25,8 +26,8 @@ const styles = StyleSheet.create({
     color: 'black',
     borderRadius: 10,
     textAlign: 'center',
-    //alignContent: 'center',
-    //textAlign: 'center',
+    alignContent: 'center',
+    textAlign: 'center',
     justifyContent: 'center',
   },
   groupCard: {
