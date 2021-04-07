@@ -1,8 +1,9 @@
-import React, { useState, Component } from 'react';
+import React, { useState, Component} from 'react';
 import { Text, View, TouchableOpacity, StyleSheet, TextInput, Switch } from 'react-native';
 const methods = require('../MondgoDB/testClient');
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { color } from 'react-native-reanimated';
+import { DarkTheme } from '@react-navigation/native';
+
 /*
 const ProfileScreen = ({ navigation }) => {
   const onLogoutPress = () => {
@@ -17,7 +18,6 @@ const ProfileScreen = ({ navigation }) => {
     }
     navigation.navigate("StartScreen");
   }
-
   const userData = require("./test_json/fake_user.json")[0];
   const [darkModeEnabled, setDarkModeEnabled] = useState(false);
     return (
@@ -29,11 +29,8 @@ const ProfileScreen = ({ navigation }) => {
           <Text style={styles.infotitle}>Favourite Song</Text>
           <Text style={styles.infodata}>{userData.songID}</Text>
             </View>
-
             */
 // Ethan code for fetching db info before render
-
-//const color = 'white'
 export default class ProfileScreen extends Component {
     // Defining states and variables
     constructor() {
@@ -41,7 +38,7 @@ export default class ProfileScreen extends Component {
         this.state = {
             darkModeEnabled: false,
             dataIsReturned: false,
-            color: 'white'
+            backgroundColor: 'white'
         };
         this.id = {
             _id: ""
@@ -51,6 +48,7 @@ export default class ProfileScreen extends Component {
 
     //Where I get the data and change states
     componentDidMount() {
+        this.onLoad();
         AsyncStorage.getItem('userID')
             .then(result => {
                 this.id._id = ("" + result);
@@ -63,13 +61,22 @@ export default class ProfileScreen extends Component {
                 console.error(err);
             });
     }
+    onLoad = () => {
+        this.props.navigation.addListener('didFocus',() => console.log('x'))
+    }
+
+    refresh_thing(params) {
+        methods.get_user(this.id, (res) => {
+            this.userData = res;
+            this.setState({ dataIsReturned: true });
+        });
+    }
 
     //Where i put the render function
     render() {
-        //changes to true when data is retrieved from server
         if (this.state.dataIsReturned === true) {
             return (
-                <View style={{flex: 1, alignItems: 'center', backgroundColor: this.state.color}}>
+                <View style={styles.container}>
                     <View style={styles.nameinfo}>
                         <Text style={styles.name}>{this.userData.username}</Text>
                         <Text style={styles.infotitle}>Favourite Genre</Text>
@@ -86,8 +93,10 @@ export default class ProfileScreen extends Component {
                     <View style={styles.followButtonsContainer}>
                         <TouchableOpacity
                             style={styles.followButton}
+                            onPress={() => this.props.navigation.navigate("Playlist", { playlistId: 2, playlistName: "Your Top Songs" })}
+
                         >
-                            <Text style={styles.followText}>Follow</Text>
+                            <Text style={styles.followText}>Add Favorite Song?</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity
@@ -101,46 +110,49 @@ export default class ProfileScreen extends Component {
                     <Switch
                         trackColor={{ false: "#767577", true: "#81b0ff" }}
                         thumbColor={this.state.darkModeEnabled ? "#f5dd4b" : "#f4f3f4"}
-                        ios_backgroundColor="#3e3e3e"
-                        onValueChange={() => {
-                            this.setState({ darkModeEnabled: !darkModeEnabled })
+                        //ios_backgroundColor="#3e3e3e"
+                        //backgroundColor = "3e3e3e"
+                        //backgroundColor = {DarkTheme}
+                        onChange={() => {
+                            //styles = {[
+                           //     styles.container,
+                           //     { backgroundColor: this.state.backgroundColor('#3e3e3e')},
+                         //   ]},
+
+                            //this.setState({backgroundColor: '#3e3e3e' })
+                            //<View style={styles.topScreen} />
+                            //this.setState({ backgroundColor: "#3e3e3e" }),
+                            this.setState({ darkModeEnabled: !darkModeEnabled})
+                            //console.log("sec")
                         }}
                         value={this.state.darkModeEnabled}
                     />
 
                     <TouchableOpacity
                         style={styles.logoutButton}
-                        onPress={() => this.props.navigation.push("StartScreen")}
+                        onPress={() => {
+                            //const deleteLoginInfo = async () => {
+                              //  try {
+                                    AsyncStorage.setItem('isLoggedIn', 'false');
+                                    AsyncStorage.setItem('userID', '');
+                                    AsyncStorage.setItem('GroupID', '');
+                                    console.log("AsyncStorage Logging Out")
+                               // } catch (err) {
+                                 //   console.log(err);
+                                //}
+                            //}
+                            this.props.navigation.navigate("StartScreen");
+                        }}
                     >
                         <Text style={styles.logoutText}>Logout</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => this.props.navigation.navigate("EditScreen")}
+                        onPress={() => this.props.navigation.push("EditScreen", {refresh: this.refresh_thing.bind(this)})}
                     >
                         <Text>Edit Profile</Text>
 
+
                     </TouchableOpacity>
-
-                    <Text style={styles.minititle}>Background Color</Text>
-
-                    <View style={styles.followButtonsContainer}> 
-                    <TouchableOpacity style={styles.colorButton}
-                    onPress={()=>{this.setState({color: 'white'})}}>
-                        <Text style={{color: 'white', fontWeight: 'bold'}}>White</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={styles.colorButton}
-                    onPress={()=>{this.setState({color: 'red'})}}>
-                        <Text style={{color: 'red', fontWeight: 'bold'}}>Red</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={styles.colorButton}
-                    onPress={()=>{this.setState({color: 'green'})}}>
-                        <Text style={{color: 'green', fontWeight: 'bold'}}>Green</Text>
-                    </TouchableOpacity>
-                    </View>
-
-                   
                 </View>
             );
         } else {
@@ -154,25 +166,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-       // backgroundColor: 
+        backgroundColor: 'white',
     },
-    colorButton: {
-        alignItems: 'center',
-        backgroundColor: 'black',
-        padding: 10,
-        marginTop: 15,
-        margin: 10,
-        borderRadius: 10,
-    },
-    minititle: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: 'black',
-        margin: 10,
-        marginBottom: 5,
-        fontFamily: 'sans-serif-condensed',
-        textAlign: 'center'
-      },
     biocontainer: {
         margin: 10,
         marginBottom: 20,
@@ -231,5 +226,12 @@ const styles = StyleSheet.create({
     infodata: {
         fontSize: 18,
         fontWeight: 'bold',
-    }
+    }/*
+    topScreen: {
+        flex: 0.3,
+        backgroundColor: "#3e3e3e",
+        borderWidth: 5,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius:20,
+    }*/
 })
