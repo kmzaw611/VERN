@@ -15,7 +15,7 @@ else
     url = "http://10.0.2.2:3000";
 // If you are testing from an Android emulator use this url instead.
 // Android Studio uses this url to redirect to the localhost if you are
-// running from an emulator.
+// running from an emulator
 
 const rh = axios.create({
     // baseURL: url
@@ -62,6 +62,24 @@ const methods = {
             })
             .catch(error => {
                 return callback("post failed");
+            });
+    },
+    follow_user: function (callback, data) {
+        rh.post(url + "/follow-user", data)
+            .then(res => {
+                return callback(res.data);
+            })
+            .catch(error => {
+                return callback("follow post failed");
+            });
+    },
+    unfollow_user: function (callback, data) {
+        rh.post(url + "/unfollow-user", data)
+            .then(res => {
+                return callback(res.data);
+            })
+            .catch(error => {
+                return callback("follow post failed");
             });
     },
 
@@ -131,6 +149,7 @@ const methods = {
                 return callback("get users failed");
             });
     },
+
     // POST calls for Store/Get song
     store_song: function (callback, data) {
         rh.post(url + "/add-song", data)
@@ -154,10 +173,16 @@ const methods = {
     //POST call for favorite songs
     top_songs: function (callback, data) {
         console.log("Hi from testClient.js")
-        console.log(data.refreshToken)
+        //console.log(data.refreshToken)
         rh.post(url + "/top_songs_playlist", data)
             .then(res => {
-                console.log(res.data)
+                //console.log(res.data)
+                //var userD = JSON.stringify(res.data);
+               // fs.writeFile('playlistVisualtest.txt', userD, function (err) {
+               //     if (err) {
+               //         return callback(err);
+              //      }
+              //  });
                 return callback(res.data)
             })
             .catch(error => {

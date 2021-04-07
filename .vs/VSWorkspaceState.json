@@ -3,9 +3,8 @@
     "",
     "\\MondgoDB",
     "\\MondgoDB\\models",
-    "\\screens",
-    "\\SpotifyAPI\\Examples"
+    "\\screens"
   ],
-  "SelectedNode": "\\MondgoDB\\client.js",
+  "SelectedNode": "\\screens\\MyGroupScreen.js",
   "PreviewInSolutionExplorer": false
 }

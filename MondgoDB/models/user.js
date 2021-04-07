@@ -32,6 +32,18 @@ const userSchema = new Schema({
         type: String,
         required: false
     },
+    following: {
+        type: Array,
+        required: false
+    },
+    followers: {
+        type: Array,
+        required: false
+    },
+    groups: {
+        type: Array,
+        required: false
+    },
     spotifyTokenID: {
         type: String,
         required: true
@@ -56,6 +68,7 @@ const userSchema = new Schema({
         type: String,
         required: false
     },
+    
     /*
     I commented this part out because type was not accepting "Song" as a valid type.
 

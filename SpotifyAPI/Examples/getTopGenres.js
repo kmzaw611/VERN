@@ -1,8 +1,8 @@
 //const { ART } = require('react-native');
-var SpotifyWebApi = require('spotify-web-api-node')
+var SpotifyWebApi = require('spotify-web-api-node');
 var spotifyApi = new SpotifyWebApi({
-    clientId: '0e8700b7f71d486bbb7c3bd120e892f8', // App client ID
-    clientSecret: '9ffb3fe2081b414e8c520d19805cbf09', //App client secret
+    clientId: 'b9d72821ddbe43bbb0a8242c7870c117', // App client ID
+    clientSecret: '301a476e613043d2b9e1753528a746ba', //App client secret
     redirectUri: 'http://localhost:8888/callback' //Where the user is to be taken after authentication
 });
 spotifyApi.setRefreshToken('AQCzVfJhvvDF8KvxRKP6ANQ_hfmYbqDdsVQ7XR0FlLlA4soBz6CnmK1HUIas6c9hQHpQ2sV_dDkfYApzJlVkoFMeyjsnVj7Kgdzzd4jG8OwUAbKvzPiVaM5ijhxRhkrdeLU') // Set refresh token, use auth_check.js to get a refresh token

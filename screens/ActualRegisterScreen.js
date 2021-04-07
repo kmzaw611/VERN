@@ -19,6 +19,9 @@ const ActualRegisterScreen = ({ navigation }) => {
       genre: "none",
       color: "none",
       bio: "none",
+      following: [],
+      followers: [],
+      groups: [],
       token: "",
       songID: "none",
       // The Spotify stuff is by default Matthew's info from SpotifyAPI/secrets.js.

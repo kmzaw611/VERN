@@ -30,11 +30,11 @@ const groupSchema = new Schema({
     },
     users: {
         type: Array,
-        required: true
+        required: false
     },
     numUsers: {
         type: Number,
-        required: true
+        required: false
     }
 }, { timestamps: true });
 

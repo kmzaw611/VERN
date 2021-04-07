@@ -1,37 +1,15 @@
-import React from 'react'
-import {Text, StyleSheet, View, TouchableOpacity, Modal, TextInput} from 'react-native'
 
-
-const MyGroupScreen = ({ navigation }) => {
-  return (
-    <View
-            >
-              <View style={{justifyContent: 'center', textAlign: 'center'}}>
-              <Text style={styles.title}>Sample Group Name</Text>
-
-              <Text style={styles.inputEmailPasswordBio}>Sample Group Bio</Text>
-
-
-              <Text style={styles.title}>Users</Text>
-              
-              <TouchableOpacity onPress={() => navigation.navigate("UserProfileScreen")}
-              style={styles.sampleGroup}>
-                <Text style={styles.sampleGroupText}>User 1 Name</Text>
-              </TouchableOpacity>
-
-              <View>
-                
-              </View>
-
-              
-              </View>
-              
-            </View>
-  )
-}
+import React, { useState, Component } from 'react'
+import { Text, StyleSheet, View, TouchableOpacity, FlatList } from 'react-native'
+const methods = require('../MondgoDB/testClient');
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const styles = StyleSheet.create({
-  inputEmailPassword: {
+    container: {
+        flex: 1,
+        alignItems: 'center',
+    },
+    inputEmailPassword: {
     width: 225,
     height: 40,
     margin: 5,
@@ -158,7 +136,13 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     padding:15,
     margin: 20
-  },
+    },
+    songcontainer: {
+        flex: 1,
+        flexDirection: 'row',
+        borderBottomWidth: 0.2,
+        paddingBottom: 5,
+    },
   sampleGroupText: {
     alignContent: 'center',
     fontWeight: 'bold',
@@ -167,4 +151,110 @@ const styles = StyleSheet.create({
   }
 })
 
-export default MyGroupScreen;
+export default class MyGroupScreen extends Component {
+    constructor() {
+        super();
+        this.state = {
+            reload: false,
+        }
+        this.id = {
+            _id: ""
+        }
+        this.title = "",
+        this.bio = "",
+            this.userList = [];
+        this.myid = ""
+    }
+    componentDidMount() {
+        AsyncStorage.getItem('userID')
+            .then(result => {
+                this.myid = result;
+            })
+            .catch(err => {
+                console.log("fart");
+            })
+        AsyncStorage.getItem('GroupID')
+            .then(result => {
+                if (result != null) {
+                    this.id._id = ("" + result);
+                    methods.get_group((res) => {
+                        // Fill data with stuff
+                        if (res != null) {
+                            this.title = res.title;
+                            this.bio = res.bio;
+                            for (var i = 0; i < res.users.length; i++) {
+                                const userid = {
+                                    _id: res.users[i]
+                                };
+                                methods.get_user(userid, res1 => {
+                                    if (res1 != null && !(res1 === "post failed")) {
+                                        this.userList.push(res1);
+                                    }
+                                    if (i == res.users.length) {
+                                        this.setState({ reload: true });
+                                    }
+                                });
+                            }
+                        }
+                    }, this.id);
+                }
+                else {
+                    console.log("No Group Found");
+                }
+            })
+            .catch(err => {
+                console.error(err);
+            });
+    }
+
+    handleUserPress = (usersid) => {
+        if (this.myid === usersid) {
+            this.props.navigation.navigate("ProfileScreen");
+        }
+        else {
+            this.props.navigation.navigate("OtherUserProfile", { uid: usersid })
+        }
+    }
+
+    
+    
+
+    render = () => {
+        const renderUser = ({ item }) => (
+            <TouchableOpacity onPress={() => { this.handleUserPress.bind(this)(item._id) }}>
+                <View style={styles.songcontainer}>
+                    <Text style={styles.sampleGroupText}>{item.username}</Text>
+                </View>
+            </TouchableOpacity>
+        )
+        if (this.state.reload == true) {
+            return (
+                <View
+                >
+                    <View style={{ justifyContent: 'center', textAlign: 'center' }}>
+                        <Text style={styles.title}>{this.title}</Text>
+
+                        <Text style={styles.inputEmailPasswordBio}>{this.bio}</Text>
+
+
+                        <Text style={styles.title}>Users</Text>
+                        
+
+                        <View>
+
+                        </View>
+                        <FlatList
+                            data={this.userList}
+                            renderItem={renderUser}
+                            keyExtractor={(item, index) => item._id}
+                        />
+                    </View>
+                </View>
+            )
+        }
+        else {
+            return (<Text> Loading </Text>);
+        }
+    }
+}
+
