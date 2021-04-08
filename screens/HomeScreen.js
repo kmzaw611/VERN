@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Text, View, FlatList, StyleSheet, TouchableOpacity, ScrollView, Image,
           ImageBackground } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+const methods = require('../MondgoDB/testClient');
 
 const playlistData = require('./test_json/playlists.json');
 const performanceData = require('./test_json/performances.json');
@@ -71,6 +73,27 @@ const HomeScreen = ({ navigation }) => {
       <Text style={styles.performanceDetail}>{item.time.toString()}</Text>
     </TouchableOpacity>
   );
+
+  useEffect(() => {
+    // Get a list of groups the user is a part of
+    // Update groupsData with it
+    const getUserGroups = async () => {
+      try {
+        const userID = await AsyncStorage.getItem('userID');
+        console.log("UserID: " + userID)
+        await methods.get_user(userID, (res) => {
+          const userData = res;
+          const groups = userData.groups;
+          console.log("Groups: " + groups);
+        });
+      } catch (error) {
+        console.log(error)
+      }
+    };
+
+    getUserGroups();
+  }, [])
+
 
   const renderGroupItem = ({ item }) => (
     <TouchableOpacity
