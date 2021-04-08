@@ -1,8 +1,13 @@
-import React, { useState, Component } from 'react';
+import React, { useState, Component} from 'react';
 import { Text, View, TouchableOpacity, StyleSheet, TextInput, Switch } from 'react-native';
 const methods = require('../MondgoDB/testClient');
 import AsyncStorage from '@react-native-async-storage/async-storage';
+<<<<<<< HEAD
 import { color } from 'react-native-reanimated';
+=======
+import { DarkTheme } from '@react-navigation/native';
+
+>>>>>>> 5c94425b9d468a03d16a7d3f07fd6707040bbd7d
 /*
 const ProfileScreen = ({ navigation }) => {
   const onLogoutPress = () => {
@@ -41,7 +46,11 @@ export default class ProfileScreen extends Component {
         this.state = {
             darkModeEnabled: false,
             dataIsReturned: false,
+<<<<<<< HEAD
             color: 'white'
+=======
+            backgroundColor: 'white'
+>>>>>>> 5c94425b9d468a03d16a7d3f07fd6707040bbd7d
         };
         this.id = {
             _id: ""
@@ -51,6 +60,7 @@ export default class ProfileScreen extends Component {
 
     //Where I get the data and change states
     componentDidMount() {
+        this.onLoad();
         AsyncStorage.getItem('userID')
             .then(result => {
                 this.id._id = ("" + result);
@@ -63,10 +73,19 @@ export default class ProfileScreen extends Component {
                 console.error(err);
             });
     }
+    onLoad = () => {
+        this.props.navigation.addListener('didFocus',() => console.log('x'))
+    }
+
+    refresh_thing(params) {
+        methods.get_user(this.id, (res) => {
+            this.userData = res;
+            this.setState({ dataIsReturned: true });
+        });
+    }
 
     //Where i put the render function
     render() {
-        //changes to true when data is retrieved from server
         if (this.state.dataIsReturned === true) {
             return (
                 <View style={{flex: 1, alignItems: 'center', backgroundColor: this.state.color}}>
@@ -86,8 +105,10 @@ export default class ProfileScreen extends Component {
                     <View style={styles.followButtonsContainer}>
                         <TouchableOpacity
                             style={styles.followButton}
+                            onPress={() => this.props.navigation.navigate("Playlist", { playlistId: 2, playlistName: "Your Top Songs" })}
+
                         >
-                            <Text style={styles.followText}>Follow</Text>
+                            <Text style={styles.followText}>Add Favorite Song?</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity
@@ -101,21 +122,44 @@ export default class ProfileScreen extends Component {
                     <Switch
                         trackColor={{ false: "#767577", true: "#81b0ff" }}
                         thumbColor={this.state.darkModeEnabled ? "#f5dd4b" : "#f4f3f4"}
-                        ios_backgroundColor="#3e3e3e"
-                        onValueChange={() => {
-                            this.setState({ darkModeEnabled: !darkModeEnabled })
+                        //ios_backgroundColor="#3e3e3e"
+                        //backgroundColor = "3e3e3e"
+                        //backgroundColor = {DarkTheme}
+                        onChange={() => {
+                            //styles = {[
+                           //     styles.container,
+                           //     { backgroundColor: this.state.backgroundColor('#3e3e3e')},
+                         //   ]},
+
+                            //this.setState({backgroundColor: '#3e3e3e' })
+                            //<View style={styles.topScreen} />
+                            //this.setState({ backgroundColor: "#3e3e3e" }),
+                            this.setState({ darkModeEnabled: !darkModeEnabled})
+                            //console.log("sec")
                         }}
                         value={this.state.darkModeEnabled}
                     />
 
                     <TouchableOpacity
                         style={styles.logoutButton}
-                        onPress={() => this.props.navigation.push("StartScreen")}
+                        onPress={() => {
+                            //const deleteLoginInfo = async () => {
+                              //  try {
+                                    AsyncStorage.setItem('isLoggedIn', 'false');
+                                    AsyncStorage.setItem('userID', '');
+                                    AsyncStorage.setItem('GroupID', '');
+                                    console.log("AsyncStorage Logging Out")
+                               // } catch (err) {
+                                 //   console.log(err);
+                                //}
+                            //}
+                            this.props.navigation.navigate("StartScreen");
+                        }}
                     >
                         <Text style={styles.logoutText}>Logout</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => this.props.navigation.navigate("EditScreen")}
+                        onPress={() => this.props.navigation.push("EditScreen", {refresh: this.refresh_thing.bind(this)})}
                     >
                         <Text>Edit Profile</Text>
 
@@ -154,6 +198,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
+<<<<<<< HEAD
        // backgroundColor: 
     },
     colorButton: {
@@ -163,6 +208,9 @@ const styles = StyleSheet.create({
         marginTop: 15,
         margin: 10,
         borderRadius: 10,
+=======
+        backgroundColor: 'white',
+>>>>>>> 5c94425b9d468a03d16a7d3f07fd6707040bbd7d
     },
     minititle: {
         fontSize: 24,
@@ -231,5 +279,12 @@ const styles = StyleSheet.create({
     infodata: {
         fontSize: 18,
         fontWeight: 'bold',
-    }
+    }/*
+    topScreen: {
+        flex: 0.3,
+        backgroundColor: "#3e3e3e",
+        borderWidth: 5,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius:20,
+    }*/
 })

@@ -5,10 +5,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const methods = require('../MondgoDB/testClient');
 
 
-export default class ProfileScreen extends Component {
+export default class EditScreen extends Component {
     // Defining states and variables
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             darkModeEnabled: false,
             dataIsReturned: false,
@@ -69,11 +69,14 @@ export default class ProfileScreen extends Component {
         if (count > 0) {
             methods.edit_user((result) => {
                 console.log(result);
-                this.props.navigation.navigate("ProfileScreen");
+                this.props.route.params.refresh(true);
+                this.props.navigation.goBack();
             }, editjson);
         }
         else {
-            this.props.navigation.navigate("ProfileScreen");
+            this.props.route.params.refresh(true);//.navigation.params);
+            //this.props.navigation.params.refresh(true);
+            this.props.navigation.goBack();
         }
     }
 

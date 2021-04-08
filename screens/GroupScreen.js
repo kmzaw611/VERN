@@ -1,100 +1,218 @@
 import React from 'react'
 import {Text, StyleSheet, View, TouchableOpacity, Modal, TextInput} from 'react-native'
-
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+const methods = require('../MondgoDB/testClient');
 
  
 
- class GroupScreen extends React.Component {
+ export default class GroupScreen extends React.Component {
 
-  constructor() 
-  {
-    super();
-    this.state={
-      show: false,
-      names: []
-    }
-    
-  }
-  
-  addName2 = (newName) => {
-    this.setState({names: newName})
-  }
+      constructor() 
+      {
+        super();
+        this.state={
+          show: false,
+            names: [],
+            reload: false,
+            title: "",
+            bio: "",
+            anchor: ""
+          }
+          this.showTitle = "No Groups";
+          this.id = {
+              _id: ""
+          };
+          inGroup = false;
+          this.addGroupHandler = this.addGroupHandler.bind(this);
+     }
 
-  onGroupPress = () => navigation.navigate("MyGroupScreen");
- //}= ({ navigation }) => {
-   render() {
+     componentDidMount() {
+         AsyncStorage.getItem('userID')
+             .then(result => {
+                 this.id._id = ("" + result);
+                 methods.get_user(this.id, (res) => {
+                     if (!(res.groups[0] === "")) {
+                         
+                         AsyncStorage.getItem('GroupID')
+                             .then(result => {
+                                 if (result != null) {
+                                     inGroup = true;
+                                     const data = {
+                                         _id: result
+                                     };
+                                     methods.get_group(res => {
+                                         this.showTitle = res.title;
+                                         this.setState({ reload: true });
+                                     }, data);
+                                 }
+                                 else {
+                                     inGroup = false;
+                                     this.showTitle = "No Groups Found";
+                                     this.setState({ reload: true });
+                                 }
+                             })
+                             .catch((err) => {
+                                 console.log(err);
+                             });
+                     }
+                     else {
+                         inGroup = false;
+                         this.showTitle = "No Groups Found";
+                         this.setState({ reload: true });
+                     }
+                 });
+             })
+             .catch(err => {
+                 console.error(err);
+             });
+     }
+     refresh_thing = () => {
+         methods.get_user(this.id, (res) => {
+             if (!(res.groups[0] === "")) {
+                 inGroup = true;
+                 AsyncStorage.getItem('GroupID')
+                     .then(result => {
+                         if (result != null) {
+                             inGroup = true;
+                             const data = {
+                                 _id: result
+                             };
+                             methods.get_group(res => {
+                                 this.showTitle = res.title;
+                                 this.setState({ reload: true });
+                             }, data);
+                         }
+                         else {
+                             inGroup = false;
+                             this.showTitle = "No Groups Found";
+                             this.setState({ reload: true });
+                         }
+                     })
+                     .catch((err) => {
+                         console.log(err);
+                     });
+             }
+         });
+     }
 
-   
-  return (
-      <View>
+     addGroupHandler = () => {
+         const groupjson = {
+             creatorID: this.id._id,
+             title: this.state.title,
+             color: "#FFFFFF",
+             bio: this.state.bio,
+             private: false,
+             password: ""
+         };
+         methods.create_group((result) => {
+             if (result != null) {
+                 if (!(result === "Title Taken")) {
+                     console.log("Result:");
+                     console.log(result);
+                     AsyncStorage.setItem('GroupID', result._id);
+                    console.log("1");
+                    console.log("2");
+                    var data = {
+                        _id: result._id,
+                        userID: groupjson.creatorID
+                    }
+                    methods.group_add((result2) => {
+                        inGroup = true;
+                        this.showTitle = result.title;
+                        data.userID = "606512b0107dfb482cb49f13";
+                        methods.group_add((result2) => {
+                         this.setState({ refresh: true });
+                         this.refresh_thing.bind(this);
+                     }, data);
+                    }, data);
+                     
+                 } else {
+                     this.setState({ title: "" }).bind(this);
+                     this.setState({ bio: "" });
+                     console.log("Title taken")
+                 }
+             } else {
+                 console.log("Failed");
+             }
 
-    <TouchableOpacity onPress={()=>{this.setState({show: true})}}>
-          <Text style={{color: 'brown', marginTop: 15, fontSize: 14, fontWeight: 'bold', marginLeft: 15}}>Create a New Group</Text>
-        </TouchableOpacity>
+         }, groupjson);         
+     }
 
-        <TouchableOpacity>
-          <Text style={{color: 'brown', fontSize: 14, fontWeight: 'bold', textAlign: 'right', marginRight: 15}}>Find Group</Text>
-        </TouchableOpacity>
-        
-        <Text style={styles.title}>Groups</Text>
+      addName(newName) {
+        this.setState({names: newName})
+     }
 
-        <TouchableOpacity onPress={() => this.props.navigation.navigate("MyGroupScreen")}
-        style={styles.sampleGroup}>
-          <Text style={styles.sampleGroupText}>Sample Group Name</Text>
-        </TouchableOpacity>
-        <Modal
-          transparent={true}
-          visible={this.state.show}
-          
-          >
-            <View style={{backgroundColor: "#000000aa", flex: 1}}
-            >
-              <View style={{backgroundColor: "#ffffff", margin: 50, padding: 40, borderRadius: 10, flex: 1}}>
-              <Text style={styles.title}>Create a Group</Text>
+      /*
+      addName2 = (newName) => {
+        this.setState({names: newName})
+      }*/
 
-              <TextInput 
-                style={styles.inputEmailPassword}
-                label="Group Name"
-                placeholder="Enter your Group Name"
-                //value={email}
-                //onChangeText={onChangeEmail}
-              />
+     onGroupPress = () => {
+         if (inGroup)
+            this.props.navigation.navigate("MyGroupScreen")
+     };
+     render() {
+         if (this.state.reload === true) {
+             return (
+                 <View>
+                     <TouchableOpacity onPress={() => { this.setState({ show: true }) }}>
+                         <Text style={{ color: 'brown', marginTop: 15, fontSize: 14, fontWeight: 'bold', marginLeft: 15 }}>Create a New Group</Text>
+                     </TouchableOpacity>
 
-              <TextInput style={styles.inputEmailPasswordBio}
-                label="Group Bio"
-                placeholder="Enter your Group Bio"
-                //value={email}
-                //onChangeText={onChangeEmail}
-              />
+                     <TouchableOpacity>
+                         <Text style={{ color: 'brown', fontSize: 14, fontWeight: 'bold', textAlign: 'right', marginRight: 15 }}>Find Group</Text>
+                     </TouchableOpacity>
 
-              <Text style={styles.title}>Users</Text>
-              <TextInput style={styles.inputEmailPassword}
-                label="New User"
-                placeholder="New User..."
-                //value={email}
-                onChangeText={this.addName2}
-              />
+                     <Text style={styles.title}>Groups</Text>
 
-              <View>
-                <Text>{this.state.names}</Text>
-              </View>
+                     <TouchableOpacity onPress={this.onGroupPress}
+                         style={styles.sampleGroup}>
+                         <Text style={styles.sampleGroupText}>{this.showTitle}</Text>
+                     </TouchableOpacity>
+                     <Modal
+                         transparent={true}
+                         visible={this.state.show}
 
-              <TouchableOpacity onPress={()=>{this.addName2({names})}}>
-                <Text style={{color: 'brown', marginTop: 15, fontSize: 14, fontWeight: 'bold', marginLeft: 15, textAlign: 'center', borderRadius: 10}}>Add User</Text>
-              </TouchableOpacity>
+                     >
+                         <View style={{ backgroundColor: "#000000aa", flex: 1 }}
+                         >
+                             <View style={{ backgroundColor: "#ffffff", margin: 50, padding: 40, borderRadius: 10, flex: 1 }}>
+                                 <Text style={styles.title}>Create a Group</Text>
 
-              <TouchableOpacity onPress={()=>{this.setState({show: false})}}>
-                <Text style={{color: 'brown', marginTop: 15, fontSize: 14, fontWeight: 'bold', marginLeft: 15, textAlign: 'center'}}>Done</Text>
-              </TouchableOpacity>
-              </View>
-              
-            </View>
-            
-          </Modal>
+                                 <TextInput
+                                     style={styles.inputEmailPassword}
+                                     label="Group Name"
+                                     placeholder="Enter your Group Name"
+                                     value={this.state.title}
+                                     onChangeText={(newValue) => this.setState({ title: newValue })}
+                                 />
 
-      </View>
-  )
+                                 <TextInput style={styles.inputEmailPasswordBio}
+                                     label="Group Bio"
+                                     placeholder="Enter your Group Bio"
+                                     value={this.state.bio}
+                                     onChangeText={(newValue) => this.setState({ bio: newValue })}
+                                 />
+
+                                 <View>
+                                     <Text>{this.state.names}</Text>
+                                 </View>
+
+                                 <TouchableOpacity onPress={() => {
+                                     this.addGroupHandler.bind(this)();
+                                     this.setState({ show: false });
+                                 }}>
+                                     <Text style={{ color: 'brown', marginTop: 15, fontSize: 14, fontWeight: 'bold', marginLeft: 15, textAlign: 'center' }}>Done</Text>
+                                 </TouchableOpacity>
+                             </View>
+                         </View>
+                     </Modal>
+                 </View>
+             )
+         }
+         else {
+             return (<Text> Loading </Text>);
+         }
   }
 }
  
@@ -232,5 +350,3 @@ import {Text, StyleSheet, View, TouchableOpacity, Modal, TextInput} from 'react-
 
   }
 })
-
-export default GroupScreen;
