@@ -69,28 +69,17 @@ export default class EditScreen extends Component {
         if (count > 0) {
             methods.edit_user((result) => {
                 console.log(result);
-<<<<<<< HEAD
-=======
+
                 //this.setState({ dataIsReturned: false });
                 //need a refresh() call here from profilescreen to change states to update
                 //this.props.navigation.state.params.refresh();
                 //this.props.navigation.goBack();
-                console.log(result);
->>>>>>> matt_branch
                 this.props.route.params.refresh(true);
                 this.props.navigation.goBack();
             }, editjson);
         }
         else {
-<<<<<<< HEAD
-            this.props.route.params.refresh(true);//.navigation.params);
-            //this.props.navigation.params.refresh(true);
-=======
-            //this.props.navigation.state.params.refresh();
-            //this.props.navigation.state.params.forceUpdate();
-            this.props.route.params.refresh(true);//.navigation.params);
-
->>>>>>> matt_branch
+            this.props.route.params.refresh(true);
             this.props.navigation.goBack();
         }
     }
