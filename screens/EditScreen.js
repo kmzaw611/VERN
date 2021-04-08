@@ -5,10 +5,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const methods = require('../MondgoDB/testClient');
 
 
-export default class ProfileScreen extends Component {
+export default class EditScreen extends Component {
     // Defining states and variables
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             darkModeEnabled: false,
             dataIsReturned: false,
@@ -45,7 +45,6 @@ export default class ProfileScreen extends Component {
 
     handleSave() {
         var count = 0;
-        //this.setState = false;
         var editjson = {
             _id: this.id._id
         };
@@ -69,21 +68,16 @@ export default class ProfileScreen extends Component {
         if (count > 0) {
             methods.edit_user((result) => {
                 console.log(result);
-                //this.setState({ dataIsReturned: false });
-                //need a refresh() call here from profilescreen to change states to update
-                //this.props.navigation.state.params.refresh();
+                this.props.route.params.refresh(true);
                 this.props.navigation.goBack();
-                
             }, editjson);
         }
         else {
-            //this.props.navigation.state.params.refresh();
-            //this.props.navigation.state.params.forceUpdate();
+            this.props.route.params.refresh(true);//.navigation.params);
+            //this.props.navigation.params.refresh(true);
             this.props.navigation.goBack();
         }
     }
-
-    
 
     render() {
         //changes to true when data is retrieved from server
@@ -135,7 +129,7 @@ export default class ProfileScreen extends Component {
                     </View>
 
                     <TouchableOpacity
-                        onPress={this.handleSave.bind(this)}   /*  right here is the issue with saving info editscreen->profilescreen  */
+                    onPress = {this.handleSave.bind(this)}
                     >
                         <Text style={{ color: 'brown', marginLeft: 10, fontSize: 14, fontWeight: 'bold', marginLeft: 15, }}>Save Profile</Text>
                     </TouchableOpacity>

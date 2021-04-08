@@ -1,4 +1,4 @@
-import React, { useState, Component } from 'react';
+import React, { useState, Component} from 'react';
 import { Text, View, TouchableOpacity, StyleSheet, TextInput, Switch } from 'react-native';
 const methods = require('../MondgoDB/testClient');
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -38,7 +38,6 @@ export default class ProfileScreen extends Component {
     // Defining states and variables
     constructor() {
         super();
-        //this.props.navigation.addListener()
         this.state = {
             darkModeEnabled: false,
             dataIsReturned: false,
@@ -62,8 +61,6 @@ export default class ProfileScreen extends Component {
     }
     //Where I get the data and change states
     componentDidMount() {
-        //const { navigation } = this.props;
-        //navigation.addListener ('willFocus', () =>
         this.onLoad();
         AsyncStorage.getItem('userID')
             .then(result => {
@@ -76,16 +73,20 @@ export default class ProfileScreen extends Component {
             .catch(err => {
                 console.error(err);
             });
-        //);
     }
     onLoad = () => {
         this.props.navigation.addListener('didFocus',() => console.log('x'))
     }
 
+    refresh_thing(params) {
+        methods.get_user(this.id, (res) => {
+            this.userData = res;
+            this.setState({ dataIsReturned: true });
+        });
+    }
+
     //Where i put the render function
     render() {
-        //changes to true when data is retrieved from server
-        //const [darkModeEnabled, setDarkModeEnabled] = useState(false);
         if (this.state.dataIsReturned === true) {
             return (
                 <View style={styles.container}>             
@@ -149,12 +150,24 @@ export default class ProfileScreen extends Component {
 
                     <TouchableOpacity
                         style={styles.logoutButton}
-                        onPress={() => this.props.navigation.push("StartScreen")}
+                        onPress={() => {
+                            //const deleteLoginInfo = async () => {
+                              //  try {
+                                    AsyncStorage.setItem('isLoggedIn', 'false');
+                                    AsyncStorage.setItem('userID', '');
+                                    AsyncStorage.setItem('GroupID', '');
+                                    console.log("AsyncStorage Logging Out")
+                               // } catch (err) {
+                                 //   console.log(err);
+                                //}
+                            //}
+                            this.props.navigation.navigate("StartScreen");
+                        }}
                     >
                         <Text style={styles.logoutText}>Logout</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => this.props.navigation.navigate("EditScreen")}
+                        onPress={() => this.props.navigation.push("EditScreen", {refresh: this.refresh_thing.bind(this)})}
                     >
                         <Text>Edit Profile</Text>
 
