@@ -17,6 +17,7 @@ import ActualRegisterScreen from './screens/ActualRegisterScreen'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Avatar } from 'react-native-elements';
+import VenueScreen from './screens/VenueScreen';
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -120,6 +121,7 @@ const App = () => {
                           <Stack.Screen name="ActualRegister" component={ActualRegisterScreen} options={{ headerShown: false }} />
                           <Stack.Screen name="EditScreen" component={EditScreen} />
                           <Stack.Screen name="OtherUserProfile" component={OtherUserProfile} />
+                          <Stack.Screen name="VenueScreen" component={VenueScreen} />
           </>
 
         ) : (
@@ -135,7 +137,8 @@ const App = () => {
                               <Stack.Screen name="MyGroupScreen" component={MyGroupScreen} />
                               <Stack.Screen name="EditScreen" component={EditScreen} />
                               <Stack.Screen name="OtherUserProfile" component={OtherUserProfile} />
-            
+                              <Stack.Screen name="VenueScreen" component={VenueScreen} />
+
           </>
         )}
       </Stack.Navigator>

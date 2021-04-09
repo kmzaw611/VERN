@@ -52,10 +52,35 @@ const HomeScreen = ({ navigation }) => {
     })
   }
 
-  const renderPerformanceItem = ({ item }) => (
+  getVenueScreen = index => () => {
+    let venueId = index;
+    let venueName;
+    if (index === 0) {
+      venueName = "Hillenbrand Hall";
+    }
+    else if (index === 1) {
+      venueName = "Earhart Hall";
+    }
+    else if (index === 2) {
+      venueName = "Elliot Concert Hall";
+    }
+    else {
+      venueName = "Purdue Hotel UwU";
+    }
+
+    navigation.navigate("VenueScreen", {
+      venueId: venueId,
+      venueName: venueName,
+    })
+  }
+
+    /*modify navagate here*/
+  const renderPerformanceItem = ({ item,index }) => (
     <TouchableOpacity
-      delayPressIn={100}
-      style={styles.performanceCard}
+          delayPressIn={100}
+          style={styles.performanceCard}
+          //onPress={() => navigation.navigate('VenueScreen')}
+          onPress={getVenueScreen(index)}
     >
       <Image
         source={require('./assets/placeholder.jpg')}
@@ -69,6 +94,7 @@ const HomeScreen = ({ navigation }) => {
       <Text style={styles.performanceDetail}>{item.date.toString()}</Text>
       <Text style={styles.performanceTitle}>Time</Text>
       <Text style={styles.performanceDetail}>{item.time.toString()}</Text>
+     
     </TouchableOpacity>
   );
 
