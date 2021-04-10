@@ -6,7 +6,7 @@ const methods = require('../MondgoDB/testClient');
 
 const playlistData = require('./test_json/playlists.json');
 const performanceData = require('./test_json/performances.json');
-const groupsData = require('./test_json/groups.json');
+let groupsData = [];
 
 const HomeScreen = ({ navigation }) => {
   const playlistImages = [
@@ -83,14 +83,33 @@ const HomeScreen = ({ navigation }) => {
         const userInfo = {
           _id: userID,
         };
-        console.log("Actually Running");
-        console.log("UserID: " + userInfo._id)
+        //console.log("Actually Running");
+        //console.log("UserID: " + userInfo._id)
         await methods.get_user(userInfo, (res) => {
           const userData = res;
-          console.log("UserData: " + userData)
-          console.log("UserName: " + userData.username)
+          //console.log("UserData: " + userData)
+          //console.log("UserName: " + userData.username)
           const groups = userData.groups;
-          console.log("Groups: " + groups);
+          if (groups.length === 0) {
+            const currGroup = {
+              id: 0,
+              name: "You have no groups.",
+              num_members: "Go join one!"
+            }
+            groupsData.push(currGroup);
+          }
+          else {
+            // Parse data of groups into groupsData with title, numUsers
+            for (var i = 0; i < groups.length; i++) {
+              const currGroup = {
+                id: i,
+                name: groups[i].title,
+                num_members: groups[i].numUsers,
+              }
+              groupsData.push(currGroup);
+            }
+          }
+          console.log("GroupsData 1st: " + groupsData[0].name);
         });
       } catch (error) {
         console.log(error)
