@@ -80,9 +80,15 @@ const HomeScreen = ({ navigation }) => {
     const getUserGroups = async () => {
       try {
         const userID = await AsyncStorage.getItem('userID');
-        console.log("UserID: " + userID)
-        await methods.get_user(userID, (res) => {
+        const userInfo = {
+          _id: userID,
+        };
+        console.log("Actually Running");
+        console.log("UserID: " + userInfo._id)
+        await methods.get_user(userInfo, (res) => {
           const userData = res;
+          console.log("UserData: " + userData)
+          console.log("UserName: " + userData.username)
           const groups = userData.groups;
           console.log("Groups: " + groups);
         });
