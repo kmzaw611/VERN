@@ -22,7 +22,7 @@ export default class EditScreen extends Component {
             _id: ""
         };
         this.userData = null;
-        
+
     }
 
     //Where I get the data and change states
@@ -69,28 +69,28 @@ export default class EditScreen extends Component {
         if (count > 0) {
             methods.edit_user((result) => {
                 console.log(result);
-<<<<<<< HEAD
-=======
+//<<<<<<< HEAD
+//=======
                 //this.setState({ dataIsReturned: false });
                 //need a refresh() call here from profilescreen to change states to update
                 //this.props.navigation.state.params.refresh();
                 //this.props.navigation.goBack();
-                console.log(result);
->>>>>>> matt_branch
+//                console.log(result);
+//>>>>>>> matt_branch
                 this.props.route.params.refresh(true);
                 this.props.navigation.goBack();
             }, editjson);
         }
         else {
-<<<<<<< HEAD
-            this.props.route.params.refresh(true);//.navigation.params);
+//<<<<<<< HEAD
+            //this.props.route.params.refresh(true);//.navigation.params);
             //this.props.navigation.params.refresh(true);
-=======
+//=======
             //this.props.navigation.state.params.refresh();
             //this.props.navigation.state.params.forceUpdate();
-            this.props.route.params.refresh(true);//.navigation.params);
+            //this.props.route.params.refresh(true);//.navigation.params);
 
->>>>>>> matt_branch
+//>>>>>>> matt_branch
             this.props.navigation.goBack();
         }
     }
@@ -143,7 +143,7 @@ export default class EditScreen extends Component {
                                         this.setState({genre: rep})
                                     }}>
                                     <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', borderRadius: 10, margin: 10 }}>POP</Text>
-                                    
+
                                 </TouchableOpacity>
 
                                 <TouchableOpacity onPress={() => {
@@ -231,7 +231,7 @@ export default class EditScreen extends Component {
             return (<Text> Loading </Text>);
         }
     }
-    
+
 }
 
 const styles = StyleSheet.create({

@@ -124,14 +124,10 @@ const App = () => {
         ) : (
           // User not signed in. Start at the StartScreen.
           <>
-<<<<<<< HEAD
-          <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
-=======
                               <Stack.Screen name="StartScreen" component={StartScreen} options={{ headerShown: false }} />
 
                               <Stack.Screen name="ActualRegister" component={ActualRegisterScreen} options={{ headerShown: false }} />
                               <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
->>>>>>> 5c94425b9d468a03d16a7d3f07fd6707040bbd7d
                               <Stack.Screen name="Playlist" component={PlaylistScreen} />
                               <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
 

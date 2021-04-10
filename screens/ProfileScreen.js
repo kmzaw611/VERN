@@ -191,11 +191,8 @@ export default class ProfileScreen extends Component {
                         <Text style={styles.logoutText}>Logout</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-<<<<<<< HEAD
                         onPress={() => this.props.navigation.push("EditScreen", {refresh: this.refresh_thing.bind(this)})}
-=======
                         onPress={() => this.props.navigation.push("EditScreen", { refresh: this.refresh_thing.bind(this) })}
->>>>>>> matt_branch
                     >
                         <Text>Edit Profile</Text>
 
