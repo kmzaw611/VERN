@@ -15,6 +15,7 @@ import MyGroupScreen from './screens/MyGroupScreen'
 import ActualRegisterScreen from './screens/ActualRegisterScreen'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Avatar } from 'react-native-elements';
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -123,10 +124,14 @@ const App = () => {
         ) : (
           // User not signed in. Start at the StartScreen.
           <>
+<<<<<<< HEAD
+          <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
+=======
                               <Stack.Screen name="StartScreen" component={StartScreen} options={{ headerShown: false }} />
 
                               <Stack.Screen name="ActualRegister" component={ActualRegisterScreen} options={{ headerShown: false }} />
                               <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
+>>>>>>> 5c94425b9d468a03d16a7d3f07fd6707040bbd7d
                               <Stack.Screen name="Playlist" component={PlaylistScreen} />
                               <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
 

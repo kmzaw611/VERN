@@ -3,6 +3,8 @@ import { Text, View, TouchableOpacity, StyleSheet, TextInput, Switch } from 'rea
 const methods = require('../MondgoDB/testClient');
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { DarkTheme } from '@react-navigation/native';
+import { Avatar, Button } from 'react-native-elements';
+import { color } from 'react-native-reanimated';
 
 /*
 const ProfileScreen = ({ navigation }) => {
@@ -40,7 +42,10 @@ export default class ProfileScreen extends Component {
         this.state = {
             darkModeEnabled: false,
             dataIsReturned: false,
-            backgroundColor: 'white'
+            isbackgroundColordef: true,
+            avatarColor: 'black',
+            avName: 'rocket',
+            color: 'white'
         };
         this.id = {
             _id: ""
@@ -48,6 +53,15 @@ export default class ProfileScreen extends Component {
         this.userData = null;
     }
 
+    onAvatarblue = () => {
+        //if(avatarColor ===)
+        this.setState({ avatarColor: 'blue' });
+        this.setState({ isbackgroundColordef: false });
+    }
+    onAvatardef = () => {
+        this.setState({ avatarColor: 'black' });
+        this.setState({ isbackgroundColordef: true });
+    }
     //Where I get the data and change states
     componentDidMount() {
         this.onLoad();
@@ -78,7 +92,21 @@ export default class ProfileScreen extends Component {
     render() {
         if (this.state.dataIsReturned === true) {
             return (
-                <View style={styles.container}>
+                //<View style={styles.container}>
+                <View style={{ flex: 1, alignItems: 'center', backgroundColor: this.state.color }}>
+
+                    <Avatar
+                        size="large"
+                        overlayContainerStyle={{ backgroundColor: this.state.avatarColor }}
+                        icon={{ name: this.state.avName, color: 'white', type: 'font-awesome' }}
+                        //{isbackgroundColordef
+                       //     ? onPress={ onAvatarblue }
+                      //      : onPress = {onAvatardef}
+                     //   }
+                        onPress={this.state.isbackgroundColordef ? this.onAvatarblue : this.onAvatardef}
+                        activeOpacity={0.7}
+                        containerStyle={{marginTop:10}}
+                    />
                     <View style={styles.nameinfo}>
                         <Text style={styles.name}>{this.userData.username}</Text>
                         <Text style={styles.infotitle}>Favourite Genre</Text>
@@ -88,7 +116,7 @@ export default class ProfileScreen extends Component {
                     </View>
 
                     <View style={styles.biocontainer}>
-                        <Text style={{ fontSize: 18, fontWeight: 'bold', }}>Bio</Text>
+                        <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', }}>Bio</Text>
                         <Text style={{ fontSize: 16, textAlign: 'justify', }}>{this.userData.bio}</Text>
                     </View>
 
@@ -101,12 +129,26 @@ export default class ProfileScreen extends Component {
                             <Text style={styles.followText}>Add Favorite Song?</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity
-                            style={styles.followButton}
-                        >
-                            <Text style={styles.followText}>Unfollow</Text>
+                    </View>
+
+
+                    <Text style={styles.minititle}>Background Color</Text>
+                    <View style={styles.followButtonsContainer}>
+                        <TouchableOpacity style={styles.colorButton}
+                            onPress={() => { this.setState({ color: 'white' }) }}>
+                            <Text style={{ color: 'white', fontWeight: 'bold' }}>White</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.colorButton}
+                            onPress={() => { this.setState({ color: 'red' }) }}>
+                            <Text style={{ color: 'red', fontWeight: 'bold' }}>Red</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.colorButton}
+                            onPress={() => { this.setState({ color: 'green' }) }}>
+                            <Text style={{ color: 'green', fontWeight: 'bold' }}>Green</Text>
                         </TouchableOpacity>
                     </View>
+
+
 
                     <Text>Enable Dark Mode</Text>
                     <Switch
@@ -149,7 +191,11 @@ export default class ProfileScreen extends Component {
                         <Text style={styles.logoutText}>Logout</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
+<<<<<<< HEAD
                         onPress={() => this.props.navigation.push("EditScreen", {refresh: this.refresh_thing.bind(this)})}
+=======
+                        onPress={() => this.props.navigation.push("EditScreen", { refresh: this.refresh_thing.bind(this) })}
+>>>>>>> matt_branch
                     >
                         <Text>Edit Profile</Text>
 
@@ -168,7 +214,24 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        backgroundColor: 'white',
+        //backgroundColor: 'white',
+    },
+    colorButton: {
+        alignItems: 'center',
+        backgroundColor: 'black',
+        padding: 10,
+        marginTop: 15,
+        margin: 10,
+        borderRadius: 10,
+    },
+    minititle: {
+        fontSize: 15,
+        fontWeight: 'bold',
+        color: 'black',
+        margin: 1,
+        marginBottom: 5,
+        fontFamily: 'sans-serif-condensed',
+        textAlign: 'center'
     },
     biocontainer: {
         margin: 10,
@@ -191,7 +254,7 @@ const styles = StyleSheet.create({
     followButtonsContainer: {
         justifyContent: 'center',
         flexDirection: 'row',
-        marginBottom: 40,
+        marginBottom: 10,
     },
     followButton: {
         alignItems: 'center',
@@ -226,7 +289,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
     },
     infodata: {
-        fontSize: 18,
+        fontSize: 16,
         fontWeight: 'bold',
     }/*
     topScreen: {
