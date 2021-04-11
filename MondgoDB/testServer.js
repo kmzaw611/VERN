@@ -367,9 +367,56 @@ server.post('/get_favorite_song', function (req, res) {
         res.send(req.body.favoriteSong)
     }
 });
+server.post('/create_playlist', function (req,res) {
+    //Creates an empty playlist on the user's Spotify account.
+    //Receives: (Required) Name: str, (Required) description: str, (Required) Tracks: list of strs
+    var name = req.body.name;
+    var description = req.body.description;
+    var tracks = req.body.tracks;
+    var spotifyApi = new SpotifyWebApi({
+        clientId: '0e8700b7f71d486bbb7c3bd120e892f8', // App client ID
+        clientSecret: '9ffb3fe2081b414e8c520d19805cbf09', //App client secret
+        redirectUri: 'http://localhost:8888/callback' //Where the user is to be taken after authentication
+    })
+    spotifyApi.setRefreshToken(req.body.refreshToken)
+    spotifyApi.refreshAccessToken()
+        .then(function (data) {
+            return data.body['access_token']
+        })
+        //Set the new access token
+        .then(function (newResult) {
+            spotifyApi.setAccessToken(newResult)
+            //console.log(spotifyApi.getAccessToken())
+        })
+        //Get top tracks promise
+        .then(function (data) {
+            let promise = spotifyApi.createPlaylist(name, {'description': description, 'collaborative': false, 'public': true})
+            console.log(promise)
+        })
+        .then(function (data) { 
+            spotifyApi.addTracksToPlaylist()
+        })
+    });
 server.post('/top_songs_playlist', function (req, res) {
+    //@ Receives:(optional)timeRange(str) (short,medium,long), (Required) Refresh token(str)
     console.log("test from top_songs_playlist in testServer.js")
     console.log(req.body.refreshToken)
+    var range = "medium_term";
+    if (req.body.timeRange == "short") {
+        range = "short_term";
+    }
+    else if (req.body.time == "medium") {
+        range = "medium_term";
+    }
+    else if (req.body.time == "long") {
+        range = "long_term";
+    }
+    else if (req.body.time == "") {
+        range = "medium_term";
+    }
+    else {
+        res.send("Invalid time range passed in, please select short, medium or long. Defaulting to medium.")
+    }
     var spotifyApi = new SpotifyWebApi({
         clientId: '0e8700b7f71d486bbb7c3bd120e892f8', // App client ID
         clientSecret: '9ffb3fe2081b414e8c520d19805cbf09', //App client secret
@@ -395,7 +442,7 @@ server.post('/top_songs_playlist', function (req, res) {
                     userId = data.body.id
                 }
             )
-            spotifyApi.getMyTopTracks()                 //************************** change structs so we don't pass in any arrays ******unless react can handle those for display*/
+            spotifyApi.getMyTopTracks({time_range: range})                 //************************** change structs so we don't pass in any arrays ******unless react can handle those for display*/
                      //*******added async below*/
                 .then(function (data) {             
                     userId = ""
@@ -439,6 +486,7 @@ server.post('/top_songs_playlist', function (req, res) {
                     //******************** something with the song.js & playlist.js schema's being intereperted in PlaylistScreen.js w/react
                     //differences with the one returned from testServer : user: '', songs: [ and ] w/date at bottom
                     let topSongs = {
+                        time_range: range,
                         //user: userId,
                         songs: songs
                         //date: todaysDate
