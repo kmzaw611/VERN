@@ -118,7 +118,10 @@ export default class EditScreen extends Component {
                     </View>
 
                     <View style={styles.biocontainer}>
+                        <TouchableOpacity onPress={()=>{this.setState({show: true})}}>
                         <Text style={styles.minititle}>Favorite Genre:</Text>
+                        </TouchableOpacity>
+
                         <TextInput style={styles.inputEmailPassword}
                             label="Favorite Genre"
                             placeholder={this.userData.genre}
@@ -199,6 +202,50 @@ export default class EditScreen extends Component {
                         </View>
 
                     </Modal>
+
+                    <Modal
+          transparent={true}
+          visible={this.state.show}
+          
+          >
+            <View style={{backgroundColor: "#000000aa", flex: 1}}
+            >
+              <View style={{backgroundColor: "#ffffff", margin: 50, padding: 40, borderRadius: 10, flex: 1}}>
+              <Text style={styles.title}>Pick Your Favorite Genre</Text>
+
+              <TouchableOpacity>
+                  <Text style={{fontSize: 24, fontWeight: 'bold', textAlign: 'center', borderRadius: 10, margin: 10}}>POP</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity>
+                  <Text style={{fontSize: 24, fontWeight: 'bold', textAlign: 'center', borderRadius: 10, margin: 10}}>RAP</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity>
+                  <Text style={{fontSize: 24, fontWeight: 'bold', textAlign: 'center', borderRadius: 10, margin: 10}}>ROCK</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity>
+                  <Text style={{fontSize: 24, fontWeight: 'bold', textAlign: 'center', borderRadius: 10, margin: 10}}>METAL</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity>
+                  <Text style={{fontSize: 24, fontWeight: 'bold', textAlign: 'center', borderRadius: 10, margin: 10}}>JAZZ</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity>
+                  <Text style={{fontSize: 24, fontWeight: 'bold', textAlign: 'center', borderRadius: 10, margin: 10}}>DJENT</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={()=>{this.setState({show: false})}}>
+                <Text style={{color: 'brown', marginTop: 15, fontSize: 14, fontWeight: 'bold', marginLeft: 15, textAlign: 'center',}}>Done</Text>
+              </TouchableOpacity>
+              </View>
+              
+            </View>
+            
+          </Modal>
+
 
                     <View style={styles.biocontainer}>
                         <Text style={styles.minititle}>Favorite Song:</Text>

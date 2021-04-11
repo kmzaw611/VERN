@@ -8,6 +8,8 @@ import { color } from 'react-native-reanimated';
 
 
 // Ethan code for fetching db info before render
+
+//const color = 'white'
 export default class ProfileScreen extends Component {
     // Defining states and variables
     constructor() {
@@ -168,8 +170,28 @@ export default class ProfileScreen extends Component {
                     >
                         <Text>Edit Profile</Text>
 
-
                     </TouchableOpacity>
+
+                    <Text style={styles.minititle}>Background Color</Text>
+
+                    <View style={styles.followButtonsContainer}> 
+                    <TouchableOpacity style={styles.colorButton}
+                    onPress={()=>{this.setState({color: 'white'})}}>
+                        <Text style={{color: 'white', fontWeight: 'bold'}}>White</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.colorButton}
+                    onPress={()=>{this.setState({color: 'red'})}}>
+                        <Text style={{color: 'red', fontWeight: 'bold'}}>Red</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.colorButton}
+                    onPress={()=>{this.setState({color: 'green'})}}>
+                        <Text style={{color: 'green', fontWeight: 'bold'}}>Green</Text>
+                    </TouchableOpacity>
+                    </View>
+
+                   
                 </View>
             );
         } else {
@@ -202,6 +224,15 @@ const styles = StyleSheet.create({
         fontFamily: 'sans-serif-condensed',
         textAlign: 'center'
     },
+    minititle: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: 'black',
+        margin: 10,
+        marginBottom: 5,
+        fontFamily: 'sans-serif-condensed',
+        textAlign: 'center'
+      },
     biocontainer: {
         margin: 10,
         marginBottom: 20,

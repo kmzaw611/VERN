@@ -9,6 +9,7 @@ import GroupScreen from './screens/GroupScreen'
 import ProfileScreen from './screens/ProfileScreen'
 import OtherUserProfile from './screens/OtherUserProfile'
 import LocalArtistScreen from './screens/LocalArtistScreen'
+import LocalArtistProfile from './screens/LocalArtistProfile'
 import PlaylistScreen from './screens/PlaylistScreen'
 import EditScreen from './screens/EditScreen'
 import MyGroupScreen from './screens/MyGroupScreen'
@@ -119,6 +120,7 @@ const App = () => {
                           <Stack.Screen name="ActualRegister" component={ActualRegisterScreen} options={{ headerShown: false }} />
                           <Stack.Screen name="EditScreen" component={EditScreen} />
                           <Stack.Screen name="OtherUserProfile" component={OtherUserProfile} />
+                          <Stack.Screen name="LocalArtistProfile" component={LocalArtistProfile} />
           </>
 
         ) : (
