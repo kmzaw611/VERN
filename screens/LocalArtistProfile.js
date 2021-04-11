@@ -35,7 +35,7 @@ export default class LocalArtistProfile extends React.Component {
         </View>
         <View style={styles.biocontainer}>
           <Text style={{ fontSize: 18, fontWeight: 'bold'}}>Bio</Text>
-          <Text style={{ fontSize: 16, textAlign: 'justify', }}>Formed in Purdue University by 5 local shitheads</Text>
+          <Text style={{ fontSize: 16, textAlign: 'justify', }}>Formed in Purdue University by 5 local bois</Text>
   
           <TouchableOpacity>
             <Text style={styles.editButton}>Edit Profile</Text>
@@ -64,7 +64,6 @@ export default class LocalArtistProfile extends React.Component {
 
                   <TouchableOpacity onPress={() => {
                     this.setState({ show: false });
-                    <Alert>Request Sent</Alert>
                 }}>
                     <Text style={{ color: 'brown', marginTop: 15, fontSize: 14, fontWeight: 'bold', marginLeft: 15, textAlign: 'center' }}>Send</Text>
                 </TouchableOpacity>
