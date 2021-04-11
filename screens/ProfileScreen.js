@@ -2,12 +2,8 @@ import React, { useState, Component} from 'react';
 import { Text, View, TouchableOpacity, StyleSheet, TextInput, Switch } from 'react-native';
 const methods = require('../MondgoDB/testClient');
 import AsyncStorage from '@react-native-async-storage/async-storage';
-<<<<<<< HEAD
-import { color } from 'react-native-reanimated';
-=======
 import { DarkTheme } from '@react-navigation/native';
 
->>>>>>> 5c94425b9d468a03d16a7d3f07fd6707040bbd7d
 /*
 const ProfileScreen = ({ navigation }) => {
   const onLogoutPress = () => {
@@ -46,11 +42,7 @@ export default class ProfileScreen extends Component {
         this.state = {
             darkModeEnabled: false,
             dataIsReturned: false,
-<<<<<<< HEAD
-            color: 'white'
-=======
             backgroundColor: 'white'
->>>>>>> 5c94425b9d468a03d16a7d3f07fd6707040bbd7d
         };
         this.id = {
             _id: ""
@@ -198,19 +190,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-<<<<<<< HEAD
-       // backgroundColor: 
-    },
-    colorButton: {
-        alignItems: 'center',
-        backgroundColor: 'black',
-        padding: 10,
-        marginTop: 15,
-        margin: 10,
-        borderRadius: 10,
-=======
         backgroundColor: 'white',
->>>>>>> 5c94425b9d468a03d16a7d3f07fd6707040bbd7d
     },
     minititle: {
         fontSize: 24,
