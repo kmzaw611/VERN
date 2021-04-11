@@ -55,7 +55,20 @@ const styles = StyleSheet.create({
     height: 150,
     borderRadius: 15,
     marginTop: 15,
-  },
+    },
+    followButtonsContainer: {
+        justifyContent: 'center',
+        flexDirection: 'row',
+        marginBottom: 10,
+    },
+    followButton: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#0095ff',
+        borderRadius: 10,
+        padding: 15,
+        margin: 10,
+    },
   horizontalRule: {
     borderBottomColor: 'black',
     borderBottomWidth: 1.0,
@@ -152,12 +165,12 @@ const styles = StyleSheet.create({
 })
 
 export default class MyGroupScreen extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             reload: false,
         }
-        this.id = {
+        this.gid = {
             _id: ""
         }
         this.title = "",
@@ -176,7 +189,7 @@ export default class MyGroupScreen extends Component {
         AsyncStorage.getItem('GroupID')
             .then(result => {
                 if (result != null) {
-                    this.id._id = ("" + result);
+                    this.gid._id = ("" + result);
                     methods.get_group((res) => {
                         // Fill data with stuff
                         if (res != null) {
@@ -196,7 +209,7 @@ export default class MyGroupScreen extends Component {
                                 });
                             }
                         }
-                    }, this.id);
+                    }, this.gid);
                 }
                 else {
                     console.log("No Group Found");
@@ -214,6 +227,27 @@ export default class MyGroupScreen extends Component {
         else {
             this.props.navigation.navigate("OtherUserProfile", { uid: usersid })
         }
+    }
+
+    handleLeave = () => {
+        console.log("dang");
+        const data = {
+            _id: this.gid._id,
+            userID: this.myid
+        }
+        console.log(data);
+        methods.group_remove(res => {
+            if (res != null && res != "User is not in this group") {
+                AsyncStorage.setItem('GroupID', '')
+                    .then(res2 => {
+                        this.props.route.params.refresh();
+                        this.props.navigation.goBack();
+                    }).catch(err => {
+                        console.log(err);
+                    });
+                
+            }
+        }, data);
     }
 
     
@@ -235,14 +269,17 @@ export default class MyGroupScreen extends Component {
                         <Text style={styles.title}>{this.title}</Text>
 
                         <Text style={styles.inputEmailPasswordBio}>{this.bio}</Text>
-
-
-                        <Text style={styles.title}>Users</Text>
-                        
-
-                        <View>
+                        <View style={styles.followButtonsContainer}>
+                            <TouchableOpacity
+                                style={styles.followButton}
+                                onPress={() => { this.handleLeave.bind(this)() }}
+                            >
+                                <Text style={styles.followText}>Leave Group</Text>
+                            </TouchableOpacity>
 
                         </View>
+
+                        <Text style={styles.title}>Users</Text>
                         <FlatList
                             data={this.userList}
                             renderItem={renderUser}
