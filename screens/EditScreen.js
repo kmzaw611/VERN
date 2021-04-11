@@ -1,5 +1,5 @@
 import React, { useState, Component } from 'react'
-import { Text, View, TouchableOpacity, StyleSheet, Switch, SafeAreaView } from 'react-native'
+import { Text, View, TouchableOpacity, StyleSheet, Switch, SafeAreaView, Modal } from 'react-native'
 import { TextInput } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const methods = require('../MondgoDB/testClient');
@@ -15,13 +15,14 @@ export default class EditScreen extends Component {
             name: "",
             genre: "",
             bio: "",
-            favoriteSong: ""
+            favoriteSong: "",
+            show: false
         };
         this.id = {
             _id: ""
         };
         this.userData = null;
-        
+
     }
 
     //Where I get the data and change states
@@ -68,13 +69,28 @@ export default class EditScreen extends Component {
         if (count > 0) {
             methods.edit_user((result) => {
                 console.log(result);
+//<<<<<<< HEAD
+//=======
+                //this.setState({ dataIsReturned: false });
+                //need a refresh() call here from profilescreen to change states to update
+                //this.props.navigation.state.params.refresh();
+                //this.props.navigation.goBack();
+//                console.log(result);
+//>>>>>>> matt_branch
                 this.props.route.params.refresh(true);
                 this.props.navigation.goBack();
             }, editjson);
         }
         else {
-            this.props.route.params.refresh(true);//.navigation.params);
+//<<<<<<< HEAD
+            //this.props.route.params.refresh(true);//.navigation.params);
             //this.props.navigation.params.refresh(true);
+//=======
+            //this.props.navigation.state.params.refresh();
+            //this.props.navigation.state.params.forceUpdate();
+            //this.props.route.params.refresh(true);//.navigation.params);
+
+//>>>>>>> matt_branch
             this.props.navigation.goBack();
         }
     }
@@ -89,6 +105,9 @@ export default class EditScreen extends Component {
                     </View>
 
                     <View style={styles.biocontainer}>
+                        <TouchableOpacity onPress={() => { this.setState({ show: true }) }}>
+                            <Text style={styles.minititle}>Favorite Genre:</Text>
+                        </TouchableOpacity>
                         <Text style={styles.minititle}>Name:</Text>
                         <TextInput style={styles.inputEmailPassword}
                             label="Username"
@@ -107,6 +126,79 @@ export default class EditScreen extends Component {
                             onChangeText={(newValue) => this.setState({genre: newValue})}
                         />
                     </View>
+                    <Modal
+                        transparent={true}
+                        visible={this.state.show}
+
+                    >
+                        <View style={{ backgroundColor: "#000000aa", flex: 1 }}
+                        >
+                            <View style={{ backgroundColor: "#ffffff", margin: 40, padding: 20, borderRadius: 5, flex: 1 }}>
+                                <Text style={styles.title}>Pick Your Favorite Genre</Text>
+
+                                <TouchableOpacity onPress={() => {
+                                    //var p = " POP ";
+                                        var rep = this.state.genre.concat(" POP ")
+                                        //this.setState({ genre: "" })
+                                        this.setState({genre: rep})
+                                    }}>
+                                    <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', borderRadius: 10, margin: 10 }}>POP</Text>
+
+                                </TouchableOpacity>
+
+                                <TouchableOpacity onPress={() => {
+                                    //var p = " POP ";
+                                    var rep = this.state.genre.concat(" RAP ")
+                                    //this.setState({ genre: "" })
+                                    this.setState({ genre: rep })
+                                }}>
+                                    <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', borderRadius: 10, margin: 10 }}>RAP</Text>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity onPress={() => {
+                                    //var p = " POP ";
+                                    var rep = this.state.genre.concat(" ROCK ")
+                                    //this.setState({ genre: "" })
+                                    this.setState({ genre: rep })
+                                }}>
+                                    <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', borderRadius: 10, margin: 10 }}>ROCK</Text>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity onPress={() => {
+                                    //var p = " POP ";
+                                    var rep = this.state.genre.concat(" METAL ")
+                                    //this.setState({ genre: "" })
+                                    this.setState({ genre: rep })
+                                }}>
+                                    <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', borderRadius: 10, margin: 10 }}>METAL</Text>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity onPress={() => {
+                                    //var p = " POP ";
+                                    var rep = this.state.genre.concat(" JAZZ ")
+                                    //this.setState({ genre: "" })
+                                    this.setState({ genre: rep })
+                                }}>
+                                    <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', borderRadius: 10, margin: 10 }}>JAZZ</Text>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity onPress={() => {
+                                    //var p = " POP ";
+                                    var rep = this.state.genre.concat(" DJENT ")
+                                    //this.setState({ genre: "" })
+                                    this.setState({ genre: rep })
+                                }}>
+                                    <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', borderRadius: 10, margin: 10 }}>DJENT</Text>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity onPress={() => { this.setState({ show: false }) }}>
+                                    <Text style={{ color: 'brown', marginTop: 15, fontSize: 14, fontWeight: 'bold', marginLeft: 15, textAlign: 'center', }}>Done</Text>
+                                </TouchableOpacity>
+                            </View>
+
+                        </View>
+
+                    </Modal>
 
                     <View style={styles.biocontainer}>
                         <Text style={styles.minititle}>Favorite Song:</Text>
@@ -139,7 +231,7 @@ export default class EditScreen extends Component {
             return (<Text> Loading </Text>);
         }
     }
-    
+
 }
 
 const styles = StyleSheet.create({
@@ -149,7 +241,7 @@ const styles = StyleSheet.create({
     },
     biocontainer: {
         margin: 10,
-        marginBottom: 20,
+        marginBottom: 15,
     },
     logoutButton: {
         alignItems: 'center',
