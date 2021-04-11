@@ -22,7 +22,7 @@ const methods = require('../MondgoDB/testClient');
           this.id = {
               _id: ""
           };
-          inGroup = false;
+          this.inGroup = false;
           this.addGroupHandler = this.addGroupHandler.bind(this);
      }
 
@@ -36,7 +36,7 @@ const methods = require('../MondgoDB/testClient');
                          AsyncStorage.getItem('GroupID')
                              .then(result => {
                                  if (result != null) {
-                                     inGroup = true;
+                                     this.inGroup = true;
                                      const data = {
                                          _id: result
                                      };
@@ -46,7 +46,7 @@ const methods = require('../MondgoDB/testClient');
                                      }, data);
                                  }
                                  else {
-                                     inGroup = false;
+                                     this.inGroup = false;
                                      this.showTitle = "No Groups Found";
                                      this.setState({ reload: true });
                                  }
@@ -56,7 +56,7 @@ const methods = require('../MondgoDB/testClient');
                              });
                      }
                      else {
-                         inGroup = false;
+                         this.inGroup = false;
                          this.showTitle = "No Groups Found";
                          this.setState({ reload: true });
                      }
@@ -69,11 +69,11 @@ const methods = require('../MondgoDB/testClient');
      refresh_thing = () => {
          methods.get_user(this.id, (res) => {
              if (!(res.groups[0] === "")) {
-                 inGroup = true;
+                 this.inGroup = true;
                  AsyncStorage.getItem('GroupID')
                      .then(result => {
                          if (result != null) {
-                             inGroup = true;
+                             this.inGroup = true;
                              const data = {
                                  _id: result
                              };
@@ -83,7 +83,7 @@ const methods = require('../MondgoDB/testClient');
                              }, data);
                          }
                          else {
-                             inGroup = false;
+                             this.inGroup = false;
                              this.showTitle = "No Groups Found";
                              this.setState({ reload: true });
                          }
@@ -117,7 +117,7 @@ const methods = require('../MondgoDB/testClient');
                         userID: groupjson.creatorID
                     }
                     methods.group_add((result2) => {
-                        inGroup = true;
+                        this.inGroup = true;
                         this.showTitle = result.title;
                         data.userID = "606512b0107dfb482cb49f13";
                         methods.group_add((result2) => {
@@ -148,8 +148,8 @@ const methods = require('../MondgoDB/testClient');
       }*/
 
      onGroupPress = () => {
-         if (inGroup)
-            this.props.navigation.navigate("MyGroupScreen")
+         if (this.inGroup)
+             this.props.navigation.navigate("MyGroupScreen", {refresh: this.refresh_thing.bind(this)});
      };
      render() {
          if (this.state.reload === true) {
