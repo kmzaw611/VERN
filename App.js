@@ -13,9 +13,9 @@ import PlaylistScreen from './screens/PlaylistScreen'
 import EditScreen from './screens/EditScreen'
 import MyGroupScreen from './screens/MyGroupScreen'
 import ActualRegisterScreen from './screens/ActualRegisterScreen'
-import MyGroupScreen from './screens/MyGroupScreen'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Avatar } from 'react-native-elements';
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -134,7 +134,7 @@ const App = () => {
                               <Stack.Screen name="MyGroupScreen" component={MyGroupScreen} />
                               <Stack.Screen name="EditScreen" component={EditScreen} />
                               <Stack.Screen name="OtherUserProfile" component={OtherUserProfile} />
-            
+
           </>
         )}
       </Stack.Navigator>
