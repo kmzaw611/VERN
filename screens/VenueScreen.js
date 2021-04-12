@@ -7,19 +7,24 @@ import QRCode from 'react-native-qrcode-svg';
 
 const VenueScreen = ({ route, navigation }) => {
     const { venueId, venueName } = route.params;
-    const [inputText, setInputText] = useState('');
+    //const [inputText, setInputText] = useState('');
     const [qrvalue, setQrvalue] = useState('');
-    let userData;
-    let id_u;
-
+    //let userData = "meep";
+    let id_u = {
+        _id: ""
+    };
+    //console.log(route);
+    //console.log(navigation);
    // if (qrvalue = '') {
         AsyncStorage.getItem('userID')
             .then(result => {
-                id_u = ("" + result);
-                console.log(id_u);
+                id_u._id = ("" + result);
+                //console.log(id_u);
                 methods.get_user(id_u, (res) => {
-                    userData = res;
-                    console.log("b4: " + res);
+                    //userData = res.username;
+                    //console.log("b4: " + qrvalue);
+                    setQrvalue(res.username);
+                    
                     //setQrvalue(res);
                     //console.log("after: " + qrvalue);
                 });
@@ -32,7 +37,7 @@ const VenueScreen = ({ route, navigation }) => {
     //const [show,setCount] = React.useState(0)
     //this.state = { show: false };
     
-    console.log(venueName);
+    //console.log(venueName);
     //const displayModal = () => {
     //    this.setState({isModalVisible})
     //};
@@ -45,7 +50,7 @@ const VenueScreen = ({ route, navigation }) => {
                 </Text>
                 <QRCode
                     //QR code value
-                    value={"Check-in" + venueName}
+                    value={"Check-in " + venueName + " " + qrvalue}
                     //size of QR Code
                     size={250}
                     //Color of the QR Code (Optional)
