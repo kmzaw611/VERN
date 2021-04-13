@@ -367,9 +367,16 @@ server.post('/get_favorite_song', function (req, res) {
         res.send(req.body.favoriteSong)
     }
 });
-server.post('/create_playlist', function (req,res) {
-    //Creates an empty playlist on the user's Spotify account.
-    //Receives: (Required) Name: str, (Required) description: str, (Required) Tracks: list of strs
+server.post('/publish_top_songs_playlist', function (req,res) {
+    //Creates a top songs playlist on the user's spotify account
+    //Receives: 
+    //(Required) name: str
+    //(Required) description: str
+    //(Required) tracks: list of strs of spotifyIDs
+    //(Required) refreshToken: str
+    //(Optional) timeRange: str (short,medium,long)
+    //Returns:
+    //Nothing
     var name = req.body.name;
     var description = req.body.description;
     var tracks = req.body.tracks;
@@ -404,9 +411,6 @@ server.post('/top_songs_playlist', function (req, res) {
     var range = "medium_term";
     if (req.body.timeRange == "short") {
         range = "short_term";
-    }
-    else if (req.body.time == "medium") {
-        range = "medium_term";
     }
     else if (req.body.time == "long") {
         range = "long_term";
