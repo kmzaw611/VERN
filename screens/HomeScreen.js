@@ -1,6 +1,9 @@
 import React from 'react'
 import { Text, View, FlatList, StyleSheet, TouchableOpacity, ScrollView, Image,
-          ImageBackground } from 'react-native'
+    ImageBackground
+} from 'react-native'
+//import { ModalProvider } from "react-native-use-modal-hooks";
+
 
 const playlistData = require('./test_json/playlists.json');
 const performanceData = require('./test_json/performances.json');

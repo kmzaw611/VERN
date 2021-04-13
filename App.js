@@ -18,6 +18,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Avatar } from 'react-native-elements';
 import VenueScreen from './screens/VenueScreen';
+//import { ModalProvider } from "react-native-use-modal-hooks";
+
+
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -106,7 +109,7 @@ const App = () => {
   )
 
 
-  return (
+    return (
     <NavigationContainer>
       <AuthContext.Provider value={authContext}>
       <Stack.Navigator>
@@ -143,7 +146,7 @@ const App = () => {
         )}
       </Stack.Navigator>
       </AuthContext.Provider>
-    </NavigationContainer>
+            </NavigationContainer>
   )
 }
 

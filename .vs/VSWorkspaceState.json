@@ -1,14 +1,12 @@
 {
   "ExpandedNodes": [
     "",
-    "\\android\\app",
-    "\\android\\app\\src\\debug",
-    "\\android\\app\\src\\main\\res\\values",
     "\\MondgoDB",
     "\\MondgoDB\\models",
     "\\screens",
+    "\\screens\\test_json",
     "\\screens\\utils"
   ],
-  "SelectedNode": "\\screens\\GroupScreen.js",
+  "SelectedNode": "\\screens\\PlaylistScreen.js",
   "PreviewInSolutionExplorer": false
 }

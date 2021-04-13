@@ -1,15 +1,38 @@
 import React, { useState, Component } from 'react';
-import { SafeAreaView,Text, StyleSheet, View, TouchableOpacity, Modal, TextInput, FlatList,Button } from 'react-native';
+import { SafeAreaView, Text, StyleSheet, View, TouchableOpacity, Modal, TextInput, FlatList, Button, TouchableHighlight } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const methods = require('../MondgoDB/testClient');
 import QRCode from 'react-native-qrcode-svg';
+//import { useModal } from "react-native-use-modal-hooks";
 
 
 const VenueScreen = ({ route, navigation }) => {
     const { venueId, venueName } = route.params;
     //const [inputText, setInputText] = useState('');
     const [qrvalue, setQrvalue] = useState('');
-    //let userData = "meep";
+    const [modalVisible, setModalVisible] = useState(false);
+      /*  //useModal(() => (
+        <Modal
+            animationType="slide"
+            transparent={true}
+        >
+            <View style={styles.centeredView}>
+                <View style={styles.modalView}>
+                    <Text style={styles.modalText}>Rate!</Text>
+
+                    <TouchableHighlight
+                        style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
+                        onPress={hideModal}
+                    >
+                        <Text style={styles.textStyle}>Hide Modal</Text>
+                    </TouchableHighlight>
+                </View>
+            </View>
+
+        </Modal>
+        ))*/
+        
+            //let userData = "meep";
     let id_u = {
         _id: ""
     };
@@ -43,12 +66,66 @@ const VenueScreen = ({ route, navigation }) => {
     //};
     //setQrvalue()
     return (
-        <SafeAreaView style={{ flex: 1 }}>
             <View style={styles.container}>
-                <Text style={styles.titleStyle}>
-                    Venue Check-IN
-                </Text>
-                <QRCode
+                <View>
+                    <Text style={styles.venuetitle}>{venueName}</Text>
+                </View>
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={modalVisible}
+                    onRequestClose={() => setModalVisible(!modalVisible)}
+                >
+                    <View style={styles.centeredView}>
+                        <View style={styles.modalView}>
+                        <Text style={styles.modalText}>Check-in Code</Text>
+
+                        <QRCode
+                            //QR code value
+                            value={"Check-in " + venueName + " " + qrvalue}
+                            //size of QR Code
+                            size={150}
+                            //Color of the QR Code (Optional)
+                            color="black"
+                            //Background Color of the QR Code (Optional)
+                            backgroundColor="white"
+                        //Logo of in the center of QR Code (Optional)
+
+                        />
+
+
+                        <TouchableHighlight
+                            style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
+                            onPress={() => setModalVisible(!modalVisible)}
+                        >
+                            <Text style={styles.textStyle}>Close</Text>
+
+                        </TouchableHighlight>
+
+                    </View>
+
+                </View>
+
+
+            </Modal>
+
+
+                <Button
+                    title="Venue Check-In"
+                    onPress={() => setModalVisible(true)}
+                />
+                    
+               
+                
+            </View>
+
+    );
+};
+
+    //STATE CHANGING IS NOT WORKING WITH FLATLIST
+
+    /* 
+     * <QRCode
                     //QR code value
                     value={"Check-in " + venueName + " " + qrvalue}
                     //size of QR Code
@@ -60,15 +137,23 @@ const VenueScreen = ({ route, navigation }) => {
                     //Logo of in the center of QR Code (Optional)
                    
                 />
-                
+                <View style={styles.centeredView}>
+                <View style={styles.modalView}>
+                    <TouchableOpacity
+                        style={{ backgroundColor: "#ffffff", margin: 40, padding: 20, borderRadius: 5, flex: 1 }}
+                        onPress={hideModal}
+                        >
+
+                        <Text style={{ color: 'brown', marginTop: 15, fontSize: 14, fontWeight: 'bold', marginLeft: 15, textAlign: 'center', }}>Done</Text>
+
+
+                    </TouchableOpacity>
+                </View>
             </View>
-        </SafeAreaView>
-    );
-};
 
-    //STATE CHANGING IS NOT WORKING WITH FLATLIST
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^important
 
-    /*
+
     return (
         <View style={styles.container}>
             <View>
@@ -106,7 +191,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'white',
-        justifyContent: 'center',
+        //justifyContent: 'center',
         alignItems: 'center',
         textAlign: 'center',
         padding: 10,
@@ -114,11 +199,11 @@ const styles = StyleSheet.create({
     titleStyle: {
         fontSize: 20,
         textAlign: 'center',
-        margin: 10,
+        margin: 10
     },
     textStyle: {
         textAlign: 'center',
-        margin: 10,
+        margin: 15,
     },
     textInputStyle: {
         flexDirection: 'row',
@@ -143,6 +228,72 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         fontSize: 16,
     },
+    venuetitle: {
+        fontSize: 18,
+        fontWeight: "bold",
+        marginTop: 10,
+        padding: 30
+    },
+    ReviewButton: {
+        alignItems: 'center',
+        backgroundColor: '#8e6f3e',
+        padding: 10,
+        margin: 10,
+        marginTop: 5,
+        marginBottom: 30,
+        borderRadius: 10,
+    },
+    minititle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#8e6f3e',
+        margin: 10,
+        marginBottom: 5,
+        fontFamily: 'sans-serif-condensed',
+    },
+    centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 22
+    },
+    modalView: {
+        flex:1,
+        margin: 40,
+        backgroundColor: "white",
+        borderRadius: 5,
+        padding: 80,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5
+    },
+    openButton: {
+        backgroundColor: "#F194FF",
+        borderRadius: 20,
+        padding: 10,
+        elevation: 2,
+        marginTop: 200
+
+    },
+    textStyle: {
+        color: "white",
+        fontWeight: "bold",
+        textAlign: "center"
+    },
+    modalText: {
+        marginTop: -70,
+        marginBottom: 15,
+        textAlign: "center",
+        fontSize: 18,
+        fontWeight: 'bold'
+    }
+    
 });
 /*
 const styles = StyleSheet.create({

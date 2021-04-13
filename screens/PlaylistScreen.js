@@ -36,7 +36,7 @@ const PlaylistScreen = ({ route, navigation }) => {
   }
 
 
-    //This is very static and will require a lot more information being grabbed and populated from within the json files being grabbed within our app
+
     playTrack = () => {
         const track = new Sound('https://p.scdn.co/mp3-preview/3eb16018c2a700240e9dfb8817b6f2d041f15eb1?cid=774b29d4f13844c495f206cafdad9c86', null, (e) => {
             if (e) {
@@ -75,7 +75,7 @@ const PlaylistScreen = ({ route, navigation }) => {
     const renderPlaylistSong = ({ item }) => (
       <TouchableOpacity
             style={styles.song}
-            onPress={playTrack()}
+            //onPress={playTrack()}
 
       >
       <View style={styles.songcontainer}>
