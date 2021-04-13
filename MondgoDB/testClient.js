@@ -172,17 +172,12 @@ const methods = {
 
     //POST call for favorite songs
     top_songs: function (callback, data) {
-        console.log("Hi from testClient.js")
+        //console.log("Hi from testClient.js")
+        //console.log(data)
         //console.log(data.refreshToken)
         rh.post(url + "/top_songs_playlist", data)
             .then(res => {
                 //console.log(res.data)
-                //var userD = JSON.stringify(res.data);
-               // fs.writeFile('playlistVisualtest.txt', userD, function (err) {
-               //     if (err) {
-               //         return callback(err);
-              //      }
-              //  });
                 return callback(res.data)
             })
             .catch(error => {

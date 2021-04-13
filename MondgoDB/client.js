@@ -11,44 +11,44 @@ const methods = require('./testClient');
 //const prompt = require('prompt');
 
 data1 = {
-    refreshToken: "AQCzVfJhvvDF8KvxRKP6ANQ_hfmYbqDdsVQ7XR0FlLlA4soBz6CnmK1HUIas6c9hQHpQ2sV_dDkfYApzJlVkoFMeyjsnVj7Kgdzzd4jG8OwUAbKvzPiVaM5ijhxRhkrdeLU"
+    refreshToken: "AQCzVfJhvvDF8KvxRKP6ANQ_hfmYbqDdsVQ7XR0FlLlA4soBz6CnmK1HUIas6c9hQHpQ2sV_dDkfYApzJlVkoFMeyjsnVj7Kgdzzd4jG8OwUAbKvzPiVaM5ijhxRhkrdeLU",
+    timeRange: "short"
 }
 
 methods.top_songs(function (result) {
     console.log(result);
 }, data1);
 
-data = {
-    userID: "6062b12f43a0ad02805f72ae",
-    _id: "6066052db97e1628ecdc14e6"
-    _id: "6066052db97e1628ecdc14e6"
-}
+// data = {
+//     userID: "6062b12f43a0ad02805f72ae",
+//     _id: "6066052db97e1628ecdc14e6"
+// }
 
 //methods.top_songs('AQCzVfJhvvDF8KvxRKP6ANQ_hfmYbqDdsVQ7XR0FlLlA4soBz6CnmK1HUIas6c9hQHpQ2sV_dDkfYApzJlVkoFMeyjsnVj7Kgdzzd4jG8OwUAbKvzPiVaM5ijhxRhkrdeLU', function (result)){
   //  console.log(result);
 //}
 
 //Group Testing
-/*
-const data = {
-    creatorID: "123456789",
-    title: "4th Ever Group",
-    color: "#FFFFFF",
-    bio: "For testing",
-    private: false,
-    password: "",
-    users: [
-        "9634209323",
-        "23749638472",
-        "324878927349"
-    ],
-    numUsers: 3
-};
 
-methods.create_group(function (result) {
-    console.log(result);
-}, data);
-*/
+// const data = {
+//     creatorID: "123456789",
+//     title: "4th Ever Group",
+//     color: "#FFFFFF",
+//     bio: "For testing",
+//     private: false,
+//     password: "",
+//     users: [
+//         "9634209323",
+//         "23749638472",
+//         "324878927349"
+//     ],
+//     numUsers: 3
+// };
+
+// methods.create_group(function (result) {
+//     console.log(result);
+// }, data);
+
 
 
 /*

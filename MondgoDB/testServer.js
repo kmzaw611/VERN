@@ -13,7 +13,7 @@ const Playlist = require('./models/playlist');
 const Group = require('./models/group');
 const cluster = require('./clusterConnector');
 var SpotifyWebApi = require('spotify-web-api-node')
-
+var fs = require('fs')
 // Variables
 const server = express();
 server.use(express.json());
@@ -405,9 +405,14 @@ server.post('/publish_top_songs_playlist', function (req,res) {
         })
     });
 server.post('/top_songs_playlist', function (req, res) {
-    //@ Receives:(optional)timeRange(str) (short,medium,long), (Required) Refresh token(str)
+    //@ Receives:
+    //  (optional)timeRange(str) (short,medium,long) - defaults to medium
+    //  (Required) refreshToken (str)
+    //@ Returns:
+    //  JSON
     console.log("test from top_songs_playlist in testServer.js")
-    console.log(req.body.refreshToken)
+
+    console.log(req.body)
     var range = "medium_term";
     if (req.body.timeRange == "short") {
         range = "short_term";
@@ -418,9 +423,9 @@ server.post('/top_songs_playlist', function (req, res) {
     else if (req.body.time == "") {
         range = "medium_term";
     }
-    else {
-        res.send("Invalid time range passed in, please select short, medium or long. Defaulting to medium.")
-    }
+    //else {
+    //    res.send("Invalid time range passed in, please select short, medium or long. Defaulting to medium.")
+    //}
     var spotifyApi = new SpotifyWebApi({
         clientId: '0e8700b7f71d486bbb7c3bd120e892f8', // App client ID
         clientSecret: '9ffb3fe2081b414e8c520d19805cbf09', //App client secret
@@ -435,19 +440,10 @@ server.post('/top_songs_playlist', function (req, res) {
         //Set the new access token
         .then(function (newResult) {
             spotifyApi.setAccessToken(newResult)
-            //console.log(spotifyApi.getAccessToken())
         })
         //Get top tracks promise
         .then(function (data) {
-            //Getting the userID doesn't work right now, something with synchronous things
-            userId = User.id
-            spotifyApi.getMe().then(
-                async function (data) {
-                    userId = data.body.id
-                }
-            )
-            spotifyApi.getMyTopTracks({time_range: range})                 //************************** change structs so we don't pass in any arrays ******unless react can handle those for display*/
-                     //*******added async below*/
+            spotifyApi.getMyTopTracks({time_range: range})
                 .then(function (data) {             
                     userId = ""
                     let topTracks = data.body.items;
@@ -455,7 +451,6 @@ server.post('/top_songs_playlist', function (req, res) {
                     var i;
                     let genreDict = {};
                     var currentArtists = [];
-                    //var duration_ms;
                     currentIds = [];
                     songs = [];
                     for (i = 0; i < topTracks.length; i++) {
@@ -465,8 +460,6 @@ server.post('/top_songs_playlist', function (req, res) {
                         currentIds = []
                         for (var j = 0; j < topTracks[i].artists.length; j++) {
                             currentArtists.push(topTracks[i].artists[j].name);
-                            //console.log(currentArtists);
-                            //currentIds.push(topTracks[i].artists[j].id);
                         }
                         //console.log(currentArtists[0]);
                         let song = {
@@ -474,40 +467,27 @@ server.post('/top_songs_playlist', function (req, res) {
                             "title": topTracks[i].name,
                             "artist": currentArtists.join(),
                             "length": topTracks[i].popularity
-                            //"artistIds": currentIds.join()
                         }
-                        //console.log(song.duration)
                         songs.push(song)
                     }
                     //Creating the JSON file to save
                     userId = ""
-
                     let date = new Date();
                     let year = date.getFullYear();
                     let month = ("0" + (date.getMonth() + 1)).slice(-2);
                     let dateNumber = ("0" + date.getDate()).slice(-2);
                     let todaysDate = (month + "-" + date + "-" + year)
-                    //******************** something with the song.js & playlist.js schema's being intereperted in PlaylistScreen.js w/react
-                    //differences with the one returned from testServer : user: '', songs: [ and ] w/date at bottom
                     let topSongs = {
                         time_range: range,
                         //user: userId,
                         songs: songs
-                        //date: todaysDate
-                        
-                        //date: todaysDate
                     }
-                    payload = (JSON.stringify(songs, null, 4))       //modify for proper struct
+                    //payload = (JSON.stringify(songs, null, 4))  //Str version of json for testing
+                    payload = topSongs
                     i = 0;
-                    const app = express();
                     console.log(payload)
-                    res.send(payload)
-                    res.end()
-                    //app.post("/top_songs_playlist", (req, res) => {
-                    //    res.send(payload)
-                    //})
-                    //app.listen(3000);
-                    console.log("Sent HTTP request to /top_songs_playlist on port 3000")
+                    res.send(payload);
+                    res.end();
                 })
         })
 });
