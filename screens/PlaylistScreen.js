@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Text, View, FlatList, TouchableOpacity, StyleSheet, Image } from 'react-native'
+import { Text, View, FlatList, TouchableOpacity, StyleSheet, Image, Alert } from 'react-native'
 const methods = require('../MondgoDB/testClient');
 //const prompt = require('prompt');
 import Sound from 'react-native-sound';
@@ -38,16 +38,26 @@ const PlaylistScreen = ({ route, navigation }) => {
 
     //const [djPP, setdjPP] = useState(false);
     
-    /*playTrack = ({ item }) => {
-        const track = new Sound(, null, (e) => {
+    playTrack = (sound_item) => {
+        console.log(sound_item);
+
+        const track = new Sound(sound_item, null, (e) => {
             if (e) {
                 console.log('error loading track:', e)
             } else {
                 console.log("playtest"),
-                track.play()
+                    track.play(),
+                    Alert.alert(
+                        'Song is playing',
+                        'Press CANCEL to close window or OK to stop song preview',
+                        [
+                            { text: 'Cancel', onPress: () => console.log('Cancel pressed') },
+                            {text: 'OK', onPress: () => track.stop()},
+                        ],
+                    )
             }
         })
-    }*/
+    }
     /*
     let sound1;
     useEffect(() => {
@@ -76,7 +86,7 @@ const PlaylistScreen = ({ route, navigation }) => {
     const renderPlaylistSong = ({ item }) => (
         <TouchableOpacity
             style={styles.song}
-            //onPress={playTrack(item)}
+            onPress={() => playTrack(item.snippet)}
             
         >
       <View style={styles.songcontainer}>
