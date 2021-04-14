@@ -5,7 +5,7 @@
 const axios = require('axios');
 
 /* Use 0 for local testing (client.js), and 1 for Emulator testing */
-const urlCode = 1;
+const urlCode = 0;
 
 var url = "";
 
@@ -172,9 +172,6 @@ const methods = {
 
     //POST call for favorite songs
     top_songs: function (callback, data) {
-        //console.log("Hi from testClient.js")
-        //console.log(data)
-        //console.log(data.refreshToken)
         rh.post(url + "/top_songs_playlist", data)
             .then(res => {
                 //console.log(res.data)
@@ -185,5 +182,15 @@ const methods = {
             });
 
     },
+    publish_top_songs: function (callback, data) {
+        rh.post(url + "/publish_top_songs_playlist", data)
+            .then(res => {
+                return callback(res.data)
+            })
+            .catch(error => {
+                return callback("Error in publish top songs");
+            });
+
+    }
 };
 module.exports = methods;
