@@ -213,16 +213,6 @@ const styles = StyleSheet.create({
         marginRight: 35,
         margin: 10,
     },
-    buttonStyle: {
-        backgroundColor: '#51D8C7',
-        borderWidth: 0,
-        color: '#FFFFFF',
-        borderColor: '#51D8C7',
-        alignItems: 'center',
-        borderRadius: 5,
-        marginTop: 30,
-        padding: 10,
-    },
     buttonTextStyle: {
         color: '#FFFFFF',
         paddingVertical: 10,
@@ -233,23 +223,6 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         marginTop: 10,
         padding: 30
-    },
-    ReviewButton: {
-        alignItems: 'center',
-        backgroundColor: '#8e6f3e',
-        padding: 10,
-        margin: 10,
-        marginTop: 5,
-        marginBottom: 30,
-        borderRadius: 10,
-    },
-    minititle: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: '#8e6f3e',
-        margin: 10,
-        marginBottom: 5,
-        fontFamily: 'sans-serif-condensed',
     },
     centeredView: {
         flex: 1,

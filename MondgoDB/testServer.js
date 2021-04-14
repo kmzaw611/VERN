@@ -422,10 +422,11 @@ server.post('/top_songs_playlist', function (req, res) {
                             "songID": topTracks[i].id,
                             "title": topTracks[i].name,
                             "artist": currentArtists.join(),
-                            "length": topTracks[i].popularity
+                            "length": topTracks[i].popularity,
+                            "snippet": topTracks[i].preview_url
                             //"artistIds": currentIds.join()
                         }
-                        //console.log(song.duration)
+                        //console.log(song.snippet)
                         songs.push(song)
                     }
                     //Creating the JSON file to save
@@ -445,7 +446,7 @@ server.post('/top_songs_playlist', function (req, res) {
                         
                         //date: todaysDate
                     }
-                    payload = (JSON.stringify(songs, null, 4))       //modify for proper struct
+                    payload = (JSON.stringify(songs, null,5))       //modify for proper struct
                     i = 0;
                     const app = express();
                     console.log(payload)

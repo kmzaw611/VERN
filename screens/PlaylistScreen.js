@@ -36,9 +36,10 @@ const PlaylistScreen = ({ route, navigation }) => {
   }
 
 
-
-    playTrack = () => {
-        const track = new Sound('https://p.scdn.co/mp3-preview/3eb16018c2a700240e9dfb8817b6f2d041f15eb1?cid=774b29d4f13844c495f206cafdad9c86', null, (e) => {
+    //const [djPP, setdjPP] = useState(false);
+    
+    /*playTrack = ({ item }) => {
+        const track = new Sound(, null, (e) => {
             if (e) {
                 console.log('error loading track:', e)
             } else {
@@ -46,7 +47,7 @@ const PlaylistScreen = ({ route, navigation }) => {
                 track.play()
             }
         })
-    }
+    }*/
     /*
     let sound1;
     useEffect(() => {
@@ -73,11 +74,11 @@ const PlaylistScreen = ({ route, navigation }) => {
     };*/
     //style={styles.song} how is rendering done
     const renderPlaylistSong = ({ item }) => (
-      <TouchableOpacity
+        <TouchableOpacity
             style={styles.song}
-            //onPress={playTrack()}
-
-      >
+            //onPress={playTrack(item)}
+            
+        >
       <View style={styles.songcontainer}>
         <View>
           <Text style={styles.songtitle}>{item.title}</Text>
@@ -112,7 +113,7 @@ const PlaylistScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   imagetitle_container: {
     alignItems: 'center',
-    marginTop: 20,
+    marginTop: 20
   },
   playlistImage: {
     width: 150,
