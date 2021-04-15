@@ -11,6 +11,7 @@ const VenueScreen = ({ route, navigation }) => {
     //const [inputText, setInputText] = useState('');
     const [qrvalue, setQrvalue] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
+    const [ratingVisible, setRatingVisible] = useState(false);
       /*  //useModal(() => (
         <Modal
             animationType="slide"
@@ -84,11 +85,12 @@ const VenueScreen = ({ route, navigation }) => {
                             //QR code value
                             value={"Check-in " + venueName + " " + qrvalue}
                             //size of QR Code
-                            size={150}
+                            size={300}
                             //Color of the QR Code (Optional)
                             color="black"
                             //Background Color of the QR Code (Optional)
                             backgroundColor="white"
+                            
                         //Logo of in the center of QR Code (Optional)
 
                         />
@@ -108,12 +110,49 @@ const VenueScreen = ({ route, navigation }) => {
 
 
             </Modal>
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={ratingVisible}
+                onRequestClose={() => setRatingVisible(!ratingVisible)}
+            >
+                <View style={styles.centeredView}>
+                    <View style={styles.modalView}>
+                        <Text style={styles.modalText}>Rate</Text>
 
 
+                        <TouchableHighlight
+                            style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
+                            onPress={() => setRatingVisible(!ratingVisible)}
+                        >
+                            <Text style={styles.textStyle}>Close</Text>
+
+                        </TouchableHighlight>
+
+                    </View>
+
+                </View>
+
+
+
+
+
+
+            </Modal>
+
+            <Button
+                title="Rating"
+                onPress={() => setRatingVisible(true)}
+
+            />
+            <View style={styles.bottom}>
                 <Button
-                    title="Venue Check-In"
+                    title="Venue Reserve/Check-In"
                     onPress={() => setModalVisible(true)}
                 />
+            </View>
+            
+
                     
                
                 
@@ -265,6 +304,11 @@ const styles = StyleSheet.create({
         textAlign: "center",
         fontSize: 18,
         fontWeight: 'bold'
+    },
+    bottom: {
+        flex:1,
+        justifyContent: 'flex-end',
+        marginBottom: 36
     }
     
 });
