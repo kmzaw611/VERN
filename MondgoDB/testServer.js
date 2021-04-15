@@ -92,8 +92,10 @@ server.post('/get-user', function (req, res) {
         console.log(result);
         if (result == null)
             res.send("Server: No User Found");
-        else
+        else {
             res.send(result);
+            console.log("Worked");
+        }
         res.end();
     }).catch((err) => {
         console.log(err);
@@ -519,6 +521,8 @@ server.post('/create-group', function (req, res) {
                 //Save user object in the database and send object to client
                 group.save()
                     .then((result2) => {
+                        console.log("Yup");
+                        console.log(result2);
                         res.send(result2);
                         res.end();
                     })
@@ -546,7 +550,23 @@ server.post('/get-group', function (req, res) {
     ).then((result) => {
         console.log(result);
         if (result == null)
-            res.send("Server: No Group Found");
+            res.send(result);
+        else {
+            res.send(result);
+            console.log("Successful group grab");
+        }
+        res.end();
+    }).catch((err) => {
+        console.log(err);
+    });
+});
+server.post('/get-groups', function (req, res) {
+    console.log(req.body.title);
+    Group.find({ title: req.body.title })
+    .then((result) => {
+        console.log(result);
+        if (result == null)
+            res.send(result);
         else {
             res.send(result);
             console.log("Successful group grab");
@@ -606,7 +626,7 @@ server.post('/group-add-user', function (req, res) {
                 .then(result => {
                     if (result != null) {
                         //Check if they have access
-                        if (result.private == false) {
+                        if (result.private == false || result.creatorID === req.body.userID /* || result.pass === encrypted req.body.pass*/) {
                             //Check if user is already in the list or if group is full
                             var check = 0;
                             var users = result.users;
@@ -787,6 +807,37 @@ server.post('/get-group-users', function (req, res) {
         res.end();
     }).catch((err) => {
         console.log(err);
+    });
+});
+
+server.post('/group_access', function (req, res) {
+    const { _id, password } = req.body;
+    // console.log("Login Email: " + email);
+    // console.log("Login Password: " + password);
+    if (!password) {
+        return res.send("Blank Password");
+    }
+    Group.find({
+        _id: _id
+    }, (err, groups) => {
+        if (err) {
+            return res.send("Server Error");
+        }
+        else {
+            console.log("no error");
+            // We've made sure that a single valid user exists with that email
+            const group = groups[0];
+            // Calls the Bcrypt function implemented for every user
+            if (!group.validPassword(password)) {
+                console.log("Wrong");
+                return res.send("Incorrect Password");
+            }
+            else {
+                console.log("Correct!");
+                // If we are here, the sign in is valid
+                return res.send("SUCCESS");
+            }
+        }
     });
 });
 
