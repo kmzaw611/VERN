@@ -1,8 +1,181 @@
 
 import React, { useState, Component } from 'react'
-import { Text, StyleSheet, View, TouchableOpacity, FlatList } from 'react-native'
+import { Text, StyleSheet, View, TouchableOpacity, FlatList, TextInput } from 'react-native'
 const methods = require('../MondgoDB/testClient');
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
+
+export default class MyGroupScreen extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            reload: false,
+            pass: ""
+        }
+        this.gid = {
+            _id: ""
+        }
+        this.inGroup = false,
+        this.title = "",
+        this.bio = "",
+        this.userList = [];
+        this.myid = ""
+        this.private = false;
+    }
+    componentDidMount() {
+        AsyncStorage.getItem('userID')
+            .then(result => {
+                this.myid = result;
+            })
+            .catch(err => {
+                console.log("notFound");
+            })
+        this.gid._id = this.props.route.params.id;
+        this.refresh_thing();
+    }
+
+    refresh_thing = () => {
+        this.userList.splice(0, this.userList.length);
+        this.inGroup = false;
+        methods.get_group((res) => {
+            if (res != null) {
+                this.title = res.title;
+                this.bio = res.bio;
+                this.private = res.private;
+                for (var i = 0; i < res.users.length; i++) {
+                    const userid = {
+                        _id: res.users[i]
+                    };
+                    if (userid._id === this.myid)
+                        this.inGroup = true;
+                    methods.get_user(userid, res1 => {
+                        if (res1 != "Server: No User Found" && !(res1 === "post failed")) {
+                            this.userList.push(res1);
+                        }
+                        if (i == res.users.length) {
+                            this.setState({ reload: true });
+                        }
+                    });
+                }
+                if (res.users.length == 0)
+                    this.setState({ reload: true });
+            }
+        }, this.gid);
+    }
+
+    handleUserPress = (usersid) => {
+        if (this.myid === usersid) {
+            this.props.navigation.navigate("ProfileScreen");
+        }
+        else {
+            this.props.navigation.navigate("OtherUserProfile", { uid: usersid })
+        }
+    }
+
+    handleButton = () => {
+        const data = {
+                _id: this.gid._id,
+                userID: this.myid
+        }
+        if (this.inGroup) {
+            methods.group_remove(res => {
+                if (res != null && res != "User is not in this group")
+                    this.refresh_thing();
+                this.props.route.params.refresh();
+                this.props.navigation.goBack();
+            }, data);
+        }
+        else {
+            if (this.private) {
+                const stuff = {
+                    _id: this.gid._id,
+                    password: this.state.pass
+                };
+                methods.group_access(result => {
+                    if (result === "SUCCESS") {
+                        methods.group_add((res) => {
+                            if (res != null)
+                                this.refresh_thing();
+                            this.props.route.params.refresh();
+                            this.props.navigation.goBack();
+                        }, data);
+                    }
+                }, stuff);
+            }
+            else {
+                methods.group_add((res) => {
+                    if (res != null)
+                        this.refresh_thing();
+                    this.props.route.params.refresh();
+                    this.props.navigation.goBack();
+                }, data);
+            }
+        }
+        
+    }
+
+    
+    
+
+    render = () => {
+        const renderUser = ({ item }) => (
+            <TouchableOpacity onPress={() => { this.handleUserPress.bind(this)(item._id) }}>
+                <View style={styles.songcontainer}>
+                    <Text style={styles.sampleGroupText}>{item.username}</Text>
+                </View>
+            </TouchableOpacity>
+        )
+        if (this.state.reload == true) {
+            return (
+                <View
+                >
+                    <View style={{ justifyContent: 'center', textAlign: 'center' }}>
+                        <Text style={styles.title}>{this.title}</Text>
+
+                        <Text style={styles.inputEmailPasswordBio}>{this.bio}</Text>
+
+                        {
+                            (this.private && !this.inGroup) ?
+                                <TextInput
+                                    style={styles.inputEmailPassword}
+                                    label="Password"
+                                    placeholder="Please enter the password"
+                                    value={this.state.pass}
+                                    onChangeText={(newValue) => this.setState({ pass: newValue })}
+                                /> : null
+                        }
+
+                        <View style={styles.followButtonsContainer}>
+                            <TouchableOpacity
+                                style={styles.followButton}
+                                onPress={() => { this.handleButton.bind(this)() }}
+                            >
+                                {
+                                    this.inGroup ?
+                                        <Text style={styles.followText}>Leave Group</Text>
+                                        :
+                                        <Text style={styles.followText}>Join Group</Text>
+                                }
+                            </TouchableOpacity>
+
+                        </View>
+
+                        <Text style={styles.title}>Users</Text>
+                        <FlatList
+                            data={this.userList}
+                            renderItem={renderUser}
+                            keyExtractor={(item, index) => item._id}
+                        />
+                    </View>
+                </View>
+            )
+        }
+        else {
+            return (<Text> Loading </Text>);
+        }
+    }
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -163,135 +336,3 @@ const styles = StyleSheet.create({
 
   }
 })
-
-export default class MyGroupScreen extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            reload: false,
-        }
-        this.gid = {
-            _id: ""
-        }
-        this.title = "",
-        this.bio = "",
-            this.userList = [];
-        this.myid = ""
-    }
-    componentDidMount() {
-        AsyncStorage.getItem('userID')
-            .then(result => {
-                this.myid = result;
-            })
-            .catch(err => {
-                console.log("fart");
-            })
-        AsyncStorage.getItem('GroupID')
-            .then(result => {
-                if (result != null) {
-                    this.gid._id = ("" + result);
-                    methods.get_group((res) => {
-                        // Fill data with stuff
-                        if (res != null) {
-                            this.title = res.title;
-                            this.bio = res.bio;
-                            for (var i = 0; i < res.users.length; i++) {
-                                const userid = {
-                                    _id: res.users[i]
-                                };
-                                methods.get_user(userid, res1 => {
-                                    if (res1 != null && !(res1 === "post failed")) {
-                                        this.userList.push(res1);
-                                    }
-                                    if (i == res.users.length) {
-                                        this.setState({ reload: true });
-                                    }
-                                });
-                            }
-                        }
-                    }, this.gid);
-                }
-                else {
-                    console.log("No Group Found");
-                }
-            })
-            .catch(err => {
-                console.error(err);
-            });
-    }
-
-    handleUserPress = (usersid) => {
-        if (this.myid === usersid) {
-            this.props.navigation.navigate("ProfileScreen");
-        }
-        else {
-            this.props.navigation.navigate("OtherUserProfile", { uid: usersid })
-        }
-    }
-
-    handleLeave = () => {
-        console.log("dang");
-        const data = {
-            _id: this.gid._id,
-            userID: this.myid
-        }
-        console.log(data);
-        methods.group_remove(res => {
-            if (res != null && res != "User is not in this group") {
-                AsyncStorage.setItem('GroupID', '')
-                    .then(res2 => {
-                        this.props.route.params.refresh();
-                        this.props.navigation.goBack();
-                    }).catch(err => {
-                        console.log(err);
-                    });
-                
-            }
-        }, data);
-    }
-
-    
-    
-
-    render = () => {
-        const renderUser = ({ item }) => (
-            <TouchableOpacity onPress={() => { this.handleUserPress.bind(this)(item._id) }}>
-                <View style={styles.songcontainer}>
-                    <Text style={styles.sampleGroupText}>{item.username}</Text>
-                </View>
-            </TouchableOpacity>
-        )
-        if (this.state.reload == true) {
-            return (
-                <View
-                >
-                    <View style={{ justifyContent: 'center', textAlign: 'center' }}>
-                        <Text style={styles.title}>{this.title}</Text>
-
-                        <Text style={styles.inputEmailPasswordBio}>{this.bio}</Text>
-                        <View style={styles.followButtonsContainer}>
-                            <TouchableOpacity
-                                style={styles.followButton}
-                                onPress={() => { this.handleLeave.bind(this)() }}
-                            >
-                                <Text style={styles.followText}>Leave Group</Text>
-                            </TouchableOpacity>
-
-                        </View>
-
-                        <Text style={styles.title}>Users</Text>
-                        <FlatList
-                            data={this.userList}
-                            renderItem={renderUser}
-                            keyExtractor={(item, index) => item._id}
-                        />
-                    </View>
-                </View>
-            )
-        }
-        else {
-            return (<Text> Loading </Text>);
-        }
-    }
-}
-
