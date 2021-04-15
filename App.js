@@ -18,6 +18,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Avatar } from 'react-native-elements';
 import VenueScreen from './screens/VenueScreen';
+import ContactInfoScreen from './screens/ContactInfoScreen'
+import EditContactInfoScreen from './screens/EditContactInfoScreen'
 //import { ModalProvider } from "react-native-use-modal-hooks";
 
 
@@ -125,6 +127,8 @@ const App = () => {
                           <Stack.Screen name="EditScreen" component={EditScreen} />
                           <Stack.Screen name="OtherUserProfile" component={OtherUserProfile} />
                           <Stack.Screen name="VenueScreen" component={VenueScreen} />
+                          <Stack.Screen name="ContactInfoScreen" component={ContactInfoScreen} />
+                          <Stack.Screen name="EditContactInfoScreen" component={EditContactInfoScreen} />
           </>
 
         ) : (
