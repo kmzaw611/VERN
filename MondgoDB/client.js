@@ -11,16 +11,15 @@ const methods = require('./testClient');
 //const prompt = require('prompt');
 
 data1 = {
-    refreshToken: "AQCzVfJhvvDF8KvxRKP6ANQ_hfmYbqDdsVQ7XR0FlLlA4soBz6CnmK1HUIas6c9hQHpQ2sV_dDkfYApzJlVkoFMeyjsnVj7Kgdzzd4jG8OwUAbKvzPiVaM5ijhxRhkrdeLU"
+    _id: "6062b12f43a0ad02805f72ae"
 }
 
-methods.top_songs(function (result) {
+methods.get_user(data1, function (result) {
     console.log(result);
-}, data1);
+});
 
 data = {
     userID: "6062b12f43a0ad02805f72ae",
-    _id: "6066052db97e1628ecdc14e6"
     _id: "6066052db97e1628ecdc14e6"
 }
 

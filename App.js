@@ -12,6 +12,7 @@ import LocalArtistScreen from './screens/LocalArtistScreen'
 import PlaylistScreen from './screens/PlaylistScreen'
 import EditScreen from './screens/EditScreen'
 import MyGroupScreen from './screens/MyGroupScreen'
+import SearchScreen from './screens/SearchScreen'
 import ActualRegisterScreen from './screens/ActualRegisterScreen'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -111,7 +112,7 @@ const App = () => {
         {(loginState.isLoggedIn === 'true') ? (
           // User is logged in. Start at the landing page.
           <>
-          <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
+                          <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
                           <Stack.Screen name="Playlist" component={PlaylistScreen} />
                           <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
                           <Stack.Screen name="MyGroupScreen" component={MyGroupScreen} />
@@ -119,6 +120,7 @@ const App = () => {
                           <Stack.Screen name="ActualRegister" component={ActualRegisterScreen} options={{ headerShown: false }} />
                           <Stack.Screen name="EditScreen" component={EditScreen} />
                           <Stack.Screen name="OtherUserProfile" component={OtherUserProfile} />
+                          <Stack.Screen name="SearchScreen" component={SearchScreen} />
           </>
 
         ) : (
@@ -130,7 +132,7 @@ const App = () => {
                               <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
                               <Stack.Screen name="Playlist" component={PlaylistScreen} />
                               <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
-
+                              <Stack.Screen name="SearchScreen" component={SearchScreen} />
                               <Stack.Screen name="MyGroupScreen" component={MyGroupScreen} />
                               <Stack.Screen name="EditScreen" component={EditScreen} />
                               <Stack.Screen name="OtherUserProfile" component={OtherUserProfile} />

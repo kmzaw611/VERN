@@ -150,7 +150,7 @@ export default class ProfileScreen extends Component {
                             //const deleteLoginInfo = async () => {
                               //  try {
                                     AsyncStorage.setItem('isLoggedIn', 'false');
-                                    AsyncStorage.setItem('userID', '');
+                            AsyncStorage.setItem('userID', '');
                                     AsyncStorage.setItem('GroupID', '');
                                     console.log("AsyncStorage Logging Out")
                                // } catch (err) {

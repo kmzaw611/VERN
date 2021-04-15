@@ -52,6 +52,7 @@ const methods = {
                 return callback(res.data);
             })
             .catch(error => {
+                console.log("butt " + error);
                 return callback("post failed");
             });
     },
@@ -113,6 +114,15 @@ const methods = {
                 return callback("get group failed");
             });
     },
+    get_groups: function (callback, name) {
+        rh.post(url + "/get-groups", name)
+            .then(res => {
+                return callback(res.data);
+            })
+            .catch(error => {
+                return callback("get groups failed");
+            });
+    },
     edit_group: function (callback, data) {
         rh.post(url + "/edit-group", data)
             .then(res => {
@@ -147,6 +157,16 @@ const methods = {
             })
             .catch(error => {
                 return callback("get users failed");
+            });
+    },
+
+    group_access: function (callback, data) {
+        rh.post(url + "/group_access", data)
+            .then(res => {
+                return callback(res.data);
+            })
+            .catch(error => {
+                return callback("testClient.js : group pass failed");
             });
     },
 
