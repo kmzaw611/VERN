@@ -7,8 +7,11 @@ import StartScreen from './screens/StartScreen'
 import HomeScreen from './screens/HomeScreen'
 import GroupScreen from './screens/GroupScreen'
 import ProfileScreen from './screens/ProfileScreen'
+import ContactInfoScreen from './screens/ContactInfoScreen'
+import EditContactInfoScreen from './screens/EditContactInfoScreen'
 import OtherUserProfile from './screens/OtherUserProfile'
 import LocalArtistScreen from './screens/LocalArtistScreen'
+import LocalArtistProfile from './screens/LocalArtistProfile'
 import PlaylistScreen from './screens/PlaylistScreen'
 import EditScreen from './screens/EditScreen'
 import MyGroupScreen from './screens/MyGroupScreen'
@@ -127,6 +130,10 @@ const App = () => {
                           <Stack.Screen name="OtherUserProfile" component={OtherUserProfile} />
                           <Stack.Screen name="VenueScreen" component={VenueScreen} />
                           <Stack.Screen name="SearchScreen" component={SearchScreen} />
+                          <Stack.Screen name="ContactInfoScreen" component={ContactInfoScreen} />
+                          <Stack.Screen name="EditContactInfoScreen" component={EditContactInfoScreen} />
+                          <Stack.Screen name="LocalArtistScreen" component={LocalArtistProfile} />
+                          <Stack.Screen name="LocalArtistProfile" component={LocalArtistProfile} />
           </>
 
         ) : (
@@ -143,6 +150,10 @@ const App = () => {
                               <Stack.Screen name="EditScreen" component={EditScreen} />
                               <Stack.Screen name="OtherUserProfile" component={OtherUserProfile} />
                               <Stack.Screen name="VenueScreen" component={VenueScreen} />
+                              <Stack.Screen name="ContactInfoScreen" component={ContactInfoScreen} />
+                              <Stack.Screen name="EditContactInfoScreen" component={EditContactInfoScreen} />
+                              <Stack.Screen name="LocalArtistScreen" component={LocalArtistProfile} />
+                              <Stack.Screen name="LocalArtistProfile" component={LocalArtistProfile} />
 
           </>
         )}
