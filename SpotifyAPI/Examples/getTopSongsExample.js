@@ -33,7 +33,6 @@ spotifyApi.refreshAccessToken()
     })
     .then(function (data) {
         let playlistURI = data.body.id
-        console.log(data)
         //Getting the userID doesn't work right now, something with synchronous things
         //userId = ""
         //spotifyApi.getMe().then(
