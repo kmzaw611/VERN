@@ -82,6 +82,8 @@ export default class ProfileScreen extends Component {
                         activeOpacity={0.7}
                         containerStyle={{marginTop:10}}
                     />
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate("ContactInfoScreen")}>
+                        
                     <View style={styles.nameinfo}>
                         <Text style={styles.name}>{this.userData.username}</Text>
                         <Text style={styles.infotitle}>Favourite Genre</Text>
@@ -89,6 +91,7 @@ export default class ProfileScreen extends Component {
                         <Text style={styles.infotitle}>Favourite Song</Text>
                         <Text style={styles.infodata}>{this.userData.songID}</Text>
                     </View>
+                    </TouchableOpacity>
 
                     <View style={styles.biocontainer}>
                         <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', }}>Bio</Text>
