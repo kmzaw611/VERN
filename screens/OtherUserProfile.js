@@ -80,22 +80,24 @@ export default class ProfileScreen extends Component {
                 my_id: this.id._id,
                 their_id: this.nid._id
         }
-        if (this.status === "Follow") {
+        if (this.status == "Follow") {
             methods.follow_user(resu => {
-                if (resu === "SUCCESS") {
+                if (resu == "SUCCESS") {
                     this.status = "Unfollow";
-                    this.refresh_thing();
+                    this.setState({ dataIsReturned: true });
+                    //this.refresh_thing();
                 }
                 else {
                     console.log(resu);
                 }
             }, data);
         }
-        else if (this.status === "Unfollow") {
+        else if (this.status == "Unfollow") {
             methods.unfollow_user(resu => {
                 if (resu === "SUCCESS") {
                     this.status = "Follow";
-                    this.refresh_thing();
+                    this.setState({ dataIsReturned: true });
+                    //this.refresh_thing();
                 }
                 else {
                     console.log(resu);
