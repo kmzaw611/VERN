@@ -12,6 +12,8 @@ import LocalArtistScreen from './screens/LocalArtistScreen'
 import LocalArtistProfile from './screens/LocalArtistProfile'
 import PlaylistScreen from './screens/PlaylistScreen'
 import EditScreen from './screens/EditScreen'
+import ContactInfoScreen from './screens/ContactInfoScreen'
+import EditContactInfoScreen from './screens/EditContactInfoScreen'
 import MyGroupScreen from './screens/MyGroupScreen'
 import ActualRegisterScreen from './screens/ActualRegisterScreen'
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -121,6 +123,8 @@ const App = () => {
                           <Stack.Screen name="EditScreen" component={EditScreen} />
                           <Stack.Screen name="OtherUserProfile" component={OtherUserProfile} />
                           <Stack.Screen name="LocalArtistProfile" component={LocalArtistProfile} />
+                          <Stack.Screen name="ContactInfoScreen" component={ContactInfoScreen} />
+                          <Stack.Screen name="EditContactInfoScreen" component={EditContactInfoScreen} />
           </>
 
         ) : (
