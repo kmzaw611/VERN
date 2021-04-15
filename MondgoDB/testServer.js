@@ -13,7 +13,7 @@ const Playlist = require('./models/playlist');
 const Group = require('./models/group');
 const cluster = require('./clusterConnector');
 var SpotifyWebApi = require('spotify-web-api-node')
-var fs = require('fs')
+
 // Variables
 const server = express();
 server.use(express.json());
@@ -92,8 +92,10 @@ server.post('/get-user', function (req, res) {
         console.log(result);
         if (result == null)
             res.send("Server: No User Found");
-        else
+        else {
             res.send(result);
+            console.log("Worked");
+        }
         res.end();
     }).catch((err) => {
         console.log(err);
@@ -367,133 +369,9 @@ server.post('/get_favorite_song', function (req, res) {
         res.send(req.body.favoriteSong)
     }
 });
-
-server.post('/publish_top_songs_playlist', function (req,res) {
-    //Creates a top songs playlist on the user's spotify account
-    //Receives: 
-    //(Required) name: str
-    //(Required) description: str
-    //(Required) tracks: list of strs of spotifyIDs
-    //(Required) refreshToken: str
-    //(Optional) timeRange: str (short,medium,long)
-    //Returns:
-    //Nothing, creates a playlist on the user's Spotify account
-    var name = req.body.name;
-    var description = req.body.description;
-    var tracks = req.body.tracks;
-    var range = "medium_term";
-    if (req.body.timeRange == "short") {
-        range = "short_term";
-    }
-    else if (req.body.time == "long") {
-        range = "long_term";
-    }
-    else if (req.body.time == "") {
-        range = "medium_term";
-    }
-    var spotifyApi = new SpotifyWebApi({
-        clientId: '0e8700b7f71d486bbb7c3bd120e892f8', // App client ID
-        clientSecret: '9ffb3fe2081b414e8c520d19805cbf09', //App client secret
-        redirectUri: 'http://localhost:8888/callback' //Where the user is to be taken after authentication
-    })
-    spotifyApi.setRefreshToken(req.body.refreshToken)
-    spotifyApi.refreshAccessToken()
-        .then(function (data) {
-            return data.body['access_token']
-        })
-        //Set the new access token
-        .then(function (newResult) {
-            spotifyApi.setAccessToken(newResult)
-            console.log("HI")
-            console.log(spotifyApi.getAccessToken())
-        })
-        //Get top tracks promise
-        .then(function (data) {
-            let promise = spotifyApi.createPlaylist(name, {'description': description, 'collaborative': false, 'public': true});
-            return promise;
-        })
-        .then(function (data) {
-            let playlistURI = data.body.id
-            console.log(playlistURI)  
-        })
-        spotifyApi.getMyTopTracks({time_range: range})
-        .then(function (data) {
-            userId = ""
-            let topTracks = data.body.items;
-            var genSeed = [];
-            var i;
-            let genreDict = {};
-            currentArtists = [];
-            currentIds = [];
-            songs = [];
-            ids = [];
-            for (i = 0; i < topTracks.length; i++) {
-                //A list of ALL artists featured on the current song
-                currentArtists = []
-                //A list of ALL artist IDs featured on the current song
-                currentIds = []
-                for (var j = 0; j < topTracks[i].artists.length; j++) {
-                    currentArtists.push(topTracks[i].artists[j].name);
-                    currentIds.push(topTracks[i].artists[j].id);
-                }
-                let song = {
-                    "id": topTracks[i].id,
-                    "name": topTracks[i].name,
-                    "duration": topTracks[i].duration,
-                    "artists": currentArtists,
-                    "artistIds": currentIds
-                }
-                ids.push(topTracks[i].id)
-                songs.push(song)
-            }
-            //Creating the JSON file to save
-            userId = ""
-            
-            let date = new Date();
-            let year = date.getFullYear();
-            let month = ("0" + (date.getMonth() + 1)).slice(-2);
-            let dateNumber = ("0" + date.getDate()).slice(-2);
-            let todaysDate = (month + "-" + date + "-" + year)
-            let topSongs = {
-                user: userId,
-                songs: songs,
-                date: todaysDate
-            }
-            let payload = (JSON.stringify(topSongs, null, 4))
-            i = 0;
-            return [ids, playlistURI]
-    })
-    .then(function(result) {
-        let trackIds = result[0]
-        for (i = 0; i < trackIds.length; i ++) {
-             trackIds[i] = "spotify:track:" + trackIds[i];
-        }
-        spotifyApi.addTracksToPlaylist(result[1], trackIds)
-        console.log("Published!")
-    })
-});
 server.post('/top_songs_playlist', function (req, res) {
-    //@ Receives:
-    //  (optional)timeRange(str) (short,medium,long) - defaults to medium
-    //  (Required) refreshToken (str)
-    //@ Returns:
-    //  JSON
     console.log("test from top_songs_playlist in testServer.js")
-
-    console.log(req.body)
-    var range = "medium_term";
-    if (req.body.timeRange == "short") {
-        range = "short_term";
-    }
-    else if (req.body.time == "long") {
-        range = "long_term";
-    }
-    else if (req.body.time == "") {
-        range = "medium_term";
-    }
-    //else {
-    //    res.send("Invalid time range passed in, please select short, medium or long. Defaulting to medium.")
-    //}
+    console.log(req.body.refreshToken)
     var spotifyApi = new SpotifyWebApi({
         clientId: '0e8700b7f71d486bbb7c3bd120e892f8', // App client ID
         clientSecret: '9ffb3fe2081b414e8c520d19805cbf09', //App client secret
@@ -508,10 +386,19 @@ server.post('/top_songs_playlist', function (req, res) {
         //Set the new access token
         .then(function (newResult) {
             spotifyApi.setAccessToken(newResult)
+            //console.log(spotifyApi.getAccessToken())
         })
         //Get top tracks promise
         .then(function (data) {
-            spotifyApi.getMyTopTracks({time_range: range})
+            //Getting the userID doesn't work right now, something with synchronous things
+            userId = User.id
+            spotifyApi.getMe().then(
+                async function (data) {
+                    userId = data.body.id
+                }
+            )
+            spotifyApi.getMyTopTracks()                 //************************** change structs so we don't pass in any arrays ******unless react can handle those for display*/
+                     //*******added async below*/
                 .then(function (data) {             
                     userId = ""
                     let topTracks = data.body.items;
@@ -519,6 +406,7 @@ server.post('/top_songs_playlist', function (req, res) {
                     var i;
                     let genreDict = {};
                     var currentArtists = [];
+                    //var duration_ms;
                     currentIds = [];
                     songs = [];
                     for (i = 0; i < topTracks.length; i++) {
@@ -528,34 +416,49 @@ server.post('/top_songs_playlist', function (req, res) {
                         currentIds = []
                         for (var j = 0; j < topTracks[i].artists.length; j++) {
                             currentArtists.push(topTracks[i].artists[j].name);
+                            //console.log(currentArtists);
+                            //currentIds.push(topTracks[i].artists[j].id);
                         }
                         //console.log(currentArtists[0]);
                         let song = {
                             "songID": topTracks[i].id,
                             "title": topTracks[i].name,
                             "artist": currentArtists.join(),
-                            "length": topTracks[i].popularity
+                            "length": topTracks[i].popularity,
+                            "snippet": topTracks[i].preview_url
+                            //"artistIds": currentIds.join()
                         }
+                        //console.log(song.snippet)
                         songs.push(song)
                     }
                     //Creating the JSON file to save
                     userId = ""
+
                     let date = new Date();
                     let year = date.getFullYear();
                     let month = ("0" + (date.getMonth() + 1)).slice(-2);
                     let dateNumber = ("0" + date.getDate()).slice(-2);
                     let todaysDate = (month + "-" + date + "-" + year)
+                    //******************** something with the song.js & playlist.js schema's being intereperted in PlaylistScreen.js w/react
+                    //differences with the one returned from testServer : user: '', songs: [ and ] w/date at bottom
                     let topSongs = {
-                        time_range: range,
                         //user: userId,
                         songs: songs
+                        //date: todaysDate
+                        
+                        //date: todaysDate
                     }
-                    //payload = (JSON.stringify(songs, null, 4))  //Str version of json for testing
-                    payload = topSongs
+                    payload = (JSON.stringify(songs, null,5))       //modify for proper struct
                     i = 0;
+                    const app = express();
                     console.log(payload)
-                    res.send(payload);
-                    res.end();
+                    res.send(payload)
+                    res.end()
+                    //app.post("/top_songs_playlist", (req, res) => {
+                    //    res.send(payload)
+                    //})
+                    //app.listen(3000);
+                    console.log("Sent HTTP request to /top_songs_playlist on port 3000")
                 })
         })
 });
@@ -618,6 +521,8 @@ server.post('/create-group', function (req, res) {
                 //Save user object in the database and send object to client
                 group.save()
                     .then((result2) => {
+                        console.log("Yup");
+                        console.log(result2);
                         res.send(result2);
                         res.end();
                     })
@@ -645,7 +550,23 @@ server.post('/get-group', function (req, res) {
     ).then((result) => {
         console.log(result);
         if (result == null)
-            res.send("Server: No Group Found");
+            res.send(result);
+        else {
+            res.send(result);
+            console.log("Successful group grab");
+        }
+        res.end();
+    }).catch((err) => {
+        console.log(err);
+    });
+});
+server.post('/get-groups', function (req, res) {
+    console.log(req.body.title);
+    Group.find({ title: req.body.title })
+    .then((result) => {
+        console.log(result);
+        if (result == null)
+            res.send(result);
         else {
             res.send(result);
             console.log("Successful group grab");
@@ -705,7 +626,7 @@ server.post('/group-add-user', function (req, res) {
                 .then(result => {
                     if (result != null) {
                         //Check if they have access
-                        if (result.private == false) {
+                        if (result.private == false || result.creatorID === req.body.userID /* || result.pass === encrypted req.body.pass*/) {
                             //Check if user is already in the list or if group is full
                             var check = 0;
                             var users = result.users;
@@ -886,6 +807,37 @@ server.post('/get-group-users', function (req, res) {
         res.end();
     }).catch((err) => {
         console.log(err);
+    });
+});
+
+server.post('/group_access', function (req, res) {
+    const { _id, password } = req.body;
+    // console.log("Login Email: " + email);
+    // console.log("Login Password: " + password);
+    if (!password) {
+        return res.send("Blank Password");
+    }
+    Group.find({
+        _id: _id
+    }, (err, groups) => {
+        if (err) {
+            return res.send("Server Error");
+        }
+        else {
+            console.log("no error");
+            // We've made sure that a single valid user exists with that email
+            const group = groups[0];
+            // Calls the Bcrypt function implemented for every user
+            if (!group.validPassword(password)) {
+                console.log("Wrong");
+                return res.send("Incorrect Password");
+            }
+            else {
+                console.log("Correct!");
+                // If we are here, the sign in is valid
+                return res.send("SUCCESS");
+            }
+        }
     });
 });
 

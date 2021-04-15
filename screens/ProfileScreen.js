@@ -6,10 +6,35 @@ import { DarkTheme } from '@react-navigation/native';
 import { Avatar, Button } from 'react-native-elements';
 import { color } from 'react-native-reanimated';
 
+/*
+const ProfileScreen = ({ navigation }) => {
+  const onLogoutPress = () => {
+    const deleteLoginInfo = async() => {
+      try {
+        await AsyncStorage.setItem('isLoggedIn', 'false');
+        await AsyncStorage.setItem('userID', '');
+        console.log("AsyncStorage Logging Out")
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    navigation.navigate("StartScreen");
+  }
 
+  const userData = require("./test_json/fake_user.json")[0];
+  const [darkModeEnabled, setDarkModeEnabled] = useState(false);
+    return (
+      <View style={styles.container}>
+        <View style={styles.nameinfo}>
+          <Text style={styles.name}>{userData.name}</Text>
+          <Text style={styles.infotitle}>Favourite Genre</Text>
+          <Text style={styles.infodata}>{userData.genre}</Text>
+          <Text style={styles.infotitle}>Favourite Song</Text>
+          <Text style={styles.infodata}>{userData.songID}</Text>
+            </View>
+
+            */
 // Ethan code for fetching db info before render
-
-//const color = 'white'
 export default class ProfileScreen extends Component {
     // Defining states and variables
     constructor() {
@@ -102,6 +127,7 @@ export default class ProfileScreen extends Component {
                         <TouchableOpacity
                             style={styles.followButton}
                             onPress={() => this.props.navigation.navigate("Playlist", { playlistId: 2, playlistName: "Your Top Songs" })}
+
                         >
                             <Text style={styles.followText}>Add Favorite Song?</Text>
                         </TouchableOpacity>
@@ -155,7 +181,7 @@ export default class ProfileScreen extends Component {
                             //const deleteLoginInfo = async () => {
                               //  try {
                                     AsyncStorage.setItem('isLoggedIn', 'false');
-                                    AsyncStorage.setItem('userID', '');
+                            AsyncStorage.setItem('userID', '');
                                     AsyncStorage.setItem('GroupID', '');
                                     console.log("AsyncStorage Logging Out")
                                // } catch (err) {
@@ -168,33 +194,13 @@ export default class ProfileScreen extends Component {
                         <Text style={styles.logoutText}>Logout</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => this.props.navigation.push("EditScreen", {refresh: this.refresh_thing.bind(this)})}
+
                         onPress={() => this.props.navigation.push("EditScreen", { refresh: this.refresh_thing.bind(this) })}
                     >
                         <Text>Edit Profile</Text>
 
+
                     </TouchableOpacity>
-
-                    <Text style={styles.minititle}>Background Color</Text>
-
-                    <View style={styles.followButtonsContainer}> 
-                    <TouchableOpacity style={styles.colorButton}
-                    onPress={()=>{this.setState({color: 'white'})}}>
-                        <Text style={{color: 'white', fontWeight: 'bold'}}>White</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={styles.colorButton}
-                    onPress={()=>{this.setState({color: 'red'})}}>
-                        <Text style={{color: 'red', fontWeight: 'bold'}}>Red</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={styles.colorButton}
-                    onPress={()=>{this.setState({color: 'green'})}}>
-                        <Text style={{color: 'green', fontWeight: 'bold'}}>Green</Text>
-                    </TouchableOpacity>
-                    </View>
-
-                   
                 </View>
             );
         } else {
@@ -227,15 +233,6 @@ const styles = StyleSheet.create({
         fontFamily: 'sans-serif-condensed',
         textAlign: 'center'
     },
-    minititle: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: 'black',
-        margin: 10,
-        marginBottom: 5,
-        fontFamily: 'sans-serif-condensed',
-        textAlign: 'center'
-      },
     biocontainer: {
         margin: 10,
         marginBottom: 20,

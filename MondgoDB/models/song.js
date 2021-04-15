@@ -22,6 +22,10 @@ const songSchema = new Schema({
     title: {
         type: String,
         required: true
+    },
+    snippet: {
+        type: String,
+        required: true
     }
 }, { timestamps: false });
 

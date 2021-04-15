@@ -9,16 +9,19 @@ import GroupScreen from './screens/GroupScreen'
 import ProfileScreen from './screens/ProfileScreen'
 import OtherUserProfile from './screens/OtherUserProfile'
 import LocalArtistScreen from './screens/LocalArtistScreen'
-import LocalArtistProfile from './screens/LocalArtistProfile'
 import PlaylistScreen from './screens/PlaylistScreen'
 import EditScreen from './screens/EditScreen'
-import ContactInfoScreen from './screens/ContactInfoScreen'
-import EditContactInfoScreen from './screens/EditContactInfoScreen'
 import MyGroupScreen from './screens/MyGroupScreen'
+import SearchScreen from './screens/SearchScreen'
 import ActualRegisterScreen from './screens/ActualRegisterScreen'
+//import MyGroupScreen from './screens/MyGroupScreen'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-//import { Avatar } from 'react-native-elements';
+import { Avatar } from 'react-native-elements';
+import VenueScreen from './screens/VenueScreen';
+//import { ModalProvider } from "react-native-use-modal-hooks";
+
+
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -107,14 +110,14 @@ const App = () => {
   )
 
 
-  return (
+    return (
     <NavigationContainer>
       <AuthContext.Provider value={authContext}>
       <Stack.Navigator>
         {(loginState.isLoggedIn === 'true') ? (
           // User is logged in. Start at the landing page.
           <>
-          <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
+                          <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
                           <Stack.Screen name="Playlist" component={PlaylistScreen} />
                           <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
                           <Stack.Screen name="MyGroupScreen" component={MyGroupScreen} />
@@ -122,30 +125,30 @@ const App = () => {
                           <Stack.Screen name="ActualRegister" component={ActualRegisterScreen} options={{ headerShown: false }} />
                           <Stack.Screen name="EditScreen" component={EditScreen} />
                           <Stack.Screen name="OtherUserProfile" component={OtherUserProfile} />
-                          <Stack.Screen name="LocalArtistProfile" component={LocalArtistProfile} />
-                          <Stack.Screen name="ContactInfoScreen" component={ContactInfoScreen} />
-                          <Stack.Screen name="EditContactInfoScreen" component={EditContactInfoScreen} />
+                          <Stack.Screen name="VenueScreen" component={VenueScreen} />
+                          <Stack.Screen name="SearchScreen" component={SearchScreen} />
           </>
 
         ) : (
           // User not signed in. Start at the StartScreen.
           <>
+          <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
                               <Stack.Screen name="StartScreen" component={StartScreen} options={{ headerShown: false }} />
 
                               <Stack.Screen name="ActualRegister" component={ActualRegisterScreen} options={{ headerShown: false }} />
-                              <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
                               <Stack.Screen name="Playlist" component={PlaylistScreen} />
                               <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
-
+                              <Stack.Screen name="SearchScreen" component={SearchScreen} />
                               <Stack.Screen name="MyGroupScreen" component={MyGroupScreen} />
                               <Stack.Screen name="EditScreen" component={EditScreen} />
                               <Stack.Screen name="OtherUserProfile" component={OtherUserProfile} />
+                              <Stack.Screen name="VenueScreen" component={VenueScreen} />
 
           </>
         )}
       </Stack.Navigator>
       </AuthContext.Provider>
-    </NavigationContainer>
+            </NavigationContainer>
   )
 }
 

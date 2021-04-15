@@ -3,8 +3,10 @@
     "",
     "\\MondgoDB",
     "\\MondgoDB\\models",
-    "\\screens"
+    "\\screens",
+    "\\screens\\test_json",
+    "\\screens\\utils"
   ],
-  "SelectedNode": "\\screens\\MyGroupScreen.js",
+  "SelectedNode": "\\screens\\test_json\\topsongs_playlist.json",
   "PreviewInSolutionExplorer": false
 }

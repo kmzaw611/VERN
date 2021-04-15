@@ -23,7 +23,18 @@ data2 = {
     refreshToken: "AQCzVfJhvvDF8KvxRKP6ANQ_hfmYbqDdsVQ7XR0FlLlA4soBz6CnmK1HUIas6c9hQHpQ2sV_dDkfYApzJlVkoFMeyjsnVj7Kgdzzd4jG8OwUAbKvzPiVaM5ijhxRhkrdeLU",
     timeRange: "short",
     description: "endpoint test",
+}
+data1 = {
+    _id: "6062b12f43a0ad02805f72ae"
+}
 
+methods.get_user(data1, function (result) {
+    console.log(result);
+});
+
+data = {
+    userID: "6062b12f43a0ad02805f72ae",
+    _id: "6066052db97e1628ecdc14e6"
 }
 methods.publish_top_songs(function (result) {
     console.log(result);

@@ -22,7 +22,7 @@ export default class EditScreen extends Component {
             _id: ""
         };
         this.userData = null;
-
+        
     }
 
     //Where I get the data and change states
@@ -69,28 +69,17 @@ export default class EditScreen extends Component {
         if (count > 0) {
             methods.edit_user((result) => {
                 console.log(result);
-//<<<<<<< HEAD
-//=======
+
                 //this.setState({ dataIsReturned: false });
                 //need a refresh() call here from profilescreen to change states to update
                 //this.props.navigation.state.params.refresh();
                 //this.props.navigation.goBack();
-//                console.log(result);
-//>>>>>>> matt_branch
                 this.props.route.params.refresh(true);
                 this.props.navigation.goBack();
             }, editjson);
         }
         else {
-//<<<<<<< HEAD
-            //this.props.route.params.refresh(true);//.navigation.params);
-            //this.props.navigation.params.refresh(true);
-//=======
-            //this.props.navigation.state.params.refresh();
-            //this.props.navigation.state.params.forceUpdate();
-            //this.props.route.params.refresh(true);//.navigation.params);
-
-//>>>>>>> matt_branch
+            this.props.route.params.refresh(true);
             this.props.navigation.goBack();
         }
     }
@@ -118,10 +107,7 @@ export default class EditScreen extends Component {
                     </View>
 
                     <View style={styles.biocontainer}>
-                        <TouchableOpacity onPress={()=>{this.setState({show: true})}}>
                         <Text style={styles.minititle}>Favorite Genre:</Text>
-                        </TouchableOpacity>
-
                         <TextInput style={styles.inputEmailPassword}
                             label="Favorite Genre"
                             placeholder={this.userData.genre}
@@ -146,7 +132,7 @@ export default class EditScreen extends Component {
                                         this.setState({genre: rep})
                                     }}>
                                     <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', borderRadius: 10, margin: 10 }}>POP</Text>
-
+                                    
                                 </TouchableOpacity>
 
                                 <TouchableOpacity onPress={() => {
@@ -203,50 +189,6 @@ export default class EditScreen extends Component {
 
                     </Modal>
 
-                    <Modal
-          transparent={true}
-          visible={this.state.show}
-          
-          >
-            <View style={{backgroundColor: "#000000aa", flex: 1}}
-            >
-              <View style={{backgroundColor: "#ffffff", margin: 50, padding: 40, borderRadius: 10, flex: 1}}>
-              <Text style={styles.title}>Pick Your Favorite Genre</Text>
-
-              <TouchableOpacity>
-                  <Text style={{fontSize: 24, fontWeight: 'bold', textAlign: 'center', borderRadius: 10, margin: 10}}>POP</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity>
-                  <Text style={{fontSize: 24, fontWeight: 'bold', textAlign: 'center', borderRadius: 10, margin: 10}}>RAP</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity>
-                  <Text style={{fontSize: 24, fontWeight: 'bold', textAlign: 'center', borderRadius: 10, margin: 10}}>ROCK</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity>
-                  <Text style={{fontSize: 24, fontWeight: 'bold', textAlign: 'center', borderRadius: 10, margin: 10}}>METAL</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity>
-                  <Text style={{fontSize: 24, fontWeight: 'bold', textAlign: 'center', borderRadius: 10, margin: 10}}>JAZZ</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity>
-                  <Text style={{fontSize: 24, fontWeight: 'bold', textAlign: 'center', borderRadius: 10, margin: 10}}>DJENT</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity onPress={()=>{this.setState({show: false})}}>
-                <Text style={{color: 'brown', marginTop: 15, fontSize: 14, fontWeight: 'bold', marginLeft: 15, textAlign: 'center',}}>Done</Text>
-              </TouchableOpacity>
-              </View>
-              
-            </View>
-            
-          </Modal>
-
-
                     <View style={styles.biocontainer}>
                         <Text style={styles.minititle}>Favorite Song:</Text>
                         <TextInput style={styles.inputEmailPassword}
@@ -278,7 +220,7 @@ export default class EditScreen extends Component {
             return (<Text> Loading </Text>);
         }
     }
-
+    
 }
 
 const styles = StyleSheet.create({
