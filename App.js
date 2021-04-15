@@ -21,6 +21,8 @@ import VenueScreen from './screens/VenueScreen';
 import ContactInfoScreen from './screens/ContactInfoScreen'
 import EditContactInfoScreen from './screens/EditContactInfoScreen'
 //import { ModalProvider } from "react-native-use-modal-hooks";
+import SearchScreen from './screens/SearchScreen'
+
 
 
 
@@ -129,6 +131,7 @@ const App = () => {
                           <Stack.Screen name="VenueScreen" component={VenueScreen} />
                           <Stack.Screen name="ContactInfoScreen" component={ContactInfoScreen} />
                           <Stack.Screen name="EditContactInfoScreen" component={EditContactInfoScreen} />
+                          <Stack.Screen name="SearchScreen" component={SearchScreen} />
           </>
 
         ) : (
@@ -145,6 +148,7 @@ const App = () => {
                               <Stack.Screen name="EditScreen" component={EditScreen} />
                               <Stack.Screen name="OtherUserProfile" component={OtherUserProfile} />
                               <Stack.Screen name="VenueScreen" component={VenueScreen} />
+                              <Stack.Screen name="SearchScreen" component={SearchScreen} />
 
           </>
         )}
