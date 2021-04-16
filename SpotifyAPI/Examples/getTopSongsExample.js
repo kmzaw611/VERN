@@ -9,7 +9,6 @@ spotifyApi.setRefreshToken('AQCzVfJhvvDF8KvxRKP6ANQ_hfmYbqDdsVQ7XR0FlLlA4soBz6Cn
 spotifyApi.setAccessToken('BQAaE7GIhcz8R5k5elJQz-nvKuwdlK04RMzr8sfgg9FMlNkyfd_oj2ey1v4xX-nGZtyZSu2CL9FAmwOSGg_ywXT9hGNNLkI2VKeR6I2IhQixAiM8Ud6i-Unf3FpN1g8mJtac3jKlWFoI1kmKdWff34I-vw')
 var userId = ""
 
-//Refresh your access token
 spotifyApi.refreshAccessToken()
     .then(function (data) {
         return data.body['access_token']
@@ -28,15 +27,21 @@ spotifyApi.refreshAccessToken()
 
     })
     //Get top tracks promise
+    .then(function(result) {
+        let promise = spotifyApi.createPlaylist('Your top tracks', {'description': 'test', 'collaborative': false, 'public': true})
+        return promise
+    })
     .then(function (data) {
+        let playlistURI = data.body.id
         //Getting the userID doesn't work right now, something with synchronous things
-        userId = ""
-        spotifyApi.getMe().then(
-            async function(data) {
-                userId = data.body.id
-            }
-        )
-        spotifyApi.getMyTopTracks()
+        //userId = ""
+        //spotifyApi.getMe().then(
+        //   async function(data) {
+        //        userId = data.body.id
+        //    }
+        //)
+        spotifyApi.getMyTopTracks({time_range: "long_term"})
+        //spotifyApi.getMyTopTracks(options = [1,1,1])
         .then(function (data) {
                 userId = ""
                 let topTracks = data.body.items;
@@ -46,6 +51,7 @@ spotifyApi.refreshAccessToken()
                 currentArtists = [];
                 currentIds = [];
                 songs = [];
+                ids = [];
                 for (i = 0; i < topTracks.length; i++) {
                     //A list of ALL artists featured on the current song
                     currentArtists = []
@@ -62,6 +68,7 @@ spotifyApi.refreshAccessToken()
                         "artists": currentArtists,
                         "artistIds": currentIds
                     }
+                    ids.push(topTracks[i].id)
                     songs.push(song)
                 }
                 //Creating the JSON file to save
@@ -78,24 +85,21 @@ spotifyApi.refreshAccessToken()
                     date: todaysDate
                 }
                 let payload = (JSON.stringify(topSongs, null, 4))
+                //console.log(payload)
                 i = 0;
-                fs.writeFileSync("data/favoriteSongs/ " + userId + "TopSongs.json", payload)
+                return [ids, playlistURI]
+                //fs.writeFileSync("data/favoriteSongs/ " + userId + "TopSongs.json", payload)
+    })
+    .then(function(result) {
+        //console.log(result[0])
+        //console.log(result[1])
+        let trackIds = result[0]
+        for (i = 0; i < trackIds.length; i ++) {
+             trackIds[i] = "spotify:track:" + trackIds[i];
+        }
+        spotifyApi.addTracksToPlaylist(result[1], trackIds)
     })
 })
-    
-    //.then(function (data) {
-    //    spotifyApi.getAvailableGenreSeeds().then(
-    //        function (data) {
-    //            let genreSeeds = data.body;
-    //            //console.log(genreSeeds);
-    //        }, function (err) {
-    //            //console.log("something went poor", err);
-    //        });
-    //})
-
-
-//curl -X "GET" "https://api.spotify.com/v1/artists/137W8MRPWKqSmrBGDBFSop" -H "Accept: application/json" -H "Content-Type: application/json" -H "Authorization: Bearer BQDd5LtpypMznRjIyHbpDPttVs7UwXl4mmFfusMfuLWvyv2IakN-M8uHMd-FmLJ4CGKHUc18vD0kn6UlFL3rmsV-DG4uwEgTMb3k7USP9lNfijbDQ6ZxFDTm_nnny8mDzszUpTyIOgGml1a2nh25g1f3jPTJEiI_J7WxEuQJkRf56Kicu02ejDTF8FIfDerJNmmzgtvcaiVWr60PE__Peba_5SzSpkjRDL42SvIlJU9OyO6xZkg9zcpvWZRPXATuHcfO-mKjhamSTiAOiea0_WGwh3aprQkx"
-//run this command with current Authorization bearer ****** to get song genres 
             
         
        

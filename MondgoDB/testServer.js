@@ -11,6 +11,8 @@ const User = require('./models/user');
 const Song = require('./models/song');
 const Playlist = require('./models/playlist');
 const Group = require('./models/group');
+const Thread = require('./models/thread');
+
 const cluster = require('./clusterConnector');
 var SpotifyWebApi = require('spotify-web-api-node')
 
@@ -18,6 +20,8 @@ var SpotifyWebApi = require('spotify-web-api-node')
 const server = express();
 server.use(express.json());
 const port = '3000';
+
+const MAXPOSTS = 15;
 
 /* This is the connection between the script and the db */
 cluster.connect(function (result) {
@@ -839,6 +843,110 @@ server.post('/group_access', function (req, res) {
         }
     });
 });
+
+//thread functions
+
+server.post('/get-thread', function (req, res) {
+    console.log(req.body.threadID);
+    Thread.findOne({ threadID: req.body.threadID }
+    ).then((result) => {
+        console.log(result);
+        if (result == null)
+            res.send(result);
+        else {
+            res.send(result);
+            console.log("Successful thread grab");
+        }
+        res.end();
+    }).catch((err) => {
+        console.log(err);
+    });
+});
+server.post('/create-thread', function (req, res) {
+    Thread.findOne({ threadID: req.body.threadID })
+        .then(result1 => {
+            if (result1 == null) {
+                const nThread = new Thread({
+                    threadID: req.body.threadID,
+                    threadTitle: req.body.threadTitle,
+                    posts: []
+                });
+                nThread.save()
+                    .then((result2) => {
+                        console.log(result2);
+                        res.send(result2);
+                        res.end();
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
+            }
+            else {
+                console.log("Thread with given ID exists");
+                res.send(result1);
+                res.end();
+            }
+        })
+        .catch(err => {
+            console.log("Server error:");
+            console.log(err);
+        });
+});
+server.post('/make-post', function (req, res) {
+    Thread.findOne({ threadID: req.body.threadID })
+        .then(result => {
+            if (result != null) {
+                console.log(result);
+                const nPost = {
+                    username: req.body.username,
+                    time: req.body.time,
+                    title: req.body.title,
+                    content: req.body.content
+                };
+                var len = result.posts.length;
+                if (len == MAXPOSTS)
+                    len -= 1;
+                for (var i = len; i > 0; i--) {
+                    result.posts[i] = result.posts[i - 1];
+                    if (i == 1) {
+                        result.posts[0] = nPost;
+                        Thread.findOneAndUpdate({ threadID: req.body.threadID }, {posts: result.posts}, { new: true })
+                            .then(result2 => {
+                                res.send(result2);
+                                res.end();
+                                return;
+                            })
+                            .catch(error => {
+                                console.error(error);
+                            });
+                    }
+                }
+                if (len == 0) {
+                    result.posts[0] = nPost;
+                    Thread.findOneAndUpdate({ threadID: req.body.threadID }, { posts: result.posts }, { new: true })
+                        .then(result2 => {
+                            res.send(result2);
+                            res.end();
+                            return;
+                        })
+                        .catch(error => {
+                            console.error(error);
+                        });
+                }
+            }
+            else {
+                res.send("Server Error: No thread found here");
+                res.end();
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            console.log("Server Error: findOne fail");
+            res.send(null);
+            res.end();
+        });
+});
+
 
 
 
