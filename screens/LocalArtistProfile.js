@@ -23,10 +23,7 @@ export default class LocalArtistProfile extends React.Component {
         <Text style={styles.title}>EMBRACING THE ENEMY</Text>
         <View 
         style={{alignItems: 'center'}}>
-          <Image
-          style={{width: 300, height: 150, justifyContent: 'center'}}
-          source={require('./assets/etebandpic.jpg')}
-          />
+          
         </View>
   
         <View style={styles.biocontainer}>

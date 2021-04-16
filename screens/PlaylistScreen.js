@@ -37,27 +37,37 @@ const PlaylistScreen = ({ route, navigation }) => {
 
 
     //const [djPP, setdjPP] = useState(false);
-    
-    playTrack = (sound_item) => {
+    playTrack = (sound_item, songName, songID) => {
         console.log(sound_item);
-
         const track = new Sound(sound_item, null, (e) => {
             if (e) {
                 console.log('error loading track:', e)
             } else {
-                console.log("playtest"),
-                    track.play(),
-                    Alert.alert(
-                        'Song is playing',
-                        'Press CANCEL to close window or OK to stop song preview',
-                        [
-                            { text: 'Cancel', onPress: () => console.log('Cancel pressed') },
-                            {text: 'OK', onPress: () => track.stop()},
-                        ],
-                    )
+                console.log("playtest");
+                track.play();
+                Alert.alert(
+                    'Song is playing',
+                    'Press CANCEL to close window or OK to stop song preview',
+                    [
+                        { text: 'Cancel', onPress: () => console.log('Cancel pressed') },
+                        { text: 'OK', onPress: () => track.stop() },
+                        {
+                            text: 'Thread', onPress: () => {
+                                navigation.push("ThreadScreen", {
+                                    threadID: songID,
+                                    header: (songName + " Thread"),
+                                    permissions: true
+                                })
+                            }
+                        }
+                    ]
+                );
             }
-        })
+        });
+
     }
+
+
     /*
     let sound1;
     useEffect(() => {
@@ -86,8 +96,7 @@ const PlaylistScreen = ({ route, navigation }) => {
     const renderPlaylistSong = ({ item }) => (
         <TouchableOpacity
             style={styles.song}
-            onPress={() => playTrack(item.snippet)}
-            
+            onPress={() => playTrack(item.snippet, item.title, item.songID)}
         >
       <View style={styles.songcontainer}>
         <View>
