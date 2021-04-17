@@ -37,9 +37,6 @@ export default class LocalArtistProfile extends React.Component {
           <Text style={{ fontSize: 18, fontWeight: 'bold'}}>Bio</Text>
           <Text style={{ fontSize: 16, textAlign: 'justify', }}>Formed in Purdue University by 5 local bois</Text>
   
-          <TouchableOpacity>
-            <Text style={styles.editButton}>Edit Profile</Text>
-          </TouchableOpacity>
           <TouchableOpacity 
           onPress={() => { this.setState({ show: true }) }}
           style={styles.followButton}
@@ -54,12 +51,13 @@ export default class LocalArtistProfile extends React.Component {
       >
           <View style={{ backgroundColor: "#000000aa", flex: 1 }}
           >
-              <View style={{ backgroundColor: "#ffffff", margin: 50, padding: 40, borderRadius: 10, flex: 1 }}>
+              <View style={{ backgroundColor: "#ffffff", margin: 50, padding: 40, borderRadius: 10, flex: 1, marginTop: 100 }}>
                   <Text style={styles.title}>Book Artist</Text>
 
                   <TextInput
+                    multiline
                     style={styles.inputEmailPasswordBio}
-                    //value={"Your talents have been requested for a performance!"}
+                    value={"Your talents have been requested for a performance!"}
                 />
 
                   <TouchableOpacity onPress={() => {

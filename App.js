@@ -17,6 +17,7 @@ import EditScreen from './screens/EditScreen'
 import MyGroupScreen from './screens/MyGroupScreen'
 import SearchScreen from './screens/SearchScreen'
 import ActualRegisterScreen from './screens/ActualRegisterScreen'
+import SpotifyAuthenticationScreen from './screens/SpotifyAuthenticationScreen'
 //import MyGroupScreen from './screens/MyGroupScreen'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -132,8 +133,9 @@ const App = () => {
                           <Stack.Screen name="SearchScreen" component={SearchScreen} />
                           <Stack.Screen name="ContactInfoScreen" component={ContactInfoScreen} />
                           <Stack.Screen name="EditContactInfoScreen" component={EditContactInfoScreen} />
-                          <Stack.Screen name="LocalArtistScreen" component={LocalArtistProfile} />
+                          <Stack.Screen name="LocalArtistScreen" component={LocalArtistScreen} />
                           <Stack.Screen name="LocalArtistProfile" component={LocalArtistProfile} />
+                          <Stack.Screen name="SpotifyAuthenticationScreen" component={SpotifyAuthenticationScreen} />
           </>
 
         ) : (
@@ -152,8 +154,9 @@ const App = () => {
                               <Stack.Screen name="VenueScreen" component={VenueScreen} />
                               <Stack.Screen name="ContactInfoScreen" component={ContactInfoScreen} />
                               <Stack.Screen name="EditContactInfoScreen" component={EditContactInfoScreen} />
-                              <Stack.Screen name="LocalArtistScreen" component={LocalArtistProfile} />
+                              <Stack.Screen name="LocalArtistScreen" component={LocalArtistScreen} />
                               <Stack.Screen name="LocalArtistProfile" component={LocalArtistProfile} />
+                              <Stack.Screen name="SpotifyAuthenticationScreen" component={SpotifyAuthenticationScreen} />
 
           </>
         )}

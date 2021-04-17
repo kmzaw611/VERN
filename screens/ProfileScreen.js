@@ -107,6 +107,17 @@ export default class ProfileScreen extends Component {
                         activeOpacity={0.7}
                         containerStyle={{marginTop:10}}
                     />
+
+                    <TouchableOpacity style={styles.followButton}>
+                        <Text style={styles.followText}>Manage My Page</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.followButton} 
+                    onPress={() => this.props.navigation.navigate("SpotifyAuthenticationScreen")}
+                    >
+                        <Text style={styles.followText}>Link Spotify</Text>
+                    </TouchableOpacity>
+
                     <TouchableOpacity onPress={() => this.props.navigation.navigate("ContactInfoScreen")}>
                         
                     <View style={styles.nameinfo}>
