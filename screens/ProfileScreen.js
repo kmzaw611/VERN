@@ -108,7 +108,6 @@ export default class ProfileScreen extends Component {
                         containerStyle={{marginTop:10}}
                     />
                     <TouchableOpacity onPress={() => this.props.navigation.navigate("ContactInfoScreen")}>
-                        
                     <View style={styles.nameinfo}>
                         <Text style={styles.name}>{this.userData.username}</Text>
                         <Text style={styles.infotitle}>Favourite Genre</Text>
