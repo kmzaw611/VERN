@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState, Component } from 'react'
 import { Text, View, FlatList, StyleSheet, TouchableOpacity, ScrollView, Image,
           ImageBackground } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -56,6 +56,13 @@ export default class ProfileScreen extends Component {
           });
   }
 
+  playlistImages = [
+    require('./assets/playlistCard1.jpg'),
+    require('./assets/playlistCard2.jpg'),
+    require('./assets/playlistCard3.jpg'),
+    require('./assets/playlistCard4.jpg'),
+  ]
+
   getPlaylistScreen = index => () => {
     let playlistId = index;
     let playlistName;
@@ -85,7 +92,7 @@ export default class ProfileScreen extends Component {
       onPress={this.getPlaylistScreen(index)}
     >
       <ImageBackground
-        source={playlistImages[item.id-1]}
+        source={this.playlistImages[item.id-1]}
         style={styles.playlistImage}
       >
         <View style={styles.tintDarkContainer}>
