@@ -16,6 +16,8 @@ export default class ProfileScreen extends Component {
       this.id = {
           _id: ""
       };
+      this.playlistData = require('./test_json/playlists.json');
+      this.performanceData = require('./test_json/performances.json');
       this.groupsData = [];
   }
 
@@ -54,6 +56,79 @@ export default class ProfileScreen extends Component {
           });
   }
 
+  getPlaylistScreen = index => () => {
+    let playlistId = index;
+    let playlistName;
+    if (index === 0) {
+      playlistName = "Top 50 This Week on Campus";
+    }
+    else if (index === 1) {
+      playlistName = "Local Artist Corner";
+    }
+    else if (index === 2) {
+      playlistName = "Your Top Songs";
+    }
+    else {
+      playlistName = "Playlist #4";
+    }
+
+    this.props.navigation.navigate("Playlist", {
+      playlistId: playlistId,
+      playlistName: playlistName,
+    })
+  }
+
+  renderPlaylistItem = ({ item, index }) => (
+    <TouchableOpacity
+      delayPressIn={100}
+      style={styles.playlistCard}
+      onPress={this.getPlaylistScreen(index)}
+    >
+      <ImageBackground
+        source={playlistImages[item.id-1]}
+        style={styles.playlistImage}
+      >
+        <View style={styles.tintDarkContainer}>
+          <Text style={styles.playlistTitle}>{item.title}</Text>
+        </View>
+      </ImageBackground>
+    </TouchableOpacity>
+  );
+
+  renderPerformanceItem = ({ item }) => (
+    <TouchableOpacity
+      delayPressIn={100}
+      style={styles.performanceCard}
+    >
+      <Image
+        source={require('./assets/placeholder.jpg')}
+        style={styles.performanceImage}
+      />
+      <Text style={styles.performanceTitle}>Artists</Text>
+      <Text style={styles.performanceDetail}>{item.artists.toString()}</Text>
+      <Text style={styles.performanceTitle}>Location</Text>
+      <Text style={styles.performanceDetail}>{item.location.toString()}</Text>
+      <Text style={styles.performanceTitle}>Date</Text>
+      <Text style={styles.performanceDetail}>{item.date.toString()}</Text>
+      <Text style={styles.performanceTitle}>Time</Text>
+      <Text style={styles.performanceDetail}>{item.time.toString()}</Text>
+    </TouchableOpacity>
+  );
+
+  renderGroupItem = ({ item }) => (
+    <TouchableOpacity
+      delayPressIn={100}
+      style={styles.groupCard}
+    >
+      <Text style={styles.groupName}>{item.name}</Text>
+      <Text style={styles.groupMembers}>{item.num_members} members</Text>
+      <Image
+        source={require('./assets/placeholder.jpg')}
+        style={styles.groupImage}
+      />
+    </TouchableOpacity>
+  );
+
   render() {
     if (this.state.dataIsReturned === true) {
       return (
@@ -62,9 +137,9 @@ export default class ProfileScreen extends Component {
             <Text style={styles.title}>Curated Playlists</Text>
             <FlatList
               numColumns={2}
-              data={playlistData}
+              data={this.playlistData}
               contentContainerStyle={{justifyContent: 'center',}}
-              renderItem={renderPlaylistItem}
+              renderItem={this.renderPlaylistItem}
               keyExtractor={item => item.id}
             />
           </View>
@@ -75,8 +150,8 @@ export default class ProfileScreen extends Component {
             </TouchableOpacity>
             <FlatList
               horizontal={true}
-              data={performanceData}
-              renderItem={renderPerformanceItem}
+              data={this.performanceData}
+              renderItem={this.renderPerformanceItem}
               keyExtractor={item => item.id}
             />
           </View>
@@ -87,8 +162,8 @@ export default class ProfileScreen extends Component {
             </TouchableOpacity>
             <FlatList
               horizontal={true}
-              data={groupsData}
-              renderItem={renderGroupItem}
+              data={this.groupsData}
+              renderItem={this.renderGroupItem}
               keyExtractor={item => item.id}
             />
           </View>
@@ -101,6 +176,7 @@ export default class ProfileScreen extends Component {
   }
 }
 
+/*
 const HomeScreen = ({ navigation }) => {
   const playlistImages = [
     require('./assets/playlistCard1.jpg'),
@@ -266,6 +342,7 @@ const HomeScreen = ({ navigation }) => {
     </ScrollView>
   )
 }
+*/
 
 const styles = StyleSheet.create({
   groupCard: {
@@ -367,5 +444,3 @@ const styles = StyleSheet.create({
     fontFamily: 'sans-serif-condensed',
   },
 })
-
-export default HomeScreen;
