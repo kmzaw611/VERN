@@ -6,7 +6,100 @@ const methods = require('../MondgoDB/testClient');
 
 const playlistData = require('./test_json/playlists.json');
 const performanceData = require('./test_json/performances.json');
-let groupsData = [];
+
+export default class ProfileScreen extends Component {
+  constructor() {
+      super();
+      this.state = {
+          dataIsReturned: false,
+      };
+      this.id = {
+          _id: ""
+      };
+      this.groupsData = [];
+  }
+
+  componentDidMount() {
+      AsyncStorage.getItem('userID')
+          .then(result => {
+              this.id._id = ("" + result);
+              methods.get_user(this.id, (res) => {
+                  const userData = res;
+                  const groups = userData.groups;
+                  if (groups.length === 0) {
+                    const currGroup = {
+                      id: 0,
+                      name: "You have no groups.",
+                      num_members: 0,
+                    }
+                    this.groupsData.push(currGroup);
+                  }
+                  else {
+                    // Parse data of groups into groupsData with title, numUsers
+                    for (var i = 0; i < groups.length; i++) {
+                      const currGroup = {
+                        id: i,
+                        name: groups[i].title,
+                        num_members: groups[i].numUsers,
+                      }
+                      this.groupsData.push(currGroup);
+                    }
+                  }
+                  console.log("GroupsData 1st: " + this.groupsData[0].name);
+                  this.setState({ dataIsReturned: true });
+              });
+          })
+          .catch(err => {
+              console.error(err);
+          });
+  }
+
+  render() {
+    if (this.state.dataIsReturned === true) {
+      return (
+        <ScrollView>
+          <View style={styles.sectionContainer}>
+            <Text style={styles.title}>Curated Playlists</Text>
+            <FlatList
+              numColumns={2}
+              data={playlistData}
+              contentContainerStyle={{justifyContent: 'center',}}
+              renderItem={renderPlaylistItem}
+              keyExtractor={item => item.id}
+            />
+          </View>
+          <View style={styles.sectionContainer}>
+            <Text style={styles.title}>Live Performances</Text>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate("Local Artists")}>
+              <Text style={{color: 'brown', marginLeft: 10, fontSize: 14, fontWeight: 'bold', marginLeft: 15,}}>See all local artists ></Text>
+            </TouchableOpacity>
+            <FlatList
+              horizontal={true}
+              data={performanceData}
+              renderItem={renderPerformanceItem}
+              keyExtractor={item => item.id}
+            />
+          </View>
+          <View style={styles.sectionContainer}>
+            <Text style={styles.title}>Your Groups</Text>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate("Groups")}>
+              <Text style={{color: 'brown', marginLeft: 10, fontSize: 14, fontWeight: 'bold', marginLeft: 15,}}>See all groups ></Text>
+            </TouchableOpacity>
+            <FlatList
+              horizontal={true}
+              data={groupsData}
+              renderItem={renderGroupItem}
+              keyExtractor={item => item.id}
+            />
+          </View>
+        </ScrollView>
+      )
+    }
+    else {
+      return (<Text> Loading </Text>);
+    }
+  }
+}
 
 const HomeScreen = ({ navigation }) => {
   const playlistImages = [
