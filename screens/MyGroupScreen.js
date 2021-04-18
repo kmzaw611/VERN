@@ -1,6 +1,6 @@
 
 import React, { useState, Component } from 'react'
-import { Text, StyleSheet, View, TouchableOpacity, FlatList, TextInput } from 'react-native'
+import { Text, StyleSheet, View, TouchableOpacity, FlatList, TextInput, ScrollView } from 'react-native'
 const methods = require('../MondgoDB/testClient');
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -120,21 +120,24 @@ export default class MyGroupScreen extends Component {
 
     render = () => {
         const renderUser = ({ item }) => (
-            <TouchableOpacity onPress={() => { this.handleUserPress.bind(this)(item._id) }}>
-                <View style={styles.songcontainer}>
+            <View style={{ borderBottomWidth: 5, borderColor: 'black' }}>
+            <TouchableOpacity
+                onPress={() => { this.handleUserPress.bind(this)(item._id) }}>
+                <View style={{ textAlign: 'center'}}>
                     <Text style={styles.sampleGroupText}>{item.username}</Text>
                 </View>
-            </TouchableOpacity>
+                </TouchableOpacity>
+                </View>
         )
         if (this.state.reload == true) {
             return (
                 <View
                 >
-                    <View style={{ justifyContent: 'center', textAlign: 'center' }}>
+                    <View style={{ justifyContent: 'center', textAlign: 'center', alignItems: 'center' }}>
                         <Text style={styles.title}>{this.title}</Text>
 
                         <Text style={styles.inputEmailPasswordBio}>{this.bio}</Text>
-
+                            
                         {
                             (this.private && !this.inGroup) ?
                                 <TextInput
@@ -158,15 +161,34 @@ export default class MyGroupScreen extends Component {
                                         <Text style={styles.followText}>Join Group</Text>
                                 }
                             </TouchableOpacity>
-
+                            {
+                                this.inGroup ?
+                                    <TouchableOpacity
+                                        style={styles.followButton}
+                                        onPress={() => {
+                                            this.props.navigation.push("ThreadScreen",
+                                                {
+                                                    threadID: this.gid._id,
+                                                    header: (this.title + " Thread"),
+                                                    permissions: this.inGroup
+                                                })
+                                        }}
+                                    >
+                                        <Text style={styles.followText}>View Thread</Text>
+                                    </TouchableOpacity>
+                                : null
+                            }
                         </View>
 
                         <Text style={styles.title}>Users</Text>
-                        <FlatList
+                        <ScrollView style={{ borderWidth: 5, borderColor: 'black', maxHeight: '55%', marginHorizontal: '5%', width: '90%', borderBottomWidth: 0 }}>
+                            <FlatList
+                                style={{ width: '100%' }}
                             data={this.userList}
                             renderItem={renderUser}
                             keyExtractor={(item, index) => item._id}
-                        />
+                            />
+                        </ScrollView>
                     </View>
                 </View>
             )
@@ -197,11 +219,9 @@ const styles = StyleSheet.create({
     margin: 5,
     backgroundColor: '#cfb991',
     color: 'black',
+    textAlign: 'center',
     borderRadius: 10,
-    textAlign: 'center',
     alignContent: 'center',
-    textAlign: 'center',
-    justifyContent: 'center',
   },
   groupCard: {
     width: 250,
@@ -329,8 +349,8 @@ const styles = StyleSheet.create({
         borderBottomWidth: 0.2,
         paddingBottom: 5,
     },
-  sampleGroupText: {
-    alignContent: 'center',
+    sampleGroupText: {
+        textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 20
 
