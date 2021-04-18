@@ -212,6 +212,7 @@ const methods = {
             });
 
 
+    },
     get_thread: function (callback, id) {
         rh.post(url + "/get-thread", id)
             .then(res => {
