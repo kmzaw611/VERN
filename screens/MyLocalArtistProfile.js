@@ -3,7 +3,7 @@ import {Text, StyleSheet, View, TouchableOpacity, Modal, TextInput, Image, Butto
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-export default class LocalArtistProfile extends React.Component {
+export default class MyLocalArtistProfile extends React.Component {
   constructor() 
       {
         super();
@@ -34,39 +34,31 @@ export default class LocalArtistProfile extends React.Component {
           <Text style={{ fontSize: 18, fontWeight: 'bold'}}>Bio</Text>
           <Text style={{ fontSize: 16, textAlign: 'justify', }}>Formed in Purdue University by 5 local bois</Text>
 
-          <Text style={{margin: 100}}>Sample Status Update</Text>
+          <View style={styles.biocontainer2}>
+            <Text style={{fontWeight: 'bold', fontSize: 20}}>Status Updates</Text>
+
+            <TextInput style={styles.inputEmailPassword}
+                  multiline
+                  label="Status Update"
+                  placeholder={"What's New?"}
+              />
+
+                    <TouchableOpacity
+                    //onPress = {this.handleSave.bind(this)}
+                    >
+                        <Text style={{ color: 'brown', marginLeft: 10, fontSize: 14, fontWeight: 'bold', marginLeft: 15, }}>Post</Text>
+                    </TouchableOpacity>
+          </View>
+
+          
   
           <TouchableOpacity 
-          onPress={() => { this.setState({ show: true }) }}
+          onPress={() => this.props.navigation.navigate("EditMyLocalArtistProfile")}
           style={styles.followButton}
           >
-          <Text style={{ fontSize: 16, textAlign: 'justify', color: 'white', fontWeight: 'bold'}}>Book Artist</Text>
+          <Text style={{ fontSize: 16, textAlign: 'justify', color: 'white', fontWeight: 'bold'}}>Edit Profile</Text>
           </TouchableOpacity>
         </View>
-        <Modal
-          transparent={true}
-          visible={this.state.show}
-  
-      >
-          <View style={{ backgroundColor: "#000000aa", flex: 1 }}
-          >
-              <View style={{ backgroundColor: "#ffffff", margin: 50, padding: 40, borderRadius: 10, flex: 1, marginTop: 100 }}>
-                  <Text style={styles.title}>Book Artist</Text>
-
-                  <TextInput
-                    multiline
-                    style={styles.inputEmailPasswordBio}
-                    value={"Your talents have been requested for a performance!"}
-                />
-
-                  <TouchableOpacity onPress={() => {
-                    this.setState({ show: false });
-                }}>
-                    <Text style={{ color: 'brown', marginTop: 15, fontSize: 14, fontWeight: 'bold', marginLeft: 15, textAlign: 'center' }}>Send</Text>
-                </TouchableOpacity>
-              </View>
-          </View>
-        </Modal>
       </View>
   
     )
@@ -76,9 +68,9 @@ export default class LocalArtistProfile extends React.Component {
 
 const styles = StyleSheet.create({
   inputEmailPassword: {
-    width: 225,
-    height: 40,
-    margin: 5,
+    width: 300,
+    height: 125,
+    margin: 10,
     backgroundColor: '#cfb991',
     color: 'black',
     borderRadius: 10,
@@ -88,6 +80,11 @@ const styles = StyleSheet.create({
     margin: 10,
     marginBottom: 20,
     alignItems: 'center'
+},
+biocontainer2: {
+  margin: 100,
+  marginBottom: 20,
+  alignItems: 'center'
 },
 followButton: {
   alignItems: 'center',

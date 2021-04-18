@@ -108,7 +108,9 @@ export default class ProfileScreen extends Component {
                         containerStyle={{marginTop:10}}
                     />
 
-                    <TouchableOpacity style={styles.followButton}>
+                    <TouchableOpacity style={styles.followButton}
+                    onPress={() => this.props.navigation.navigate("MyLocalArtistProfile")}
+                    >
                         <Text style={styles.followText}>Manage My Page</Text>
                     </TouchableOpacity>
 

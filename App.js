@@ -12,6 +12,8 @@ import EditContactInfoScreen from './screens/EditContactInfoScreen'
 import OtherUserProfile from './screens/OtherUserProfile'
 import LocalArtistScreen from './screens/LocalArtistScreen'
 import LocalArtistProfile from './screens/LocalArtistProfile'
+import MyLocalArtistProfile from './screens/MyLocalArtistProfile'
+import EditMyLocalArtistProfile from './screens/EditMyLocalArtistProfile'
 import PlaylistScreen from './screens/PlaylistScreen'
 import EditScreen from './screens/EditScreen'
 import MyGroupScreen from './screens/MyGroupScreen'
@@ -133,6 +135,8 @@ const App = () => {
                             <Stack.Screen name="VenueScreen" component={VenueScreen} />
                             <Stack.Screen name="SearchScreen" component={SearchScreen} />
                             <Stack.Screen name="LocalArtistProfile" component={LocalArtistProfile} />
+                            <Stack.Screen name="MyLocalArtistProfile" component={MyLocalArtistProfile} />
+                            <Stack.Screen name="EditMyLocalArtistProfile" component={EditMyLocalArtistProfile} />
                             <Stack.Screen name="ThreadScreen" component={ThreadScreen} />
                             <Stack.Screen name="SpotifyAuthenticationScreen" component={SpotifyAuthenticationScreen} />
                         </>
@@ -152,6 +156,8 @@ const App = () => {
                                 <Stack.Screen name="OtherUserProfile" component={OtherUserProfile} />
                                 <Stack.Screen name="VenueScreen" component={VenueScreen} />
                                 <Stack.Screen name="LocalArtistProfile" component={LocalArtistProfile} />
+                                <Stack.Screen name="MyLocalArtistProfile" component={MyLocalArtistProfile} />
+                                <Stack.Screen name="EditMyLocalArtistProfile" component={EditMyLocalArtistProfile} />
                                 <Stack.Screen name="ThreadScreen" component={ThreadScreen} />
                                 <Stack.Screen name="SpotifyAuthenticationScreen" component={SpotifyAuthenticationScreen} />
                                 
