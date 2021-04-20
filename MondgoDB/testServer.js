@@ -445,7 +445,8 @@ server.post('/publish_top_songs_playlist', function (req,res) {
                             "name": topTracks[i].name,
                             "duration": topTracks[i].duration,
                             "artists": currentArtists,
-                            "artistIds": currentIds
+                            "artistIds": currentIds,
+                            "snippet": topTracks[i].preview_url
                         }
                         ids.push(topTracks[i].id)
                         songs.push(song)
