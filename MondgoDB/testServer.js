@@ -407,17 +407,16 @@ server.post('/publish_top_songs_playlist', function (req,res) {
         })
         //Get top tracks promise
         .then(function (data) {
-            console.log(name)
              spotifyApi.createPlaylist(name, {'description': description, 'collaborative': false, 'public': true})
             .then(function (data) {
                 let playlistURI = data.body.id
                 return playlistURI
             })
-            .then(function (data) {
-                console.log("Flag")
-                console.log(spotifyApi.getAccessToken())
+            .then(function (playlist) {
                 spotifyApi.getMyTopTracks({time_range: range})
                 .then(function (data) {
+                    console.log("PLAYLIST ID")
+                    console.log(playlist)
                     userId = ""
                     let topTracks = data.body.items;
                     var genSeed = [];
@@ -461,17 +460,17 @@ server.post('/publish_top_songs_playlist', function (req,res) {
                     }
                     let payload = (JSON.stringify(topSongs, null, 4))
                     i = 0;
-                    return [ids, data]
+                    return [ids, playlist]
             })
             .then(function(result) {
-                console.log(result[0])
                 let trackIds = []
                 for (i = 0; i < result[0].length; i ++) {
                      trackIds[i] = "spotify:track:" + result[0][i];
                 }
+                console.log("TRAKCS TO BE ADDED")
                 console.log(trackIds)
                 spotifyApi.addTracksToPlaylist(result[1], trackIds)
-                console.log("Published!")
+                console.log("Added Tracks!")
             })
             })
          })
