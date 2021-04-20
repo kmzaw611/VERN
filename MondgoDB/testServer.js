@@ -445,8 +445,8 @@ server.post('/publish_top_songs_playlist', function (req,res) {
                             "name": topTracks[i].name,
                             "duration": topTracks[i].duration,
                             "artists": currentArtists,
-                            "artistIds": currentIds,
-                            "snippet": topTracks[i].preview_url
+                            "artistIds": currentIds
+                            //"snippet": topTracks[i].preview_url
                         }
                         ids.push(topTracks[i].id)
                         songs.push(song)
@@ -543,7 +543,8 @@ server.post('/top_songs_playlist', function (req, res) {
                             "songID": topTracks[i].id,
                             "title": topTracks[i].name,
                             "artist": currentArtists.join(),
-                            "length": topTracks[i].popularity
+                            "length": topTracks[i].popularity,
+                            "snippet": topTracks[i].preview_url
                         }
                         songs.push(song)
                     }
