@@ -404,73 +404,77 @@ server.post('/publish_top_songs_playlist', function (req,res) {
         //Set the new access token
         .then(function (newResult) {
             spotifyApi.setAccessToken(newResult)
-            console.log("HI")
-            console.log(spotifyApi.getAccessToken())
         })
         //Get top tracks promise
         .then(function (data) {
-            let promise = spotifyApi.createPlaylist(name, {'description': description, 'collaborative': false, 'public': true});
-            return promise;
-        })
-        .then(function (data) {
-            let playlistURI = data.body.id
-            console.log(playlistURI)  
-        })
-        spotifyApi.getMyTopTracks({time_range: range})
-        .then(function (data) {
-            userId = ""
-            let topTracks = data.body.items;
-            var genSeed = [];
-            var i;
-            let genreDict = {};
-            currentArtists = [];
-            currentIds = [];
-            songs = [];
-            ids = [];
-            for (i = 0; i < topTracks.length; i++) {
-                //A list of ALL artists featured on the current song
-                currentArtists = []
-                //A list of ALL artist IDs featured on the current song
-                currentIds = []
-                for (var j = 0; j < topTracks[i].artists.length; j++) {
-                    currentArtists.push(topTracks[i].artists[j].name);
-                    currentIds.push(topTracks[i].artists[j].id);
+            console.log(name)
+             spotifyApi.createPlaylist(name, {'description': description, 'collaborative': false, 'public': true})
+            .then(function (data) {
+                let playlistURI = data.body.id
+                return playlistURI
+            })
+            .then(function (data) {
+                console.log("Flag")
+                console.log(spotifyApi.getAccessToken())
+                spotifyApi.getMyTopTracks({time_range: range})
+                .then(function (data) {
+                    userId = ""
+                    let topTracks = data.body.items;
+                    var genSeed = [];
+                    var i;
+                    let genreDict = {};
+                    currentArtists = [];
+                    currentIds = [];
+                    songs = [];
+                    ids = [];
+                    for (i = 0; i < topTracks.length; i++) {
+                        //A list of ALL artists featured on the current song
+                        currentArtists = []
+                        //A list of ALL artist IDs featured on the current song
+                        currentIds = []
+                        for (var j = 0; j < topTracks[i].artists.length; j++) {
+                            currentArtists.push(topTracks[i].artists[j].name);
+                            currentIds.push(topTracks[i].artists[j].id);
+                        }
+                        let song = {
+                            "id": topTracks[i].id,
+                            "name": topTracks[i].name,
+                            "duration": topTracks[i].duration,
+                            "artists": currentArtists,
+                            "artistIds": currentIds
+                        }
+                        ids.push(topTracks[i].id)
+                        songs.push(song)
+                    }
+                    //Creating the JSON file to save
+                    userId = ""
+                    
+                    let date = new Date();
+                    let year = date.getFullYear();
+                    let month = ("0" + (date.getMonth() + 1)).slice(-2);
+                    let dateNumber = ("0" + date.getDate()).slice(-2);
+                    let todaysDate = (month + "-" + date + "-" + year)
+                    let topSongs = {
+                        user: userId,
+                        songs: songs,
+                        date: todaysDate
+                    }
+                    let payload = (JSON.stringify(topSongs, null, 4))
+                    i = 0;
+                    return [ids, data]
+            })
+            .then(function(result) {
+                console.log(result[0])
+                let trackIds = []
+                for (i = 0; i < result[0].length; i ++) {
+                     trackIds[i] = "spotify:track:" + result[0][i];
                 }
-                let song = {
-                    "id": topTracks[i].id,
-                    "name": topTracks[i].name,
-                    "duration": topTracks[i].duration,
-                    "artists": currentArtists,
-                    "artistIds": currentIds
-                }
-                ids.push(topTracks[i].id)
-                songs.push(song)
-            }
-            //Creating the JSON file to save
-            userId = ""
-            
-            let date = new Date();
-            let year = date.getFullYear();
-            let month = ("0" + (date.getMonth() + 1)).slice(-2);
-            let dateNumber = ("0" + date.getDate()).slice(-2);
-            let todaysDate = (month + "-" + date + "-" + year)
-            let topSongs = {
-                user: userId,
-                songs: songs,
-                date: todaysDate
-            }
-            let payload = (JSON.stringify(topSongs, null, 4))
-            i = 0;
-            return [ids, playlistURI]
-    })
-    .then(function(result) {
-        let trackIds = result[0]
-        for (i = 0; i < trackIds.length; i ++) {
-             trackIds[i] = "spotify:track:" + trackIds[i];
-        }
-        spotifyApi.addTracksToPlaylist(result[1], trackIds)
-        console.log("Published!")
-    })
+                console.log(trackIds)
+                spotifyApi.addTracksToPlaylist(result[1], trackIds)
+                console.log("Published!")
+            })
+            })
+         })
 });
 server.post('/top_songs_playlist', function (req, res) {
     //@ Receives:

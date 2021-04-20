@@ -10,16 +10,17 @@
 const methods = require('./testClient');
 //const prompt = require('prompt');
 
-// data1 = {
-//     refreshToken: "AQCzVfJhvvDF8KvxRKP6ANQ_hfmYbqDdsVQ7XR0FlLlA4soBz6CnmK1HUIas6c9hQHpQ2sV_dDkfYApzJlVkoFMeyjsnVj7Kgdzzd4jG8OwUAbKvzPiVaM5ijhxRhkrdeLU",
-//     timeRange: "short"
-// }
+//  data1 = {
+//      refreshToken: "AQCzVfJhvvDF8KvxRKP6ANQ_hfmYbqDdsVQ7XR0FlLlA4soBz6CnmK1HUIas6c9hQHpQ2sV_dDkfYApzJlVkoFMeyjsnVj7Kgdzzd4jG8OwUAbKvzPiVaM5ijhxRhkrdeLU",
+//      timeRange: "short"
+//  }
 
-// methods.top_songs(function (result) {
-//     console.log(result);
-// }, data1);
+//  methods.top_songs(function (result) {
+//      console.log(result);
+//  }, data1);
 
 data2 = {
+    name: "Test",
     refreshToken: "AQCzVfJhvvDF8KvxRKP6ANQ_hfmYbqDdsVQ7XR0FlLlA4soBz6CnmK1HUIas6c9hQHpQ2sV_dDkfYApzJlVkoFMeyjsnVj7Kgdzzd4jG8OwUAbKvzPiVaM5ijhxRhkrdeLU",
     timeRange: "short",
     description: "endpoint test",
@@ -28,10 +29,10 @@ data2 = {
 methods.publish_top_songs(function (result) {
     console.log(result);
 }, data2);
-// data = {
-//     userID: "6062b12f43a0ad02805f72ae",
-//     _id: "6066052db97e1628ecdc14e6"
-// }
+data = {
+    userID: "6062b12f43a0ad02805f72ae",
+    _id: "6066052db97e1628ecdc14e6"
+}
 
 //methods.top_songs('AQCzVfJhvvDF8KvxRKP6ANQ_hfmYbqDdsVQ7XR0FlLlA4soBz6CnmK1HUIas6c9hQHpQ2sV_dDkfYApzJlVkoFMeyjsnVj7Kgdzzd4jG8OwUAbKvzPiVaM5ijhxRhkrdeLU', function (result)){
   //  console.log(result);

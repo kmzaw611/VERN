@@ -1,4 +1,3 @@
 import authHandler from "./SpotifyAPI/mobileAuth.js"
-asdf = authHandler.onLogin()
-console.log(asdf)
+authHandler.onLogin()
 //const authHandler = require("./SpotifyAPI/mobileAuth")
