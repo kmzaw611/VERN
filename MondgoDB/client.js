@@ -8,11 +8,11 @@ const methods = require('./testClient');
 
 data1 = {
      refreshToken: "AQCzVfJhvvDF8KvxRKP6ANQ_hfmYbqDdsVQ7XR0FlLlA4soBz6CnmK1HUIas6c9hQHpQ2sV_dDkfYApzJlVkoFMeyjsnVj7Kgdzzd4jG8OwUAbKvzPiVaM5ijhxRhkrdeLU",
-     timeRange: "short",
-     name: "test2"
+     timeRange: "short"
+     //name: "test2"
  }
 
-methods.publish_top_songs(function (result) {
+methods.top_songs(function (result) {
 console.log(result);
 }, data1);
 
