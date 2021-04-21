@@ -6,7 +6,34 @@ import { DarkTheme } from '@react-navigation/native';
 import { Avatar, Button } from 'react-native-elements';
 import { color } from 'react-native-reanimated';
 
+/*
+const ProfileScreen = ({ navigation }) => {
+  const onLogoutPress = () => {
+    const deleteLoginInfo = async() => {
+      try {
+        await AsyncStorage.setItem('isLoggedIn', 'false');
+        await AsyncStorage.setItem('userID', '');
+        console.log("AsyncStorage Logging Out")
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    navigation.navigate("StartScreen");
+  }
 
+  const userData = require("./test_json/fake_user.json")[0];
+  const [darkModeEnabled, setDarkModeEnabled] = useState(false);
+    return (
+      <View style={styles.container}>
+        <View style={styles.nameinfo}>
+          <Text style={styles.name}>{userData.name}</Text>
+          <Text style={styles.infotitle}>Favourite Genre</Text>
+          <Text style={styles.infodata}>{userData.genre}</Text>
+          <Text style={styles.infotitle}>Favourite Song</Text>
+          <Text style={styles.infodata}>{userData.songID}</Text>
+            </View>
+
+            */
 // Ethan code for fetching db info before render
 export default class ProfileScreen extends Component {
     // Defining states and variables
@@ -99,6 +126,7 @@ export default class ProfileScreen extends Component {
                         <TouchableOpacity
                             style={styles.followButton}
                             onPress={() => this.props.navigation.navigate("Playlist", { playlistId: 2, playlistName: "Your Top Songs" })}
+
                         >
                             <Text style={styles.followText}>Add Favorite Song?</Text>
                         </TouchableOpacity>
@@ -165,7 +193,7 @@ export default class ProfileScreen extends Component {
                         <Text style={styles.logoutText}>Logout</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => this.props.navigation.push("EditScreen", {refresh: this.refresh_thing.bind(this)})}
+
                         onPress={() => this.props.navigation.push("EditScreen", { refresh: this.refresh_thing.bind(this) })}
                     >
                         <Text>Edit Profile</Text>
