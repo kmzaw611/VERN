@@ -25,6 +25,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Avatar } from 'react-native-elements';
 import VenueScreen from './screens/VenueScreen';
 import ThreadScreen from './screens/ThreadScreen';
+import NotificationScreen from './screens/NotificationScreen';
 import SpotifyAuthenticationScreen from './screens/SpotifyAuthenticationScreen'; 
 //import { ModalProvider } from "react-native-use-modal-hooks";
 
@@ -140,6 +141,7 @@ const App = () => {
                             <Stack.Screen name="ContactInfoScreen" component={ContactInfoScreen} />
                             <Stack.Screen name="EditContactInfoScreen" component={EditContactInfoScreen} />
                             <Stack.Screen name="ThreadScreen" component={ThreadScreen} />
+                            <Stack.Screen name="NotificationScreen" component={NotificationScreen} />
                             <Stack.Screen name="SpotifyAuthenticationScreen" component={SpotifyAuthenticationScreen} />
                         </>
 
@@ -164,6 +166,7 @@ const App = () => {
                                 <Stack.Screen name="EditContactInfoScreen" component={EditContactInfoScreen} />
                                 <Stack.Screen name="ThreadScreen" component={ThreadScreen} />
                                 <Stack.Screen name="SpotifyAuthenticationScreen" component={SpotifyAuthenticationScreen} />
+                                <Stack.Screen name="NotificationScreen" component={NotificationScreen} />
                                 
                             </>
                         )}
