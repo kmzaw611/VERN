@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, Component } from 'react'
 import { Text, View, FlatList, StyleSheet, TouchableOpacity, ScrollView, Image,
     ImageBackground
 } from 'react-native'
@@ -7,8 +7,184 @@ import { Text, View, FlatList, StyleSheet, TouchableOpacity, ScrollView, Image,
 
 const playlistData = require('./test_json/playlists.json');
 const performanceData = require('./test_json/performances.json');
-const groupsData = require('./test_json/groups.json');
 
+export default class ProfileScreen extends Component {
+  constructor() {
+      super();
+      this.state = {
+          dataIsReturned: false,
+      };
+      this.id = {
+          _id: ""
+      };
+      this.playlistData = require('./test_json/playlists.json');
+      this.performanceData = require('./test_json/performances.json');
+      this.groupsData = [];
+  }
+
+  componentDidMount() {
+      AsyncStorage.getItem('userID')
+          .then(result => {
+              this.id._id = ("" + result);
+              methods.get_user(this.id, (res) => {
+                  const userData = res;
+                  const groups = userData.groups;
+                  if (groups.length === 0) {
+                    const currGroup = {
+                      id: 0,
+                      name: "You have no groups.",
+                      num_members: 0,
+                    }
+                    this.groupsData.push(currGroup);
+                  }
+                  else {
+                    // Parse data of groups into groupsData with title, numUsers
+                    for (var i = 0; i < groups.length; i++) {
+                      const currGroup = {
+                        id: i,
+                        name: groups[i].title,
+                        num_members: groups[i].numUsers,
+                      }
+                      this.groupsData.push(currGroup);
+                    }
+                  }
+                  console.log("GroupsData 1st: " + this.groupsData[0].name);
+                  this.setState({ dataIsReturned: true });
+              });
+          })
+          .catch(err => {
+              console.error(err);
+          });
+  }
+
+  playlistImages = [
+    require('./assets/playlistCard1.jpg'),
+    require('./assets/playlistCard2.jpg'),
+    require('./assets/playlistCard3.jpg'),
+    require('./assets/playlistCard4.jpg'),
+  ]
+
+  getPlaylistScreen = index => () => {
+    let playlistId = index;
+    let playlistName;
+    if (index === 0) {
+      playlistName = "Top 50 This Week on Campus";
+    }
+    else if (index === 1) {
+      playlistName = "Local Artist Corner";
+    }
+    else if (index === 2) {
+      playlistName = "Your Top Songs";
+    }
+    else {
+      playlistName = "Playlist #4";
+    }
+
+    this.props.navigation.navigate("Playlist", {
+      playlistId: playlistId,
+      playlistName: playlistName,
+    })
+  }
+
+  renderPlaylistItem = ({ item, index }) => (
+    <TouchableOpacity
+      delayPressIn={100}
+      style={styles.playlistCard}
+      onPress={this.getPlaylistScreen(index)}
+    >
+      <ImageBackground
+        source={this.playlistImages[item.id-1]}
+        style={styles.playlistImage}
+      >
+        <View style={styles.tintDarkContainer}>
+          <Text style={styles.playlistTitle}>{item.title}</Text>
+        </View>
+      </ImageBackground>
+    </TouchableOpacity>
+  );
+
+  renderPerformanceItem = ({ item }) => (
+    <TouchableOpacity
+      delayPressIn={100}
+      style={styles.performanceCard}
+    >
+      <Image
+        source={require('./assets/placeholder.jpg')}
+        style={styles.performanceImage}
+      />
+      <Text style={styles.performanceTitle}>Artists</Text>
+      <Text style={styles.performanceDetail}>{item.artists.toString()}</Text>
+      <Text style={styles.performanceTitle}>Location</Text>
+      <Text style={styles.performanceDetail}>{item.location.toString()}</Text>
+      <Text style={styles.performanceTitle}>Date</Text>
+      <Text style={styles.performanceDetail}>{item.date.toString()}</Text>
+      <Text style={styles.performanceTitle}>Time</Text>
+      <Text style={styles.performanceDetail}>{item.time.toString()}</Text>
+    </TouchableOpacity>
+  );
+
+  renderGroupItem = ({ item }) => (
+    <TouchableOpacity
+      delayPressIn={100}
+      style={styles.groupCard}
+    >
+      <Text style={styles.groupName}>{item.name}</Text>
+      <Text style={styles.groupMembers}>{item.num_members} members</Text>
+      <Image
+        source={require('./assets/placeholder.jpg')}
+        style={styles.groupImage}
+      />
+    </TouchableOpacity>
+  );
+
+  render() {
+    if (this.state.dataIsReturned === true) {
+      return (
+        <ScrollView>
+          <View style={styles.sectionContainer}>
+            <Text style={styles.title}>Curated Playlists</Text>
+            <FlatList
+              numColumns={2}
+              data={this.playlistData}
+              contentContainerStyle={{justifyContent: 'center',}}
+              renderItem={this.renderPlaylistItem}
+              keyExtractor={item => item.id}
+            />
+          </View>
+          <View style={styles.sectionContainer}>
+            <Text style={styles.title}>Live Performances</Text>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate("Local Artists")}>
+              <Text style={{color: 'brown', marginLeft: 10, fontSize: 14, fontWeight: 'bold', marginLeft: 15,}}>See all local artists ></Text>
+            </TouchableOpacity>
+            <FlatList
+              horizontal={true}
+              data={this.performanceData}
+              renderItem={this.renderPerformanceItem}
+              keyExtractor={item => item.id}
+            />
+          </View>
+          <View style={styles.sectionContainer}>
+            <Text style={styles.title}>Your Groups</Text>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate("Groups")}>
+              <Text style={{color: 'brown', marginLeft: 10, fontSize: 14, fontWeight: 'bold', marginLeft: 15,}}>See all groups ></Text>
+            </TouchableOpacity>
+            <FlatList
+              horizontal={true}
+              data={this.groupsData}
+              renderItem={this.renderGroupItem}
+              keyExtractor={item => item.id}
+            />
+          </View>
+        </ScrollView>
+      )
+    }
+    else {
+      return (<Text> Loading </Text>);
+    }
+  }
+}
+
+/*
 const HomeScreen = ({ navigation }) => {
   const playlistImages = [
     require('./assets/playlistCard1.jpg'),
@@ -154,6 +330,7 @@ const HomeScreen = ({ navigation }) => {
     </ScrollView>
   )
 }
+*/
 
 const styles = StyleSheet.create({
   groupCard: {
@@ -255,5 +432,3 @@ const styles = StyleSheet.create({
     fontFamily: 'sans-serif-condensed',
   },
 })
-
-export default HomeScreen;
