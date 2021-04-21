@@ -1,8 +1,9 @@
 import React, { useState, Component } from 'react'
 import { Text, View, FlatList, StyleSheet, TouchableOpacity, ScrollView, Image,
-          ImageBackground } from 'react-native'
-import AsyncStorage from '@react-native-async-storage/async-storage';
-const methods = require('../MondgoDB/testClient');
+    ImageBackground
+} from 'react-native'
+//import { ModalProvider } from "react-native-use-modal-hooks";
+
 
 const playlistData = require('./test_json/playlists.json');
 const performanceData = require('./test_json/performances.json');
@@ -230,10 +231,35 @@ const HomeScreen = ({ navigation }) => {
     })
   }
 
-  const renderPerformanceItem = ({ item }) => (
+  getVenueScreen = index => () => {
+    let venueId = index;
+    let venueName;
+    if (index === 0) {
+      venueName = "Hillenbrand Hall";
+    }
+    else if (index === 1) {
+      venueName = "Earhart Hall";
+    }
+    else if (index === 2) {
+      venueName = "Elliot Concert Hall";
+    }
+    else {
+      venueName = "Purdue Hotel UwU";
+    }
+
+    navigation.navigate("VenueScreen", {
+      venueId: venueId,
+      venueName: venueName,
+    })
+  }
+
+    /*modify navagate here*/
+  const renderPerformanceItem = ({ item,index }) => (
     <TouchableOpacity
-      delayPressIn={100}
-      style={styles.performanceCard}
+          delayPressIn={100}
+          style={styles.performanceCard}
+          //onPress={() => navigation.navigate('VenueScreen')}
+          onPress={getVenueScreen(index)}
     >
       <Image
         source={require('./assets/placeholder.jpg')}
@@ -247,54 +273,9 @@ const HomeScreen = ({ navigation }) => {
       <Text style={styles.performanceDetail}>{item.date.toString()}</Text>
       <Text style={styles.performanceTitle}>Time</Text>
       <Text style={styles.performanceDetail}>{item.time.toString()}</Text>
+     
     </TouchableOpacity>
   );
-
-  useEffect(() => {
-    // Get a list of groups the user is a part of
-    // Update groupsData with it
-    const getUserGroups = async () => {
-      try {
-        const userID = await AsyncStorage.getItem('userID');
-        const userInfo = {
-          _id: userID,
-        };
-        //console.log("Actually Running");
-        //console.log("UserID: " + userInfo._id)
-        await methods.get_user(userInfo, (res) => {
-          const userData = res;
-          //console.log("UserData: " + userData)
-          //console.log("UserName: " + userData.username)
-          const groups = userData.groups;
-          if (groups.length === 0) {
-            const currGroup = {
-              id: 0,
-              name: "You have no groups.",
-              num_members: "Go join one!"
-            }
-            groupsData.push(currGroup);
-          }
-          else {
-            // Parse data of groups into groupsData with title, numUsers
-            for (var i = 0; i < groups.length; i++) {
-              const currGroup = {
-                id: i,
-                name: groups[i].title,
-                num_members: groups[i].numUsers,
-              }
-              groupsData.push(currGroup);
-            }
-          }
-          console.log("GroupsData 1st: " + groupsData[0].name);
-        });
-      } catch (error) {
-        console.log(error)
-      }
-    };
-
-    getUserGroups();
-  }, [])
-
 
   const renderGroupItem = ({ item }) => (
     <TouchableOpacity

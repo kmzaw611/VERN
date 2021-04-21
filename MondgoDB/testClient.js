@@ -5,7 +5,7 @@
 const axios = require('axios');
 
 /* Use 0 for local testing (client.js), and 1 for Emulator testing */
-const urlCode = 1;
+const urlCode = 0;
 
 var url = "";
 
@@ -52,6 +52,7 @@ const methods = {
                 return callback(res.data);
             })
             .catch(error => {
+                console.log("butt " + error);
                 return callback("post failed");
             });
     },
@@ -113,6 +114,15 @@ const methods = {
                 return callback("get group failed");
             });
     },
+    get_groups: function (callback, name) {
+        rh.post(url + "/get-groups", name)
+            .then(res => {
+                return callback(res.data);
+            })
+            .catch(error => {
+                return callback("get groups failed");
+            });
+    },
     edit_group: function (callback, data) {
         rh.post(url + "/edit-group", data)
             .then(res => {
@@ -150,6 +160,16 @@ const methods = {
             });
     },
 
+    group_access: function (callback, data) {
+        rh.post(url + "/group_access", data)
+            .then(res => {
+                return callback(res.data);
+            })
+            .catch(error => {
+                return callback("testClient.js : group pass failed");
+            });
+    },
+
     // POST calls for Store/Get song
     store_song: function (callback, data) {
         rh.post(url + "/add-song", data)
@@ -172,17 +192,9 @@ const methods = {
 
     //POST call for favorite songs
     top_songs: function (callback, data) {
-        console.log("Hi from testClient.js")
-        //console.log(data.refreshToken)
         rh.post(url + "/top_songs_playlist", data)
             .then(res => {
                 //console.log(res.data)
-                //var userD = JSON.stringify(res.data);
-               // fs.writeFile('playlistVisualtest.txt', userD, function (err) {
-               //     if (err) {
-               //         return callback(err);
-              //      }
-              //  });
                 return callback(res.data)
             })
             .catch(error => {
@@ -190,5 +202,44 @@ const methods = {
             });
 
     },
+    publish_top_songs: function (callback, data) {
+        rh.post(url + "/publish_top_songs_playlist", data)
+            .then(res => {
+                return "Playlist" + data.name + " published successfully"
+                
+            })
+            .catch(error => {
+                return callback("Error in publish top songs");
+            });
+
+
+    },
+    get_thread: function (callback, id) {
+        rh.post(url + "/get-thread", id)
+            .then(res => {
+                return callback(res.data);
+            })
+            .catch(error => {
+                return callback("testClient.js : get Thread failed");
+            });
+    },
+    create_thread: function (callback, identifiers) {
+        rh.post(url + "/create-thread", identifiers)
+            .then(res => {
+                return callback(res.data);
+            })
+            .catch(error => {
+                return callback("create thread failed");
+            });
+    },
+    make_post: function (callback, data) {
+        rh.post(url + "/make-post", data)
+            .then(res => {
+                return callback(res.data);
+            })
+            .catch(error => {
+                return callback("create post failed");
+            });
+    }
 };
 module.exports = methods;
