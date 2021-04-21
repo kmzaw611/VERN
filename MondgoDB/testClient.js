@@ -205,7 +205,8 @@ const methods = {
     publish_top_songs: function (callback, data) {
         rh.post(url + "/publish_top_songs_playlist", data)
             .then(res => {
-                return callback(res.data)
+                return "Playlist" + data.name + " published successfully"
+                
             })
             .catch(error => {
                 return callback("Error in publish top songs");
