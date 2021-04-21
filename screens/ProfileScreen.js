@@ -117,14 +117,14 @@ export default class ProfileScreen extends Component {
         }
         methods.top_songs(result => {
             //TODO Need to change this shit
-            this.song1.name = result[0].name;
-            this.song1.artist = result[0].artist;
+            this.song1.name = result.songs[0].title;
+            this.song1.artist = result.songs[0].artist;
             methods.top_songs(result2 => {
-                this.song2.name = result2[0].name;
-                this.song2.artist = result2[0].artist;
+                this.song2.name = result.songs[0].title;
+                this.song2.artist = result.songs[0].artist;
                 methods.top_songs(result3 => {
-                    this.song3.name = result3[0].name;
-                    this.song3.artist = result3[0].artist;
+                    this.song3.name = result.songs[0].title;
+                    this.song3.artist = result.songs[0].artist;
                 })
             },data2)
             this.setState({ dataIsReturned: true });
