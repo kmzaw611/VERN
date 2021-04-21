@@ -58,6 +58,11 @@ export default class MyLocalArtistProfile extends React.Component {
           >
           <Text style={{ fontSize: 16, textAlign: 'justify', color: 'white', fontWeight: 'bold'}}>Edit Profile</Text>
           </TouchableOpacity>
+
+          <TouchableOpacity  onPress={() => this.props.navigation.navigate("NotificationScreen")}
+          style={{borderRadius: 3, padding: 15, margin: 10, borderWidth: 4, backgroundColor: 'blue'}}>
+           <Text style={{color: 'white', fontWeight: 'bold'}}>Number of Notifications</Text>
+          </TouchableOpacity>
         </View>
       </View>
   
