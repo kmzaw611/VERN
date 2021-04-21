@@ -1,5 +1,5 @@
 import React, { useState, Component} from 'react';
-import { Text, View, TouchableOpacity, StyleSheet, TextInput, Switch } from 'react-native';
+import { Text, View, TouchableOpacity, StyleSheet, TextInput, Switch, ScrollView } from 'react-native';
 const methods = require('../MondgoDB/testClient');
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { DarkTheme } from '@react-navigation/native';
@@ -93,127 +93,158 @@ export default class ProfileScreen extends Component {
         if (this.state.dataIsReturned === true) {
             return (
                 //<View style={styles.container}>
-                <View style={{ flex: 1, alignItems: 'center', backgroundColor: this.state.color }}>
+                <ScrollView>
+                    <View style={{ flex: 1, alignItems: 'center', backgroundColor: this.state.color }}>
 
-                    <Avatar
-                        size="large"
-                        overlayContainerStyle={{ backgroundColor: this.state.avatarColor }}
-                        icon={{ name: this.state.avName, color: 'white', type: 'font-awesome' }}
-                        //{isbackgroundColordef
-                       //     ? onPress={ onAvatarblue }
-                      //      : onPress = {onAvatardef}
-                     //   }
-                        onPress={this.state.isbackgroundColordef ? this.onAvatarblue : this.onAvatardef}
-                        activeOpacity={0.7}
-                        containerStyle={{marginTop:10}}
-                    />
+<Avatar
+    size="large"
+    overlayContainerStyle={{ backgroundColor: this.state.avatarColor }}
+    icon={{ name: this.state.avName, color: 'white', type: 'font-awesome' }}
+    //{isbackgroundColordef
+   //     ? onPress={ onAvatarblue }
+  //      : onPress = {onAvatardef}
+ //   }
+    onPress={this.state.isbackgroundColordef ? this.onAvatarblue : this.onAvatardef}
+    activeOpacity={0.7}
+    containerStyle={{marginTop:10}}
+/>
 
-                    <TouchableOpacity style={styles.followButton}
-                    onPress={() => this.props.navigation.navigate("MyLocalArtistProfile")}
-                    >
-                        <Text style={styles.followText}>Manage My Page</Text>
-                    </TouchableOpacity>
+<TouchableOpacity style={styles.followButton}
+onPress={() => this.props.navigation.navigate("MyLocalArtistProfile")}
+>
+    <Text style={styles.followText}>Manage My Page</Text>
+</TouchableOpacity>
 
-                    <TouchableOpacity style={styles.followButton} 
-                    onPress={() => this.props.navigation.navigate("SpotifyAuthenticationScreen")}
-                    >
-                        <Text style={styles.followText}>Link Spotify</Text>
-                    </TouchableOpacity>
+<TouchableOpacity style={styles.followButton} 
+onPress={() => this.props.navigation.navigate("SpotifyAuthenticationScreen")}
+>
+    <Text style={styles.followText}>Link Spotify</Text>
+</TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate("ContactInfoScreen")}>
-                    <View style={styles.nameinfo}>
-                        <Text style={styles.name}>{this.userData.username}</Text>
-                        <Text style={styles.infotitle}>Favourite Genre</Text>
-                        <Text style={styles.infodata}>{this.userData.genre}</Text>
-                        <Text style={styles.infotitle}>Favourite Song</Text>
-                        <Text style={styles.infodata}>{this.userData.songID}</Text>
-                    </View>
-                    </TouchableOpacity>
+<TouchableOpacity onPress={() => this.props.navigation.navigate("ContactInfoScreen")}>
+<View style={styles.nameinfo}>
+    <Text style={styles.name}>{this.userData.username}</Text>
+    <Text style={styles.infotitle}>Favourite Genre</Text>
+    <Text style={styles.infodata}>{this.userData.genre}</Text>
+    <Text style={styles.infotitle}>Favourite Song</Text>
+    <Text style={styles.infodata}>{this.userData.songID}</Text>
+</View>
+</TouchableOpacity>
 
-                    <View style={styles.biocontainer}>
-                        <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', }}>Bio</Text>
-                        <Text style={{ fontSize: 16, textAlign: 'justify', }}>{this.userData.bio}</Text>
-                    </View>
+<View style={styles.followButtonsContainer}>
+    <View style={styles.tintDarkContainer}>
+        <Text style={{fontSize: 20, paddingBottom: 25, fontWeight: 'bold'}}>   Short Term   </Text>
+        <Text>   Short Term Song   </Text>
+        <TouchableOpacity style={styles.followButton}>
+        <Text style={{color: 'white', fontWeight: 'bold'}}>Publish</Text>
+        </TouchableOpacity>
+    </View>
+    <View style={styles.tintDarkContainer}>
+        <Text style={{fontSize: 20, paddingBottom: 25, fontWeight: 'bold'}}>   Medium Term   </Text>
+        <Text>   Medium Term Song   </Text>
+        <TouchableOpacity style={styles.followButton}>
+        <Text style={{color: 'white', fontWeight: 'bold'}}>Publish</Text>
+        </TouchableOpacity>
+    </View>
+    <View style={styles.tintDarkContainer}>
+        <Text style={{fontSize: 20, paddingBottom: 25, fontWeight: 'bold'}}>   Long Term   </Text>
+        <Text>   Long Term Song   </Text>
+        <TouchableOpacity style={styles.followButton}>
+        <Text style={{color: 'white', fontWeight: 'bold'}}>Publish</Text>
+        </TouchableOpacity>
+    </View>
+</View>
 
-                    <View style={styles.followButtonsContainer}>
-                        <TouchableOpacity
-                            style={styles.followButton}
-                            onPress={() => this.props.navigation.navigate("Playlist", { playlistId: 2, playlistName: "Your Top Songs" })}
+<View>
+    
+</View>
 
-                        >
-                            <Text style={styles.followText}>Add Favorite Song?</Text>
-                        </TouchableOpacity>
+<View style={styles.biocontainer}>
+    <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', }}>Bio</Text>
+    <Text style={{ fontSize: 16, textAlign: 'justify', }}>{this.userData.bio}</Text>
+</View>
 
-                    </View>
+<View style={styles.followButtonsContainer}>
+    <TouchableOpacity
+        style={styles.followButton}
+        onPress={() => this.props.navigation.navigate("Playlist", { playlistId: 2, playlistName: "Your Top Songs" })}
 
+    >
+        <Text style={styles.followText}>Add Favorite Song?</Text>
+    </TouchableOpacity>
 
-                    <Text style={styles.minititle}>Background Color</Text>
-                    <View style={styles.followButtonsContainer}>
-                        <TouchableOpacity style={styles.colorButton}
-                            onPress={() => { this.setState({ color: 'white' }) }}>
-                            <Text style={{ color: 'white', fontWeight: 'bold' }}>White</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.colorButton}
-                            onPress={() => { this.setState({ color: 'red' }) }}>
-                            <Text style={{ color: 'red', fontWeight: 'bold' }}>Red</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.colorButton}
-                            onPress={() => { this.setState({ color: 'green' }) }}>
-                            <Text style={{ color: 'green', fontWeight: 'bold' }}>Green</Text>
-                        </TouchableOpacity>
-                    </View>
-
-
-
-                    <Text>Enable Dark Mode</Text>
-                    <Switch
-                        trackColor={{ false: "#767577", true: "#81b0ff" }}
-                        thumbColor={this.state.darkModeEnabled ? "#f5dd4b" : "#f4f3f4"}
-                        //ios_backgroundColor="#3e3e3e"
-                        //backgroundColor = "3e3e3e"
-                        //backgroundColor = {DarkTheme}
-                        onChange={() => {
-                            //styles = {[
-                           //     styles.container,
-                           //     { backgroundColor: this.state.backgroundColor('#3e3e3e')},
-                         //   ]},
-
-                            //this.setState({backgroundColor: '#3e3e3e' })
-                            //<View style={styles.topScreen} />
-                            //this.setState({ backgroundColor: "#3e3e3e" }),
-                            this.setState({ darkModeEnabled: !darkModeEnabled})
-                            //console.log("sec")
-                        }}
-                        value={this.state.darkModeEnabled}
-                    />
-
-                    <TouchableOpacity
-                        style={styles.logoutButton}
-                        onPress={() => {
-                            //const deleteLoginInfo = async () => {
-                              //  try {
-                                    AsyncStorage.setItem('isLoggedIn', 'false');
-                            AsyncStorage.setItem('userID', '');
-                                    AsyncStorage.setItem('GroupID', '');
-                                    console.log("AsyncStorage Logging Out")
-                               // } catch (err) {
-                                 //   console.log(err);
-                                //}
-                            //}
-                            this.props.navigation.navigate("StartScreen");
-                        }}
-                    >
-                        <Text style={styles.logoutText}>Logout</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-
-                        onPress={() => this.props.navigation.push("EditScreen", { refresh: this.refresh_thing.bind(this) })}
-                    >
-                        <Text>Edit Profile</Text>
+</View>
 
 
-                    </TouchableOpacity>
-                </View>
+<Text style={styles.minititle}>Background Color</Text>
+<View style={styles.followButtonsContainer}>
+    <TouchableOpacity style={styles.colorButton}
+        onPress={() => { this.setState({ color: 'white' }) }}>
+        <Text style={{ color: 'white', fontWeight: 'bold' }}>White</Text>
+    </TouchableOpacity>
+    <TouchableOpacity style={styles.colorButton}
+        onPress={() => { this.setState({ color: 'red' }) }}>
+        <Text style={{ color: 'red', fontWeight: 'bold' }}>Red</Text>
+    </TouchableOpacity>
+    <TouchableOpacity style={styles.colorButton}
+        onPress={() => { this.setState({ color: 'green' }) }}>
+        <Text style={{ color: 'green', fontWeight: 'bold' }}>Green</Text>
+    </TouchableOpacity>
+</View>
+
+
+
+<Text>Enable Dark Mode</Text>
+<Switch
+    trackColor={{ false: "#767577", true: "#81b0ff" }}
+    thumbColor={this.state.darkModeEnabled ? "#f5dd4b" : "#f4f3f4"}
+    //ios_backgroundColor="#3e3e3e"
+    //backgroundColor = "3e3e3e"
+    //backgroundColor = {DarkTheme}
+    onChange={() => {
+        //styles = {[
+       //     styles.container,
+       //     { backgroundColor: this.state.backgroundColor('#3e3e3e')},
+     //   ]},
+
+        //this.setState({backgroundColor: '#3e3e3e' })
+        //<View style={styles.topScreen} />
+        //this.setState({ backgroundColor: "#3e3e3e" }),
+        this.setState({ darkModeEnabled: !darkModeEnabled})
+        //console.log("sec")
+    }}
+    value={this.state.darkModeEnabled}
+/>
+
+<TouchableOpacity
+    style={styles.logoutButton}
+    onPress={() => {
+        //const deleteLoginInfo = async () => {
+          //  try {
+                AsyncStorage.setItem('isLoggedIn', 'false');
+        AsyncStorage.setItem('userID', '');
+                AsyncStorage.setItem('GroupID', '');
+                console.log("AsyncStorage Logging Out")
+           // } catch (err) {
+             //   console.log(err);
+            //}
+        //}
+        this.props.navigation.navigate("StartScreen");
+    }}
+>
+    <Text style={styles.logoutText}>Logout</Text>
+</TouchableOpacity>
+<TouchableOpacity
+
+    onPress={() => this.props.navigation.push("EditScreen", { refresh: this.refresh_thing.bind(this) })}
+>
+    <Text>Edit Profile</Text>
+
+
+</TouchableOpacity>
+</View>
+                </ScrollView>
+                
             );
         } else {
             return (<Text> Loading </Text>);
@@ -303,7 +334,14 @@ const styles = StyleSheet.create({
     infodata: {
         fontSize: 16,
         fontWeight: 'bold',
-    }/*
+    },
+    tintDarkContainer: {
+        //flex: 1,
+        borderColor: 'black',
+        borderRadius: 1,
+        borderWidth: 1
+        //justifyContent: 'center',
+      },/*
     topScreen: {
         flex: 0.3,
         backgroundColor: "#3e3e3e",

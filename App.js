@@ -137,6 +137,8 @@ const App = () => {
                             <Stack.Screen name="LocalArtistProfile" component={LocalArtistProfile} />
                             <Stack.Screen name="MyLocalArtistProfile" component={MyLocalArtistProfile} />
                             <Stack.Screen name="EditMyLocalArtistProfile" component={EditMyLocalArtistProfile} />
+                            <Stack.Screen name="ContactInfoScreen" component={ContactInfoScreen} />
+                            <Stack.Screen name="EditContactInfoScreen" component={EditContactInfoScreen} />
                             <Stack.Screen name="ThreadScreen" component={ThreadScreen} />
                             <Stack.Screen name="SpotifyAuthenticationScreen" component={SpotifyAuthenticationScreen} />
                         </>
@@ -158,6 +160,8 @@ const App = () => {
                                 <Stack.Screen name="LocalArtistProfile" component={LocalArtistProfile} />
                                 <Stack.Screen name="MyLocalArtistProfile" component={MyLocalArtistProfile} />
                                 <Stack.Screen name="EditMyLocalArtistProfile" component={EditMyLocalArtistProfile} />
+                                <Stack.Screen name="ContactInfoScreen" component={ContactInfoScreen} />
+                                <Stack.Screen name="EditContactInfoScreen" component={EditContactInfoScreen} />
                                 <Stack.Screen name="ThreadScreen" component={ThreadScreen} />
                                 <Stack.Screen name="SpotifyAuthenticationScreen" component={SpotifyAuthenticationScreen} />
                                 
