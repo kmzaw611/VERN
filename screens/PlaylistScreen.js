@@ -9,6 +9,7 @@ data1 = {
 }
 
 const PlaylistScreen = ({ route, navigation }) => {
+
   const { playlistId, playlistName } = route.params;
   let playlistData;
   let playlistImage;
@@ -21,12 +22,8 @@ const PlaylistScreen = ({ route, navigation }) => {
     playlistData = require("./test_json/localartist_playlist.json");
     playlistImage = require("./assets/playlistCard2.jpg")
   }
-  else if (playlistId === 2) { //here is for the linking between -> server for grabbing top_songs json
-      playlistData = require("./test_json/topsongs_playlist.json");/*methods.top_songs(async function (result) {
-          console.log("PlaylistScreen");
-          console.log(result);
-          console.log("PostPlaylistScreen");
-      }, data1);*/
+  else if (playlistId === 2) { 
+      playlistData = require("./test_json/topsongs_playlist.json");
       playlistImage = require("./assets/playlistCard3.jpg")
 
   }

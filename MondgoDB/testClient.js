@@ -237,6 +237,27 @@ const methods = {
             .catch(error => {
                 return callback("create post failed");
             });
+    },
+
+    //localArtist functions
+
+    create_local: function (callback, data) {
+        rh.post(url + "/create-local", data)
+            .then(res => {
+                return callback(res.data);
+            })
+            .catch(error => {
+                return callback("create thread failed");
+            });
+    },
+    edit_local: function (callback, ndata) {
+        rh.post(url + "/edit-local", ndata)
+            .then(res => {
+                return callback(res.data);
+            })
+            .catch(error => {
+                return callback("create thread failed");
+            });
     }
 };
 module.exports = methods;

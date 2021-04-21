@@ -12,6 +12,7 @@ const Song = require('./models/song');
 const Playlist = require('./models/playlist');
 const Group = require('./models/group');
 const Thread = require('./models/thread');
+const Local = require('./models/localArtist');
 
 const cluster = require('./clusterConnector');
 var SpotifyWebApi = require('spotify-web-api-node')
@@ -135,7 +136,7 @@ server.post('/edit-user', function (req, res) {
             }
         })
         .catch(error => {
-            console.log("Shit");
+            console.log("Server Error");
             console.error(error);
         });
 });
@@ -944,6 +945,77 @@ server.post('/make-post', function (req, res) {
             console.log("Server Error: findOne fail");
             res.send(null);
             res.end();
+        });
+});
+
+//local functions
+
+server.post('/create-local', function (req, res) {
+    Local.findOne({ creatorID: req.body.creatorID })
+        .then(result1 => {
+            if (result1 == null) {
+                const nLocal = new Local({
+                    creatorID: req.body.creatorID,
+                    name: req.body.name,
+                    genre: req.body.genre,
+                    location: req.body.location,
+                    biography: req.body.biography,
+                    contactInfo: req.body.contactInfo,
+                    updates: []
+                });
+                nLocal.save()
+                    .then((result2) => {
+                        console.log(result2);
+                        res.send(result2);
+                        res.end();
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
+            }
+            else {
+                console.log("Local with given creator exists");
+                res.send(result1);
+                res.end();
+            }
+        })
+        .catch(err => {
+            console.log("Server error:");
+            console.log(err);
+        });
+});
+server.post('/edit-local', function (req, res) {
+    Local.findOne({ creatorID: req.body.creatorID })
+        .then(result => {
+            if (result != null) {
+                const find = {
+                    creatorID: req.body.creatorID
+                }
+
+                var update = req.body;
+                delete update["creatorID"];
+                console.log(update);
+
+                Local.findOneAndUpdate(find, update, { new: true })
+                    .then(result2 => {
+                        console.log(result2);
+                        res.send(result2);
+                        res.end();
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            }
+            else {
+                //Not clear to replace
+                console.log(result);
+                res.send("Couldnt find them");
+                res.end();
+            }
+        })
+        .catch(error => {
+            console.log("Server Error");
+            console.error(error);
         });
 });
 

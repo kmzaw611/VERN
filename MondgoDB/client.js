@@ -7,14 +7,16 @@ const methods = require('./testClient');
 //const prompt = require('prompt');
 
 data1 = {
-    threadID: "6062b12f43a0ad02805f72ae",
-    username: "Man1",
-    time: "9:34",
-    title: "Dayumm",
-    content: "Content test"
+    creatorID: "6062b12f43a0ad02805f72ae",
+    name: "Fart",
+    genre: "Fart",
+    location: "Fart",
+    contactInfo: "Fart",
+    biography: "Fart",
+    wtf: "shouldnt happen"
     //threadTitle: "Talkin bout sumn"
 }
 
-methods.make_post(function (result) {
+methods.edit_local(function (result) {
     console.log(result);
 }, data1);
