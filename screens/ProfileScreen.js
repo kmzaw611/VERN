@@ -101,7 +101,10 @@ export default class ProfileScreen extends Component {
             this.setState({ dataIsReturned: true });
         });
     }
-
+    test_songs = () => {
+        this.song1.name = "Test";
+        this.setState({ dataIsReturned: true });
+    }
     get_songs = () => {
         const data1 = {
             refreshToken: this.userData.refreshToken,
@@ -116,18 +119,17 @@ export default class ProfileScreen extends Component {
             range: "long"
         }
         methods.top_songs(result => {
-            //TODO Need to change this shit
             this.song1.name = result.songs[0].title;
             this.song1.artist = result.songs[0].artist;
             methods.top_songs(result2 => {
-                this.song2.name = result.songs[0].title;
-                this.song2.artist = result.songs[0].artist;
+                this.song2.name = result2.songs[0].title;
+                this.song2.artist = result2.songs[0].artist;
                 methods.top_songs(result3 => {
-                    this.song3.name = result.songs[0].title;
-                    this.song3.artist = result.songs[0].artist;
-                })
+                    this.song3.name = result3.songs[0].title;
+                    this.song3.artist = result3.songs[0].artist;
+                    this.setState({ dataIsReturned: true })
+                }, data3)
             },data2)
-            this.setState({ dataIsReturned: true });
         }, data1)
     }
 
@@ -177,6 +179,9 @@ onPress={() => this.props.navigation.navigate("SpotifyAuthenticationScreen")}
 <View style={styles.followButtonsContainer}>
     <View style={styles.tintDarkContainer}>
         <Text style={{fontSize: 20, paddingBottom: 25, fontWeight: 'bold'}}>   Short Term   </Text>
+
+        <Text>{this.song1.name}</Text>
+
         <Text>   Short Term Song -  </Text>
         <Text>   Artist Name   </Text>
     </View>
@@ -208,14 +213,14 @@ onPress={() => this.props.navigation.navigate("SpotifyAuthenticationScreen")}
     </View>
     <View style={styles.tintDarkContainer}>
         <Text style={{fontSize: 20, paddingBottom: 25, fontWeight: 'bold'}}>   Medium Term   </Text>
-        <Text>this.song2.name</Text>
+        <Text>{this.song2.name}</Text>
         <TouchableOpacity style={styles.followButton}>
         <Text style={{color: 'white', fontWeight: 'bold'}}>Publish</Text>
         </TouchableOpacity>
     </View>
     <View style={styles.tintDarkContainer}>
         <Text style={{fontSize: 20, paddingBottom: 25, fontWeight: 'bold'}}>   Long Term   </Text>
-        <Text>this.song3.name</Text>
+        <Text>{this.song3.name}</Text>
         <TouchableOpacity style={styles.followButton}>
         <Text style={{color: 'white', fontWeight: 'bold'}}>Publish</Text>
         </TouchableOpacity>
