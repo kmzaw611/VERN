@@ -491,13 +491,13 @@ server.post('/top_songs_playlist', function (req, res) {
 
     console.log(req.body)
     var range = "medium_term";
-    if (req.body.timeRange == "short") {
+    if (req.body.range == "short") {
         range = "short_term";
     }
-    else if (req.body.time == "long") {
+    else if (req.body.range == "long") {
         range = "long_term";
     }
-    else if (req.body.time == "") {
+    else if (req.body.range == "") {
         range = "medium_term";
     }
     //else {
