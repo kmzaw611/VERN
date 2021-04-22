@@ -205,12 +205,41 @@ const methods = {
     publish_top_songs: function (callback, data) {
         rh.post(url + "/publish_top_songs_playlist", data)
             .then(res => {
-                return callback(res.data)
+                return "Playlist" + data.name + " published successfully"
+                
             })
             .catch(error => {
                 return callback("Error in publish top songs");
             });
 
+
+    },
+    get_thread: function (callback, id) {
+        rh.post(url + "/get-thread", id)
+            .then(res => {
+                return callback(res.data);
+            })
+            .catch(error => {
+                return callback("testClient.js : get Thread failed");
+            });
+    },
+    create_thread: function (callback, identifiers) {
+        rh.post(url + "/create-thread", identifiers)
+            .then(res => {
+                return callback(res.data);
+            })
+            .catch(error => {
+                return callback("create thread failed");
+            });
+    },
+    make_post: function (callback, data) {
+        rh.post(url + "/make-post", data)
+            .then(res => {
+                return callback(res.data);
+            })
+            .catch(error => {
+                return callback("create post failed");
+            });
     }
 };
 module.exports = methods;

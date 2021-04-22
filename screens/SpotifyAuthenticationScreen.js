@@ -1,17 +1,18 @@
 import React from 'react'
-import {Text, StyleSheet, View, TouchableOpacity, Modal, TextInput} from 'react-native'
+import {Text, StyleSheet, View, TouchableOpacity, Modal, TextInput, Image} from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LocalArtistScreen = ({ navigation }) => {
   return (
-    <View>
-      <Text style={styles.title}>Local Artists</Text>
+    <View style={{alignItems: 'center'}}>
+      <Text style={styles.title}>Link Your Spotify Account</Text>
+        
 
-      
-      <TouchableOpacity
-        onPress={() => navigation.navigate("LocalArtistProfile")}
-        style={styles.sampleGroup}>
-        <Text style={styles.sampleGroupText}>EMBRACING THE ENEMY</Text>
+      <TouchableOpacity style={{marginTop: 100}}>
+          <Image
+          style={{width: 300, height: 300, justifyContent: 'center'}}
+          source={require('./assets/spotifybutton.png')}
+          />
       </TouchableOpacity>
     </View>
    

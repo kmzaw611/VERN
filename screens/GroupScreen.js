@@ -157,8 +157,8 @@ const methods = require('../MondgoDB/testClient');
 
                     <Text style={styles.title}>Groups</Text>
                     <TouchableOpacity style={styles.followButton}
-                        onPress={() => { this.refresh_thing.bind(this)() }}>
-                        <Text>refresh</Text>
+                             onPress={() => { this.refresh_thing.bind(this)() }}>
+                             <Text style={{ fontWeight: 'bold' }}>refresh</Text>
                     </TouchableOpacity>
                          <SafeAreaView style={{ flex: 1 }}>
                             <FlatList
