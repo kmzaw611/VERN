@@ -177,6 +177,30 @@ onPress={() => this.props.navigation.navigate("SpotifyAuthenticationScreen")}
 <View style={styles.followButtonsContainer}>
     <View style={styles.tintDarkContainer}>
         <Text style={{fontSize: 20, paddingBottom: 25, fontWeight: 'bold'}}>   Short Term   </Text>
+        <Text>   Short Term Song -  </Text>
+        <Text>   Artist Name   </Text>
+    </View>
+    <View style={styles.tintDarkContainer}>
+        <Text style={{fontSize: 20, paddingBottom: 25, fontWeight: 'bold'}}>   Medium Term   </Text>
+        <Text>   Medium Term Song -  </Text>
+        <Text>   Artist Name   </Text>
+    </View>
+    <View style={styles.tintDarkContainer}>
+        <Text style={{fontSize: 20, paddingBottom: 25, fontWeight: 'bold'}}>   Long Term   </Text>
+        <Text>   Long Term Song -  </Text>
+        <Text style={{alignItems: 'center'}}>   Artist Name   </Text>
+    </View>
+</View>
+
+<View style={styles.followButtonsContainer}>
+        <TouchableOpacity style={styles.followButton}>
+        <Text style={{color: 'white', fontWeight: 'bold'}}>Publish</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.followButton}>
+        <Text style={{color: 'white', fontWeight: 'bold'}}>Publish</Text>
+        </TouchableOpacity>
+
         <Text>this.song1.name</Text>
         <TouchableOpacity style={styles.followButton} onPress = {() => this.get_songs.bind(this)()}>
         <Text style={{color: 'white', fontWeight: 'bold'}}>Publish</Text>
@@ -195,11 +219,12 @@ onPress={() => this.props.navigation.navigate("SpotifyAuthenticationScreen")}
         <TouchableOpacity style={styles.followButton}>
         <Text style={{color: 'white', fontWeight: 'bold'}}>Publish</Text>
         </TouchableOpacity>
-    </View>
 </View>
 
-<View>
-    
+<View style={{alignItems: 'center'}}>
+    <TouchableOpacity style={styles.followButton}>
+        <Text style={{color: 'white', fontWeight: 'bold'}}>Update</Text>
+    </TouchableOpacity>
 </View>
 
 <View style={styles.biocontainer}>
