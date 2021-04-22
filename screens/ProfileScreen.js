@@ -101,7 +101,10 @@ export default class ProfileScreen extends Component {
             this.setState({ dataIsReturned: true });
         });
     }
-
+    test_songs = () => {
+        this.song1.name = "Test";
+        this.setState({ dataIsReturned: true });
+    }
     get_songs = () => {
         const data1 = {
             refreshToken: this.userData.refreshToken,
@@ -177,8 +180,8 @@ onPress={() => this.props.navigation.navigate("SpotifyAuthenticationScreen")}
 <View style={styles.followButtonsContainer}>
     <View style={styles.tintDarkContainer}>
         <Text style={{fontSize: 20, paddingBottom: 25, fontWeight: 'bold'}}>   Short Term   </Text>
-        <Text>this.song1.name</Text>
-        <TouchableOpacity style={styles.followButton} onPress = {() => this.get_songs.bind(this)()}>
+        <Text>{this.song1.name}</Text>
+        <TouchableOpacity style={styles.followButton} onPress = {() => this.test_songs.bind(this)()}>
         <Text style={{color: 'white', fontWeight: 'bold'}}>Publish</Text>
         </TouchableOpacity>
     </View>
