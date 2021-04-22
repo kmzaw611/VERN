@@ -2,6 +2,8 @@ import React, { useState, Component } from 'react'
 import { Text, View, FlatList, StyleSheet, TouchableOpacity, ScrollView, Image,
     ImageBackground
 } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 //import { ModalProvider } from "react-native-use-modal-hooks";
 
 
@@ -253,7 +255,7 @@ const HomeScreen = ({ navigation }) => {
     })
   }
 
-    /*modify navagate here*/
+
   const renderPerformanceItem = ({ item,index }) => (
     <TouchableOpacity
           delayPressIn={100}
