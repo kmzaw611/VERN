@@ -5,7 +5,7 @@
 const axios = require('axios');
 
 /* Use 0 for local testing (client.js), and 1 for Emulator testing */
-const urlCode = 1;
+const urlCode = 0;
 
 var url = "";
 
