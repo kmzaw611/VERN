@@ -51,6 +51,19 @@ export default class ProfileScreen extends Component {
             _id: ""
         };
         this.userData = null;
+        this.song1 = {
+            name: "Default",
+            artist: "Default"
+        }
+        this.song2 = {
+            name: "Default",
+            artist: "Default"
+        }
+        this.song3 = {
+            name: "Default",
+            artist: "Default"
+        }
+        this.token = "";
     }
 
     onAvatarblue = () => {
@@ -69,6 +82,7 @@ export default class ProfileScreen extends Component {
             .then(result => {
                 this.id._id = ("" + result);
                 methods.get_user(this.id, (res) => {
+
                     this.userData = res;
                     this.setState({ dataIsReturned: true });
                 });
@@ -86,6 +100,35 @@ export default class ProfileScreen extends Component {
             this.userData = res;
             this.setState({ dataIsReturned: true });
         });
+    }
+
+    get_songs = () => {
+        const data1 = {
+            refreshToken: this.userData.refreshToken,
+            range: "short"
+        }
+        const data2 = {
+            refreshToken: this.userData.refreshToken,
+            range: "medium"
+        }
+        const data3 = {
+            refreshToken: this.userData.refreshToken,
+            range: "long"
+        }
+        methods.top_songs(result => {
+            //TODO Need to change this shit
+            this.song1.name = result.songs[0].title;
+            this.song1.artist = result.songs[0].artist;
+            methods.top_songs(result2 => {
+                this.song2.name = result.songs[0].title;
+                this.song2.artist = result.songs[0].artist;
+                methods.top_songs(result3 => {
+                    this.song3.name = result.songs[0].title;
+                    this.song3.artist = result.songs[0].artist;
+                })
+            },data2)
+            this.setState({ dataIsReturned: true });
+        }, data1)
     }
 
     //Where i put the render function
@@ -158,6 +201,21 @@ onPress={() => this.props.navigation.navigate("SpotifyAuthenticationScreen")}
         <Text style={{color: 'white', fontWeight: 'bold'}}>Publish</Text>
         </TouchableOpacity>
 
+        <Text>this.song1.name</Text>
+        <TouchableOpacity style={styles.followButton} onPress = {() => this.get_songs.bind(this)()}>
+        <Text style={{color: 'white', fontWeight: 'bold'}}>Publish</Text>
+        </TouchableOpacity>
+    </View>
+    <View style={styles.tintDarkContainer}>
+        <Text style={{fontSize: 20, paddingBottom: 25, fontWeight: 'bold'}}>   Medium Term   </Text>
+        <Text>this.song2.name</Text>
+        <TouchableOpacity style={styles.followButton}>
+        <Text style={{color: 'white', fontWeight: 'bold'}}>Publish</Text>
+        </TouchableOpacity>
+    </View>
+    <View style={styles.tintDarkContainer}>
+        <Text style={{fontSize: 20, paddingBottom: 25, fontWeight: 'bold'}}>   Long Term   </Text>
+        <Text>this.song3.name</Text>
         <TouchableOpacity style={styles.followButton}>
         <Text style={{color: 'white', fontWeight: 'bold'}}>Publish</Text>
         </TouchableOpacity>
