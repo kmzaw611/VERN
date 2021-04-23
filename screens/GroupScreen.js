@@ -144,15 +144,16 @@ const methods = require('../MondgoDB/testClient');
          if (this.state.reload === true) {
              return (
                  <ScrollView>
-                 <View>
+                     <View>
+                         <View style={styles.followButtonsContainer}>
                      <TouchableOpacity onPress={() => { this.setState({ show: true }) }}>
-                         <Text style={{ color: 'brown', marginTop: 15, fontSize: 14, fontWeight: 'bold', marginLeft: 15 }}>Create a New Group</Text>
+                         <Text style={{ color: 'brown', fontSize: 14, fontWeight: 'bold', marginLeft: 15 }}>New Group</Text>
                      </TouchableOpacity>
 
                          <TouchableOpacity onPress={() => { this.props.navigation.navigate("SearchScreen") }}>
                          <Text style={{ color: 'brown', fontSize: 14, fontWeight: 'bold', textAlign: 'right', marginRight: 15 }}>Find Group</Text>
-                    </TouchableOpacity>
-
+                             </TouchableOpacity>
+                         </View>
                     
 
                     <Text style={styles.title}>Groups</Text>
@@ -245,7 +246,13 @@ const methods = require('../MondgoDB/testClient');
     color: 'black',
     borderRadius: 10,
     textAlign: 'center'
-  },
+     },
+     followButtonsContainer: {
+         justifyContent: 'space-between',
+         flexDirection: 'row',
+         marginBottom: 10,
+         padding: 5
+     },
   inputEmailPasswordBio: {
     width: 225,
     height: 100,

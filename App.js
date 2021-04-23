@@ -26,7 +26,7 @@ import { Avatar } from 'react-native-elements';
 import VenueScreen from './screens/VenueScreen';
 import ThreadScreen from './screens/ThreadScreen';
 import NotificationScreen from './screens/NotificationScreen';
-import SpotifyAuthenticationScreen from './screens/SpotifyAuthenticationScreen'; 
+import SpotifyAuthenticationScreen from './screens/SpotifyAuthenticationScreen';
 //import { ModalProvider } from "react-native-use-modal-hooks";
 
 
