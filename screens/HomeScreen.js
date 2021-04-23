@@ -6,7 +6,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 //import { ModalProvider } from "react-native-use-modal-hooks";
 
-
 const playlistData = require('./test_json/playlists.json');
 const performanceData = require('./test_json/performances.json');
 
@@ -31,6 +30,7 @@ export default class ProfileScreen extends Component {
               methods.get_user(this.id, (res) => {
                   const userData = res;
                   const groups = userData.groups;
+                  /*
                   if (groups.length === 0) {
                     const currGroup = {
                       id: 0,
@@ -50,6 +50,7 @@ export default class ProfileScreen extends Component {
                       this.groupsData.push(currGroup);
                     }
                   }
+                  */
                   console.log("GroupsData 1st: " + this.groupsData[0].name);
                   this.setState({ dataIsReturned: true });
               });
@@ -156,7 +157,7 @@ export default class ProfileScreen extends Component {
           <View style={styles.sectionContainer}>
             <Text style={styles.title}>Live Performances</Text>
             <TouchableOpacity onPress={() => this.props.navigation.navigate("Local Artists")}>
-              <Text style={{color: 'brown', marginLeft: 10, fontSize: 14, fontWeight: 'bold', marginLeft: 15,}}>See all local artists ></Text>
+              <Text style={{color: 'brown', marginLeft: 10, fontSize: 14, fontWeight: 'bold', marginLeft: 15,}}>See all local artists </Text>
             </TouchableOpacity>
             <FlatList
               horizontal={true}
@@ -168,7 +169,7 @@ export default class ProfileScreen extends Component {
           <View style={styles.sectionContainer}>
             <Text style={styles.title}>Your Groups</Text>
             <TouchableOpacity onPress={() => this.props.navigation.navigate("Groups")}>
-              <Text style={{color: 'brown', marginLeft: 10, fontSize: 14, fontWeight: 'bold', marginLeft: 15,}}>See all groups ></Text>
+              <Text style={{color: 'brown', marginLeft: 10, fontSize: 14, fontWeight: 'bold', marginLeft: 15,}}>See all groups </Text>
             </TouchableOpacity>
             <FlatList
               horizontal={true}
@@ -255,7 +256,12 @@ const HomeScreen = ({ navigation }) => {
     })
   }
 
+<<<<<<< HEAD
 
+=======
+    /*modify navagate here*/
+    /*
+>>>>>>> 0d410b996c4d39432f2c0ca753c082526915de17
   const renderPerformanceItem = ({ item,index }) => (
     <TouchableOpacity
           delayPressIn={100}
