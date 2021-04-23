@@ -51,7 +51,7 @@ export default class ProfileScreen extends Component {
                     }
                   }
                   */
-                  console.log("GroupsData 1st: " + this.groupsData[0].name);
+                  //console.log("GroupsData 1st: " + this.groupsData[0].name);
                   this.setState({ dataIsReturned: true });
               });
           })
@@ -87,7 +87,29 @@ export default class ProfileScreen extends Component {
       playlistId: playlistId,
       playlistName: playlistName,
     })
-  }
+    }
+    getVenueScreen = index => () => {
+        let venueId = index;
+        let venueName;
+        if (index === 0) {
+            venueName = "Hillenbrand Hall";
+        }
+        else if (index === 1) {
+            venueName = "Earhart Hall";
+        }
+        else if (index === 2) {
+            venueName = "Elliot Concert Hall";
+        }
+        else {
+            venueName = "Purdue Hotel UwU";
+        }
+
+        this.props.navigation.navigate("VenueScreen", {
+            venueId: venueId,
+            venueName: venueName,
+        })
+    }
+   
 
   renderPlaylistItem = ({ item, index }) => (
     <TouchableOpacity
@@ -106,10 +128,11 @@ export default class ProfileScreen extends Component {
     </TouchableOpacity>
   );
 
-  renderPerformanceItem = ({ item }) => (
+  renderPerformanceItem = ({ item, index }) => (
     <TouchableOpacity
-      delayPressIn={100}
-      style={styles.performanceCard}
+          delayPressIn={100}
+          style={styles.performanceCard}
+          onPress={this.getVenueScreen(index)}
     >
       <Image
         source={require('./assets/placeholder.jpg')}
@@ -178,6 +201,7 @@ export default class ProfileScreen extends Component {
               keyExtractor={item => item.id}
             />
           </View>
+
         </ScrollView>
       )
     }

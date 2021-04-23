@@ -5,8 +5,10 @@
     "\\MondgoDB\\models",
     "\\screens",
     "\\screens\\test_json",
-    "\\screens\\utils"
+    "\\screens\\utils",
+    "\\SpotifyAPI",
+    "\\SpotifyAPI\\Examples"
   ],
-  "SelectedNode": "\\screens\\test_json\\topsongs_playlist.json",
+  "SelectedNode": "\\screens\\VenueScreen.js",
   "PreviewInSolutionExplorer": false
 }
