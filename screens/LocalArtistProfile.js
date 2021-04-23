@@ -1,77 +1,194 @@
 import React from 'react'
 import {Text, StyleSheet, View, TouchableOpacity, Modal, TextInput, Image, Button, Alert} from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+const methods = require('../MondgoDB/testClient');
 
 export default class LocalArtistProfile extends React.Component {
-  constructor() 
-      {
-        super();
-        this.state={
-          show: false,
-            names: [],
+    constructor(props) {
+        super(props);
+        this.state = {
+            show: false,
+            show2: false,
             reload: false,
-            title: "",
-            bio: "",
-            anchor: ""
-          }
-     }
+            message: ""
+        }
+        this.id = {
+            _id: ""
+        }
+        this.localID = "";
+        this.user = null;
+        this.local = null;
+    }
 
-  render() {
-    return (
-      <View>
-        <Text style={styles.title}>EMBRACING THE ENEMY</Text>
-        <View 
-        style={{alignItems: 'center'}}>
-          
-        </View>
-  
-        <View style={styles.biocontainer}>
-        <Text style={{ fontSize: 16, textAlign: 'justify', }}>Genre: Alternative Metal</Text>
-        <Text style={{ fontSize: 16, textAlign: 'justify', }}>Location: West Lafayette, IN</Text>
-        </View>
-        <View style={styles.biocontainer}>
-          <Text style={{ fontSize: 18, fontWeight: 'bold'}}>Bio</Text>
-          <Text style={{ fontSize: 16, textAlign: 'justify', }}>Formed in Purdue University by 5 local bois</Text>
-  
-          <TouchableOpacity>
-            <Text style={styles.editButton}>Edit Profile</Text>
-          </TouchableOpacity>
-          <TouchableOpacity 
-          onPress={() => { this.setState({ show: true }) }}
-          style={styles.followButton}
-          >
-          <Text style={{ fontSize: 16, textAlign: 'justify', color: 'white', fontWeight: 'bold'}}>Book Artist</Text>
-          </TouchableOpacity>
-        </View>
-        <Modal
-          transparent={true}
-          visible={this.state.show}
-  
-      >
-          <View style={{ backgroundColor: "#000000aa", flex: 1 }}
-          >
-              <View style={{ backgroundColor: "#ffffff", margin: 50, padding: 40, borderRadius: 10, flex: 1 }}>
-                  <Text style={styles.title}>Book Artist</Text>
+    componentDidMount() {
+        AsyncStorage.getItem('userID')
+            .then(result => {
+                this.id._id = ("" + result);
+                methods.get_user(this.id, res => {
+                    if (res != null) {
+                        console.log(res);
+                        this.user = res;
+                        methods.get_local(res2 => {
+                            console.log(res2);
+                            if (res2 != null) {
+                                this.local = res2;
+                                this.localID = this.props.route.params.localID;
+                                this.setState({ reload: true });
+                            }
+                            else {
+                                console.log("no local found");
+                            }
+                        }, { creatorID: this.props.route.params.localID });
+                    }
+                    else {
+                        console.log("no user found");
+                    }
+                });
+            })
+            .catch(err => {
+                console.error(err);
+            });
+    }
 
-                  <TextInput
-                    style={styles.inputEmailPasswordBio}
-                    //value={"Your talents have been requested for a performance!"}
-                />
+    handleMessageSend = () => {
+        methods.create_thread(result => {
+            methods.make_post(res => {
+                if (res != null && res != "Server Error: No thread found here")
+                    console.log("Post Sent");
+                else
+                    console.log("Post Not Sent");
+            }, {
+                threadID: result.threadID,
+                username: this.user.username,
+                time: Date().toLocaleLowerCase(),
+                title: this.user.username,
+                content: this.state.message
+            });
+        }, { threadID: this.local.creatorID, threadTitle: this.local.name + "'s Messages" });
+    }
 
-                  <TouchableOpacity onPress={() => {
-                    this.setState({ show: false });
-                }}>
-                    <Text style={{ color: 'brown', marginTop: 15, fontSize: 14, fontWeight: 'bold', marginLeft: 15, textAlign: 'center' }}>Send</Text>
-                </TouchableOpacity>
-              </View>
-          </View>
-        </Modal>
-      </View>
-  
-    )
+    goToUpdates = () => {
+        this.props.navigation.push("ThreadScreen", {
+            threadID: this.local._id,
+            header: (this.local.name + "'s Updates"),
+            permissions: false
+        });
+    }
+
+    render() {
+        if (this.state.reload) {
+            return (
+                <View>
+                    <Text style={styles.title2}>{this.local.name}</Text>
+                    <View style={{ alignItems: 'center' }}></View>
+
+                    <View style={styles.biocontainer}>
+                        <View style={{ alignItems: 'center' }}>
+                            <Text style={{ fontSize: 20, textAlign: 'justify', fontWeight: 'bold' }}>{"Genre:"}</Text>
+                            <Text style={{ fontSize: 16, textAlign: 'justify', }}>{this.local.genre}</Text>
+                            <Text style={{ fontSize: 20, textAlign: 'justify', fontWeight: 'bold' }}>{"Location:"}</Text>
+                            <Text style={{ fontSize: 16, textAlign: 'justify', }}>{this.local.location}</Text>
+                            <Text style={{ fontSize: 20, textAlign: 'justify', fontWeight: 'bold' }}>{"Bio:"}</Text>
+                            <Text style={{ fontSize: 16, textAlign: 'justify', }}>{this.local.biography}</Text>
+                        </View>
+                    </View>
+                    <View style={styles.biocontainer}>
+                        {
+                            this.user.isLocalBusiness ?
+                                <TouchableOpacity
+                                    onPress={() => { this.setState({ show2: true }) }}
+                                    style={styles.followButton}
+                                >
+                                    <Text style={{ fontSize: 16, textAlign: 'justify', color: 'white', fontWeight: 'bold' }}>Contact</Text>
+                                </TouchableOpacity>
+                                : null
+                        }
+                        {
+                            this.user.isLocalBusiness ?
+                                <TouchableOpacity
+                                    onPress={() => { this.setState({ show: true }) }}
+                                    style={styles.followButton}
+                                >
+                                    <Text style={{ fontSize: 16, textAlign: 'justify', color: 'white', fontWeight: 'bold' }}>Send Message</Text>
+                                </TouchableOpacity>
+                            : null
+                        }
+                        <TouchableOpacity
+                            onPress={() => { this.goToUpdates(); }}
+                            style={styles.followButton}
+                        >
+                            <Text style={{ fontSize: 16, textAlign: 'justify', color: 'white', fontWeight: 'bold' }}>View Updates</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <Modal
+                        transparent={true}
+                        visible={this.state.show}
+                    >
+                        <View style={{ backgroundColor: "#000000aa", flex: 1 }}>
+                            <View style={{ backgroundColor: "#ffffff", margin: 50, padding: 40, borderRadius: 10, flex: 1 }}>
+                                <Text style={styles.title}>Send Artist Message</Text>
+
+                                <TextInput style={styles.inputEmailPassword}
+                                    label="Name"
+                                    placeholder="Send Message"
+                                    value={this.state.message}
+                                    onChangeText={(newValue) => this.setState({ message: newValue })}
+                                />
+
+                                <TouchableOpacity onPress={() => {
+                                    this.handleMessageSend();
+                                    this.setState({ show: false });
+                                }}>
+                                    <Text style={{ color: 'brown', marginTop: 15, fontSize: 14, fontWeight: 'bold', marginLeft: 15, textAlign: 'center' }}>Send</Text>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity onPress={() => {
+                                    this.setState({ show: false });
+                                }}>
+                                    <Text style={{ color: 'brown', marginTop: 15, fontSize: 14, fontWeight: 'bold', marginLeft: 15, textAlign: 'center' }}>Cancel</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </Modal>
+                    <Modal
+                        transparent={true}
+                        visible={this.state.show2}
+                    >
+                        <View style={{ backgroundColor: "#000000aa", flex: 1 }}>
+                            <View style={{ backgroundColor: "#ffffff", margin: 50, padding: 40, borderRadius: 10, flex: 1 }}>
+                                <Text style={styles.title}>Contact Information</Text>
+
+                                <Text style={styles.infodata}>Phone Number</Text>
+                                <Text style={styles.infotitle}>{this.local.phone}</Text>
+
+                                <Text style={styles.infodata}>Email Address</Text>
+                                <Text style={styles.infotitle}>{this.local.email}</Text>
+                                <Text style={styles.infodata}>Instagram</Text>
+                                <Text style={styles.infotitle}>{this.local.insta}</Text>
+                                <Text style={styles.infodata}>Snapchat</Text>
+                                <Text style={styles.infotitle}>{this.local.snap}</Text>
+                                <Text style={styles.infodata}>Twitter</Text>
+                                <Text style={styles.infotitle}>{this.local.twitter}</Text>
+
+                                <TouchableOpacity onPress={() => {
+                                    this.setState({ show2: false });
+                                }}>
+                                    <Text style={{ color: 'brown', marginTop: 15, fontSize: 14, fontWeight: 'bold', marginLeft: 15, textAlign: 'center' }}>Done</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </Modal>
+
+                </View>
+            );
+        }
+        else {
+            return (
+                <Text>Loading...</Text>
+            );
+        }
   }
-  }
+}
   
 
 const styles = StyleSheet.create({
@@ -90,12 +207,14 @@ const styles = StyleSheet.create({
     alignItems: 'center'
 },
 followButton: {
-  alignItems: 'center',
-  justifyContent: 'center',
-  backgroundColor: '#0095ff',
-  borderRadius: 10,
-  padding: 15,
-  margin: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#8e6f3e',
+    color: 'black',
+    width: '40%',
+    borderRadius: 10,
+    padding: 15,
+    margin: 10,
 },
 editButton: {
   alignItems: 'center',
@@ -220,7 +339,18 @@ editButton: {
     marginBottom: 20,
     padding:15,
     margin: 20
-  },
+    },
+    title2: {
+        fontSize: 32,
+        fontWeight: 'bold',
+        color: '#8e6f3e',
+        marginBottom: 10,
+        fontFamily: 'sans-serif-condensed',
+        borderWidth: 5,
+        width: '100%',
+        textAlign: 'center',
+        borderColor: 'black'
+    },
   sampleGroupText: {
     alignContent: 'center',
     fontWeight: 'bold',

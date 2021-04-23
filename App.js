@@ -21,6 +21,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Avatar } from 'react-native-elements';
 import VenueScreen from './screens/VenueScreen';
 import ThreadScreen from './screens/ThreadScreen';
+import ContactInfoScreen from './screens/ContactInfoScreen';
 //import { ModalProvider } from "react-native-use-modal-hooks";
 
 
@@ -131,14 +132,14 @@ const App = () => {
                             <Stack.Screen name="SearchScreen" component={SearchScreen} />
                             <Stack.Screen name="LocalArtistProfile" component={LocalArtistProfile} />
                             <Stack.Screen name="ThreadScreen" component={ThreadScreen} />
+                            <Stack.Screen name="ContactInfoScreen" component={ContactInfoScreen} />
                         </>
 
                     ) : (
                             // User not signed in. Start at the StartScreen.
                             <>
-                                <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
                                 <Stack.Screen name="StartScreen" component={StartScreen} options={{ headerShown: false }} />
-
+                                <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
                                 <Stack.Screen name="ActualRegister" component={ActualRegisterScreen} options={{ headerShown: false }} />
                                 <Stack.Screen name="Playlist" component={PlaylistScreen} />
                                 <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
@@ -149,6 +150,7 @@ const App = () => {
                                 <Stack.Screen name="VenueScreen" component={VenueScreen} />
                                 <Stack.Screen name="LocalArtistProfile" component={LocalArtistProfile} />
                                 <Stack.Screen name="ThreadScreen" component={ThreadScreen} />
+                                <Stack.Screen name="ContactInfoScreen" component={ContactInfoScreen} />
                             </>
                         )}
                 </Stack.Navigator>

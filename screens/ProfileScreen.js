@@ -1,39 +1,11 @@
 import React, { useState, Component} from 'react';
-import { Text, View, TouchableOpacity, StyleSheet, TextInput, Switch } from 'react-native';
+import { Text, View, TouchableOpacity, StyleSheet, ScrollView, Switch } from 'react-native';
 const methods = require('../MondgoDB/testClient');
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { DarkTheme } from '@react-navigation/native';
 import { Avatar, Button } from 'react-native-elements';
 import { color } from 'react-native-reanimated';
 
-/*
-const ProfileScreen = ({ navigation }) => {
-  const onLogoutPress = () => {
-    const deleteLoginInfo = async() => {
-      try {
-        await AsyncStorage.setItem('isLoggedIn', 'false');
-        await AsyncStorage.setItem('userID', '');
-        console.log("AsyncStorage Logging Out")
-      } catch (err) {
-        console.log(err);
-      }
-    }
-    navigation.navigate("StartScreen");
-  }
-
-  const userData = require("./test_json/fake_user.json")[0];
-  const [darkModeEnabled, setDarkModeEnabled] = useState(false);
-    return (
-      <View style={styles.container}>
-        <View style={styles.nameinfo}>
-          <Text style={styles.name}>{userData.name}</Text>
-          <Text style={styles.infotitle}>Favourite Genre</Text>
-          <Text style={styles.infodata}>{userData.genre}</Text>
-          <Text style={styles.infotitle}>Favourite Song</Text>
-          <Text style={styles.infodata}>{userData.songID}</Text>
-            </View>
-
-            */
 // Ethan code for fetching db info before render
 export default class ProfileScreen extends Component {
     // Defining states and variables
@@ -88,119 +60,130 @@ export default class ProfileScreen extends Component {
         });
     }
 
+    contButton = () => {
+        if (this.userData.isLocalArtist)
+            this.props.navigation.navigate("ContactInfoScreen");
+    }
+
+    notifButton = () => {
+        if (this.userData.isLocalArtist)
+            this.props.navigation.push("ThreadScreen", {
+                threadID: this.id._id,
+                header: ("Notifications"),
+                permissions: false
+            })
+    }
+
     //Where i put the render function
     render() {
         if (this.state.dataIsReturned === true) {
             return (
-                //<View style={styles.container}>
-                <View style={{ flex: 1, alignItems: 'center', backgroundColor: this.state.color }}>
-
-                    <Avatar
-                        size="large"
-                        overlayContainerStyle={{ backgroundColor: this.state.avatarColor }}
-                        icon={{ name: this.state.avName, color: 'white', type: 'font-awesome' }}
-                        //{isbackgroundColordef
-                       //     ? onPress={ onAvatarblue }
-                      //      : onPress = {onAvatardef}
-                     //   }
-                        onPress={this.state.isbackgroundColordef ? this.onAvatarblue : this.onAvatardef}
-                        activeOpacity={0.7}
-                        containerStyle={{marginTop:10}}
-                    />
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate("ContactInfoScreen")}>
-                    <View style={styles.nameinfo}>
-                        <Text style={styles.name}>{this.userData.username}</Text>
-                        <Text style={styles.infotitle}>Favourite Genre</Text>
-                        <Text style={styles.infodata}>{this.userData.genre}</Text>
-                        <Text style={styles.infotitle}>Favourite Song</Text>
-                        <Text style={styles.infodata}>{this.userData.songID}</Text>
+                <ScrollView>
+                    
+                    <View style={{ flex: 1, alignItems: 'center', backgroundColor: this.state.color }}>
+                        <View style={{ width: '100%', justifyContent: 'space-between', flexDirection: 'row', marginTop: '2%', paddingHorizontal: '5%' }}>
+                            {
+                                this.userData.isLocalArtist ?
+                                    <TouchableOpacity
+                                        style={{ textAlign: 'center' }}
+                                        onPress={() => this.notifButton.bind(this)()}>
+                                        <Text>Notifications</Text>
+                                    </TouchableOpacity>
+                                : null
+                            }
+                            {
+                                this.userData.isLocalArtist ?
+                                    <TouchableOpacity
+                                        style={{textAlign: 'center'}}
+                                        onPress={() => this.contButton.bind(this)()}>
+                                        <Text>Manage Page</Text>
+                                    </TouchableOpacity>
+                                : null
+                            }
                         </View>
-                    </TouchableOpacity>
+                        <Avatar
+                            size="large"
+                            overlayContainerStyle={{ backgroundColor: this.state.avatarColor }}
+                            icon={{ name: this.state.avName, color: 'white', type: 'font-awesome' }}
+                            onPress={this.state.isbackgroundColordef ? this.onAvatarblue : this.onAvatardef}
+                            activeOpacity={0.7}
+                            containerStyle={{marginTop:10}}
+                        />
+                        <View style={styles.nameinfo}>
+                            <Text style={styles.name}>{this.userData.username}</Text>
+                            <Text style={styles.infotitle}>Favourite Genre</Text>
+                            <Text style={styles.infodata}>{this.userData.genre}</Text>
+                            <Text style={styles.infotitle}>Favourite Song</Text>
+                            <Text style={styles.infodata}>{this.userData.songID}</Text>
+                        </View>
 
-                    <View style={styles.biocontainer}>
-                        <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', }}>Bio</Text>
-                        <Text style={{ fontSize: 16, textAlign: 'justify', }}>{this.userData.bio}</Text>
-                    </View>
+                        
 
-                    <View style={styles.followButtonsContainer}>
+                        <View style={styles.biocontainer}>
+                            <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', }}>Bio</Text>
+                            <Text style={{ fontSize: 16, textAlign: 'justify', }}>{this.userData.bio}</Text>
+                        </View>
+
+                        <View style={styles.followButtonsContainer}>
+                            <TouchableOpacity
+                                style={styles.followButton}
+                                onPress={() => this.props.navigation.navigate("Playlist", { playlistId: 2, playlistName: "Your Top Songs" })}
+
+                            >
+                                <Text style={styles.followText}>Add Favorite Song?</Text>
+                            </TouchableOpacity>
+
+                        </View>
+
+
+                        <Text style={styles.minititle}>Background Color</Text>
+                        <View style={styles.followButtonsContainer}>
+                            <TouchableOpacity style={styles.colorButton}
+                                onPress={() => { this.setState({ color: 'white' }) }}>
+                                <Text style={{ color: 'white', fontWeight: 'bold' }}>White</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.colorButton}
+                                onPress={() => { this.setState({ color: 'red' }) }}>
+                                <Text style={{ color: 'red', fontWeight: 'bold' }}>Red</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.colorButton}
+                                onPress={() => { this.setState({ color: 'green' }) }}>
+                                <Text style={{ color: 'green', fontWeight: 'bold' }}>Green</Text>
+                            </TouchableOpacity>
+                        </View>
+
+
+
+                        <Text>Enable Dark Mode</Text>
+                        <Switch
+                            trackColor={{ false: "#767577", true: "#81b0ff" }}
+                            thumbColor={this.state.darkModeEnabled ? "#f5dd4b" : "#f4f3f4"}
+                            onChange={() => {
+                                this.setState({ darkModeEnabled: !darkModeEnabled})
+                            }}
+                            value={this.state.darkModeEnabled}
+                        />
+
+
                         <TouchableOpacity
-                            style={styles.followButton}
-                            onPress={() => this.props.navigation.navigate("Playlist", { playlistId: 2, playlistName: "Your Top Songs" })}
-
+                            style={styles.logoutButton}
+                            onPress={() => {
+                                AsyncStorage.setItem('isLoggedIn', 'false');
+                                AsyncStorage.setItem('userID', '');
+                                console.log("AsyncStorage Logging Out")
+                                this.props.navigation.navigate("StartScreen");
+                            }}
                         >
-                            <Text style={styles.followText}>Add Favorite Song?</Text>
+                            <Text style={styles.logoutText}>Logout</Text>
                         </TouchableOpacity>
 
-                    </View>
-
-
-                    <Text style={styles.minititle}>Background Color</Text>
-                    <View style={styles.followButtonsContainer}>
-                        <TouchableOpacity style={styles.colorButton}
-                            onPress={() => { this.setState({ color: 'white' }) }}>
-                            <Text style={{ color: 'white', fontWeight: 'bold' }}>White</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.colorButton}
-                            onPress={() => { this.setState({ color: 'red' }) }}>
-                            <Text style={{ color: 'red', fontWeight: 'bold' }}>Red</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.colorButton}
-                            onPress={() => { this.setState({ color: 'green' }) }}>
-                            <Text style={{ color: 'green', fontWeight: 'bold' }}>Green</Text>
+                        <TouchableOpacity
+                            onPress={() => this.props.navigation.push("EditScreen", { refresh: this.refresh_thing.bind(this) })}
+                        >
+                            <Text>Edit Profile</Text>
                         </TouchableOpacity>
                     </View>
-
-
-
-                    <Text>Enable Dark Mode</Text>
-                    <Switch
-                        trackColor={{ false: "#767577", true: "#81b0ff" }}
-                        thumbColor={this.state.darkModeEnabled ? "#f5dd4b" : "#f4f3f4"}
-                        //ios_backgroundColor="#3e3e3e"
-                        //backgroundColor = "3e3e3e"
-                        //backgroundColor = {DarkTheme}
-                        onChange={() => {
-                            //styles = {[
-                           //     styles.container,
-                           //     { backgroundColor: this.state.backgroundColor('#3e3e3e')},
-                         //   ]},
-
-                            //this.setState({backgroundColor: '#3e3e3e' })
-                            //<View style={styles.topScreen} />
-                            //this.setState({ backgroundColor: "#3e3e3e" }),
-                            this.setState({ darkModeEnabled: !darkModeEnabled})
-                            //console.log("sec")
-                        }}
-                        value={this.state.darkModeEnabled}
-                    />
-
-                    <TouchableOpacity
-                        style={styles.logoutButton}
-                        onPress={() => {
-                            //const deleteLoginInfo = async () => {
-                              //  try {
-                                    AsyncStorage.setItem('isLoggedIn', 'false');
-                            AsyncStorage.setItem('userID', '');
-                                    AsyncStorage.setItem('GroupID', '');
-                                    console.log("AsyncStorage Logging Out")
-                               // } catch (err) {
-                                 //   console.log(err);
-                                //}
-                            //}
-                            this.props.navigation.navigate("StartScreen");
-                        }}
-                    >
-                        <Text style={styles.logoutText}>Logout</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-
-                        onPress={() => this.props.navigation.push("EditScreen", { refresh: this.refresh_thing.bind(this) })}
-                    >
-                        <Text>Edit Profile</Text>
-
-
-                    </TouchableOpacity>
-                </View>
+                </ScrollView>
             );
         } else {
             return (<Text> Loading </Text>);

@@ -24,12 +24,24 @@ const localSchema = new Schema({
         type: String,
         required: false
     },
-    contactInfo: {
+    phone: {
         type: String,
         required: false
     },
-    updates: {
-        type: Array,
+    email: {
+        type: String,
+        required: false
+    },
+    insta: {
+        type: String,
+        required: false
+    },
+    snap: {
+        type: String,
+        required: false
+    },
+    twitter: {
+        type: String,
         required: false
     }
 }, { timestamps: true });

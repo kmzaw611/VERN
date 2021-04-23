@@ -5,7 +5,7 @@
 const axios = require('axios');
 
 /* Use 0 for local testing (client.js), and 1 for Emulator testing */
-const urlCode = 0;
+const urlCode = 1;
 
 var url = "";
 
@@ -52,7 +52,7 @@ const methods = {
                 return callback(res.data);
             })
             .catch(error => {
-                console.log("butt " + error);
+                console.log(error);
                 return callback("post failed");
             });
     },
@@ -250,7 +250,25 @@ const methods = {
             .catch(error => {
                 return callback("create thread failed");
             });
-    }
+    },
+    get_local: function (callback, ndata) {
+        rh.post(url + "/get-local", ndata)
+            .then(res => {
+                return callback(res.data);
+            })
+            .catch(error => {
+                return callback("Get local failed");
+            });
+    },
+    get_list: function (callback, ndata) {
+        rh.post(url + "/get-list", ndata)
+            .then(res => {
+                return callback(res.data.artists);
+            })
+            .catch(error => {
+                return callback("Get local failed");
+            });
+    },
     publish_top_songs: function (callback, data) {
         rh.post(url + "/publish_top_songs_playlist", data)
             .then(res => {

@@ -20,12 +20,10 @@ const methods = require('./testClient');
 // }, data1);
 
 data2 = {
+    _id: "608202a748c64b1cec015005",
     refreshToken: "AQCzVfJhvvDF8KvxRKP6ANQ_hfmYbqDdsVQ7XR0FlLlA4soBz6CnmK1HUIas6c9hQHpQ2sV_dDkfYApzJlVkoFMeyjsnVj7Kgdzzd4jG8OwUAbKvzPiVaM5ijhxRhkrdeLU",
-    timeRange: "short",
-    description: "endpoint test",
-
 }
-methods.publish_top_songs(function (result) {
+methods.edit_user(function (result) {
     console.log(result);
 }, data2);
 // data = {
