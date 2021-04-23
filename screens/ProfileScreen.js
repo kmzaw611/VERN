@@ -105,6 +105,36 @@ export default class ProfileScreen extends Component {
         this.song1.name = "Test";
         this.setState({ dataIsReturned: true });
     }
+    publish_songs_short = () => {
+        const playlistData = {
+            refreshToken: this.userData.refreshToken,
+            range: "short",
+            name: "VERN Short Term Top Tracks"
+        }
+        methods.publish_top_songs(result => {
+            
+        },playlistData)
+    }
+    publish_songs_medium = () => {
+        const playlistData2 = {
+            refreshToken: this.userData.refreshToken,
+            range: "medium",
+            name: "VERN Medium Term Top Tracks"
+        }
+        methods.publish_top_songs(result => {
+            
+        },playlistData2)
+    }
+    publish_songs_long = () => {
+        const playlistData3 = {
+            refreshToken: this.userData.refreshToken,
+            range: "long",
+            name: "VERN Long Term Top Tracks"
+        }
+        methods.publish_top_songs(result => {
+            
+        },playlistData3)
+    }
     get_songs = () => {
         const data1 = {
             refreshToken: this.userData.refreshToken,
@@ -179,41 +209,38 @@ onPress={() => this.props.navigation.navigate("SpotifyAuthenticationScreen")}
 <View style={styles.followButtonsContainer}>
     <View style={styles.tintDarkContainer}>
         <Text style={{fontSize: 20, paddingBottom: 25, fontWeight: 'bold'}}>   Short Term   </Text>
-
         <Text>{this.song1.name}</Text>
-
-        <Text>   Short Term Song -  </Text>
-        <Text>   Artist Name   </Text>
+        <Text>{this.song1.artist}</Text>
     </View>
     <View style={styles.tintDarkContainer}>
         <Text style={{fontSize: 20, paddingBottom: 25, fontWeight: 'bold'}}>   Medium Term   </Text>
-        <Text>   Medium Term Song -  </Text>
-        <Text>   Artist Name   </Text>
+        <Text>{this.song2.name}</Text>
+        <Text>{this.song2.artist}</Text>
     </View>
     <View style={styles.tintDarkContainer}>
         <Text style={{fontSize: 20, paddingBottom: 25, fontWeight: 'bold'}}>   Long Term   </Text>
-        <Text>   Long Term Song -  </Text>
-        <Text style={{alignItems: 'center'}}>   Artist Name   </Text>
+        <Text>{this.song3.name}</Text>
+        <Text>{this.song3.artist}</Text>
     </View>
 </View>
 
 <View style={styles.followButtonsContainer}>
-        <TouchableOpacity style={styles.followButton}>
+        <TouchableOpacity style={styles.followButton} onPress = {() => this.publish_songs_short.bind(this)()}>
         <Text style={{color: 'white', fontWeight: 'bold'}}>Publish</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.followButton}>
+        <TouchableOpacity style={styles.followButton} onPress = {() => this.publish_songs_medium.bind(this)()}>
         <Text style={{color: 'white', fontWeight: 'bold'}}>Publish</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.followButton} onPress = {() => this.get_songs.bind(this)()}>
+        <TouchableOpacity style={styles.followButton} onPress = {() => this.publish_songs_long.bind(this)()}>
         <Text style={{color: 'white', fontWeight: 'bold'}}>Publish</Text>
         </TouchableOpacity>
     </View>
    
 
 <View style={{alignItems: 'center'}}>
-    <TouchableOpacity style={styles.followButton}>
+    <TouchableOpacity style={styles.followButton} onPress = {() => this.get_songs.bind(this)()}>
         <Text style={{color: 'white', fontWeight: 'bold'}}>Update</Text>
     </TouchableOpacity>
 </View>
