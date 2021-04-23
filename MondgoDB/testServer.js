@@ -386,14 +386,13 @@ server.post('/publish_top_songs_playlist', function (req,res) {
     var name = req.body.name;
     var description = req.body.description;
     var tracks = req.body.tracks;
-    var range = "medium_term";
-    if (req.body.timeRange == "short") {
+    if (req.body.range == "short") {
         range = "short_term";
     }
-    else if (req.body.time == "long") {
+    else if (req.body.range == "long") {
         range = "long_term";
     }
-    else if (req.body.time == "") {
+    else{
         range = "medium_term";
     }
     var spotifyApi = new SpotifyWebApi({
@@ -474,6 +473,7 @@ server.post('/publish_top_songs_playlist', function (req,res) {
                      trackIds[i] = "spotify:track:" + result[0][i];
                 }
                 console.log("TRAKCS TO BE ADDED")
+                console.log(range)
                 console.log(trackIds)
                 spotifyApi.addTracksToPlaylist(result[1], trackIds)
                 console.log("Added Tracks!")
