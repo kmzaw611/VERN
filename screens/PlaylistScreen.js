@@ -38,6 +38,7 @@ const PlaylistScreen = ({ route, navigation }) => {
 
     //const [djPP, setdjPP] = useState(false);
     playTrack = (sound_item, songName, songID) => {
+        Sound.setCategory('Playback');
         console.log(sound_item);
         const track = new Sound(sound_item, null, (e) => {
             if (e) {
@@ -96,7 +97,7 @@ const PlaylistScreen = ({ route, navigation }) => {
     const renderPlaylistSong = ({ item }) => (
         <TouchableOpacity
             style={styles.song}
-            onPress={() => playTrack(item.snippet, item.title, item.songID)}
+            onPress={() => playTrack(item.snippet + "", item.title, item.songID)}
         >
       <View style={styles.songcontainer}>
         <View>
