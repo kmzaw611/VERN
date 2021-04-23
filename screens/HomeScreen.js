@@ -2,10 +2,10 @@ import React, { useState, Component } from 'react'
 import { Text, View, FlatList, StyleSheet, TouchableOpacity, ScrollView, Image,
     ImageBackground
 } from 'react-native'
-const methods = require('../MondgoDB/testClient');
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 //import { ModalProvider } from "react-native-use-modal-hooks";
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
 const playlistData = require('./test_json/playlists.json');
 const performanceData = require('./test_json/performances.json');
 
@@ -256,8 +256,12 @@ const HomeScreen = ({ navigation }) => {
     })
   }
 
+<<<<<<< HEAD
+
+=======
     /*modify navagate here*/
     /*
+>>>>>>> 0d410b996c4d39432f2c0ca753c082526915de17
   const renderPerformanceItem = ({ item,index }) => (
     <TouchableOpacity
           delayPressIn={100}
