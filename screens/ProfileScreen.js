@@ -425,7 +425,8 @@ const styles = StyleSheet.create({
         //flex: 1,
         borderColor: 'black',
         borderRadius: 1,
-        borderWidth: 1
+        borderWidth: 1,
+        maxWidth: 135
         //justifyContent: 'center',
       },/*
     topScreen: {
