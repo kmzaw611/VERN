@@ -386,6 +386,7 @@ server.post('/publish_top_songs_playlist', function (req,res) {
     var name = req.body.name;
     var description = req.body.description;
     var tracks = req.body.tracks;
+    console.log(req.body.range);
     if (req.body.range == "short") {
         range = "short_term";
     }

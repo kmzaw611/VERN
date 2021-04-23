@@ -225,15 +225,15 @@ onPress={() => this.props.navigation.navigate("SpotifyAuthenticationScreen")}
 </View>
 
 <View style={styles.followButtonsContainer}>
-        <TouchableOpacity style={styles.followButton}>
+        <TouchableOpacity style={styles.followButton} onPress = {() => this.publish_songs_short.bind(this)()}>
         <Text style={{color: 'white', fontWeight: 'bold'}}>Publish</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.followButton}>
+        <TouchableOpacity style={styles.followButton} onPress = {() => this.publish_songs_medium.bind(this)()}>
         <Text style={{color: 'white', fontWeight: 'bold'}}>Publish</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.followButton} onPress = {() => this.get_songs.bind(this)()}>
+        <TouchableOpacity style={styles.followButton} onPress = {() => this.publish_songs_long.bind(this)()}>
         <Text style={{color: 'white', fontWeight: 'bold'}}>Publish</Text>
         </TouchableOpacity>
     </View>
