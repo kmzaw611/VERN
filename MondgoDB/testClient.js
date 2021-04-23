@@ -203,6 +203,7 @@ const methods = {
 
     },
     publish_top_songs: function (callback, data) {
+        console.log(data)
         rh.post(url + "/publish_top_songs_playlist", data)
             .then(res => {
                 return "Playlist" + data.name + " published successfully"
