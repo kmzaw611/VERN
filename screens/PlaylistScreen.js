@@ -38,7 +38,7 @@ const PlaylistScreen = ({ route, navigation }) => {
         console.log(sound_item);
         const track = new Sound(sound_item, null, (e) => {
             if (e) {
-                console.log('error loading track:', e)
+                console.log('error loading track:', e);
             } else {
                 console.log("playtest");
                 track.play();

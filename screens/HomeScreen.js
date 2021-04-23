@@ -3,6 +3,7 @@ import { Text, View, FlatList, StyleSheet, TouchableOpacity, ScrollView, Image,
     ImageBackground
 } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+const methods = require('../MondgoDB/testClient');
 
 //import { ModalProvider } from "react-native-use-modal-hooks";
 
@@ -27,32 +28,35 @@ export default class ProfileScreen extends Component {
       AsyncStorage.getItem('userID')
           .then(result => {
               this.id._id = ("" + result);
+              console.log("inside");
               methods.get_user(this.id, (res) => {
+                  console.log(res);
                   const userData = res;
-                  const groups = userData.groups;
-                  /*
-                  if (groups.length === 0) {
-                    const currGroup = {
-                      id: 0,
-                      name: "You have no groups.",
-                      num_members: 0,
-                    }
-                    this.groupsData.push(currGroup);
+                  var arr = res.groups;
+
+                  //Fix groups to work
+                  console.log(arr);
+                  for (var i = 0; i < arr.length; i++) {
+                      methods.get_group(res2 => {
+                          if (res2 != null) {
+                              this.groupsData.push({
+                                  title: res2.title,
+                                  numUsers: res2.numUsers
+                              });
+                          }
+                          console.log(i);
+                          if (i >= arr.length)
+                            this.setState({ dataIsReturned: true });
+                      }, { _id: arr[i] })
                   }
-                  else {
-                    // Parse data of groups into groupsData with title, numUsers
-                    for (var i = 0; i < groups.length; i++) {
-                      const currGroup = {
-                        id: i,
-                        name: groups[i].title,
-                        num_members: groups[i].numUsers,
-                      }
-                      this.groupsData.push(currGroup);
-                    }
+                  if (arr.length == 0) {
+                      this.groupsData.push({
+                          title: "No Groups Found",
+                          numUsers: 0
+                      });
+                      this.setState({ dataIsReturned: true });
                   }
-                  */
-                  console.log("GroupsData 1st: " + this.groupsData[0].name);
-                  this.setState({ dataIsReturned: true });
+                     
               });
           })
           .catch(err => {
@@ -131,8 +135,8 @@ export default class ProfileScreen extends Component {
       delayPressIn={100}
       style={styles.groupCard}
     >
-      <Text style={styles.groupName}>{item.name}</Text>
-      <Text style={styles.groupMembers}>{item.num_members} members</Text>
+      <Text style={styles.groupName}>{item.title}</Text>
+      <Text style={styles.groupMembers}>{item.numUsers} members</Text>
       <Image
         source={require('./assets/placeholder.jpg')}
         style={styles.groupImage}

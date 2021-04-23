@@ -189,12 +189,6 @@ export default class ProfileScreen extends Component {
     containerStyle={{marginTop:10}}
 />
 
-<TouchableOpacity style={styles.followButton}
-onPress={() => this.props.navigation.navigate("MyLocalArtistProfile")}
->
-    <Text style={styles.followText}>Manage My Page</Text>
-</TouchableOpacity>
-
 <TouchableOpacity style={styles.followButton} 
 onPress={() => this.props.navigation.navigate("SpotifyAuthenticationScreen")}
 >
@@ -281,7 +275,11 @@ onPress={() => this.props.navigation.navigate("SpotifyAuthenticationScreen")}
         <Text style={{ color: 'green', fontWeight: 'bold' }}>Green</Text>
     </TouchableOpacity>
 </View>
-
+                        <TouchableOpacity
+                            onPress={() => this.props.navigation.push("EditScreen", { refresh: this.refresh_thing.bind(this) })}
+                        >
+                            <Text>Edit Profile</Text>
+                        </TouchableOpacity>
 
                         <TouchableOpacity
                             style={styles.logoutButton}
@@ -316,33 +314,6 @@ onPress={() => this.props.navigation.navigate("SpotifyAuthenticationScreen")}
     }}
     value={this.state.darkModeEnabled}
 />
-
-<TouchableOpacity
-    style={styles.logoutButton}
-    onPress={() => {
-        //const deleteLoginInfo = async () => {
-          //  try {
-                AsyncStorage.setItem('isLoggedIn', 'false');
-        AsyncStorage.setItem('userID', '');
-                AsyncStorage.setItem('GroupID', '');
-                console.log("AsyncStorage Logging Out")
-           // } catch (err) {
-             //   console.log(err);
-            //}
-        //}
-        this.props.navigation.navigate("StartScreen");
-    }}
->
-    <Text style={styles.logoutText}>Logout</Text>
-</TouchableOpacity>
-<TouchableOpacity
-
-    onPress={() => this.props.navigation.push("EditScreen", { refresh: this.refresh_thing.bind(this) })}
->
-    <Text>Edit Profile</Text>
-
-
-</TouchableOpacity>
 </View>
                 </ScrollView>
                 

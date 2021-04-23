@@ -94,7 +94,7 @@ export default class LocalArtistProfile extends React.Component {
                     </View>
                     <View style={styles.biocontainer}>
                         {
-                            this.user.isLocalBusiness ?
+                            (this.user.isLocalBusiness || this.user.isLocalArtist) ?
                                 <TouchableOpacity
                                     onPress={() => { this.setState({ show2: true }) }}
                                     style={styles.followButton}
@@ -104,12 +104,12 @@ export default class LocalArtistProfile extends React.Component {
                                 : null
                         }
                         {
-                            this.user.isLocalBusiness ?
+                            (this.user.isLocalBusiness || this.user.isLocalArtist) ?
                                 <TouchableOpacity
                                     onPress={() => { this.setState({ show: true }) }}
                                     style={styles.followButton}
                                 >
-                                    <Text style={{ fontSize: 16, textAlign: 'justify', color: 'white', fontWeight: 'bold' }}>Send Message</Text>
+                                    <Text style={{ fontSize: 16, textAlign: 'justify', color: 'white', fontWeight: 'bold' }}>Book Artist</Text>
                                 </TouchableOpacity>
                             : null
                         }
