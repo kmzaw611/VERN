@@ -30,8 +30,8 @@ export default class ProfileScreen extends Component {
               methods.get_user(this.id, (res) => {
                   const userData = res;
                   const groups = userData.groups;
-                  /*
-                  if (groups.length === 0) {
+                  
+                  /*if (groups.length === 0) {
                     const currGroup = {
                       id: 0,
                       name: "You have no groups.",
@@ -49,8 +49,8 @@ export default class ProfileScreen extends Component {
                       }
                       this.groupsData.push(currGroup);
                     }
-                  }
-                  */
+                  }*/
+                  
                   //console.log("GroupsData 1st: " + this.groupsData[0].name);
                   this.setState({ dataIsReturned: true });
               });

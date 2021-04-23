@@ -94,9 +94,7 @@ export default class EditScreen extends Component {
                     </View>
 
                     <View style={styles.biocontainer}>
-                        <TouchableOpacity onPress={() => { this.setState({ show: true }) }}>
-                            <Text style={styles.minititle}>Favorite Genre:</Text>
-                        </TouchableOpacity>
+                    
                         <Text style={styles.minititle}>Name:</Text>
                         <TextInput style={styles.inputEmailPassword}
                             label="Username"
@@ -107,7 +105,9 @@ export default class EditScreen extends Component {
                     </View>
 
                     <View style={styles.biocontainer}>
-                        <Text style={styles.minititle}>Favorite Genre:</Text>
+                        <TouchableOpacity onPress={() => { this.setState({ show: true }) }}>
+                            <Text style={styles.minititle}>Favorite Genre:</Text>
+                        </TouchableOpacity>
                         <TextInput style={styles.inputEmailPassword}
                             label="Favorite Genre"
                             placeholder={this.userData.genre}
