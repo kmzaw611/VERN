@@ -347,17 +347,23 @@ server.post('/login-user', function (req, res) {
     }
     else {
       // We've made sure that a single valid user exists with that email
-      const user = users[0];
+        const user = users[0];
+        console.log("dan");
+        console.log(users);
+        console.log(user);
       // Calls the Bcrypt function implemented for every user
       if (!user.validPassword(password)) {
         return res.send("Incorrect Password");
       }
       else {
         // If we are here, the sign in is valid
-        return res.send({
+          console.log("good");
+          console.log(user._id);
+        res.send({
           message: 'Valid Sign In',
           userID: user._id
         });
+          res.end();
       }
     }
   });

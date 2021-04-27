@@ -14,7 +14,7 @@ const StartScreen = ({ navigation }) => {
       email: email,
       password: password,
     };
-    methods.login_user(function(result) {
+    methods.login_user((result) => {
       console.log(result);
       if (result === "No User With Email") {
         Alert.alert(
@@ -42,14 +42,15 @@ const StartScreen = ({ navigation }) => {
             console.log("Starting AsyncStorage")
             await AsyncStorage.setItem('isLoggedIn', 'true');
             await AsyncStorage.setItem('userID', userID);
-            console.log("Successful AsyncStorage operation")
+              console.log("Successful AsyncStorage operation");
+              navigation.navigate("Landing");
           } catch (err) {
             console.log(err);
           }
         }
         storeLoginInfo();
         // Send user to landing page if he has successfully logged in
-        navigation.navigate("Landing");
+        
       }
     }, loginInfo );
 

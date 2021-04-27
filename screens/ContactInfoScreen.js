@@ -393,7 +393,7 @@ export default class ContactInfoScreen extends Component {
                     <Text style={styles.title}>Haven't Created a Page Yet?</Text>
                     <TouchableOpacity
                         onPress={() => { this.setState({ show1: true }) }}
-                        style={styles.followButton}
+                        style={styles.followButton2}
                     >
                         <Text style={{ fontSize: 16, textAlign: 'justify', color: 'white', fontWeight: 'bold' }}>Click here to get started!</Text>
                     </TouchableOpacity>
@@ -507,6 +507,13 @@ const styles = StyleSheet.create({
         color: 'black',
         width: '40%',
         borderRadius: 10,
+        padding: 15,
+        margin: 10,
+    },
+    followButton2: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#8e6f3e',
         padding: 15,
         margin: 10,
     },
