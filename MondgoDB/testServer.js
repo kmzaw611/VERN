@@ -12,6 +12,8 @@ const Song = require('./models/song');
 const Playlist = require('./models/playlist');
 const Group = require('./models/group');
 const Thread = require('./models/thread');
+const Local = require('./models/localArtist');
+const AList = require('./models/artistList');
 
 const cluster = require('./clusterConnector');
 var SpotifyWebApi = require('spotify-web-api-node')
@@ -22,6 +24,7 @@ server.use(express.json());
 const port = '3000';
 
 const MAXPOSTS = 15;
+const ID = "1";
 
 /* This is the connection between the script and the db */
 cluster.connect(function (result) {
@@ -135,7 +138,7 @@ server.post('/edit-user', function (req, res) {
             }
         })
         .catch(error => {
-            console.log("Shit");
+            console.log("Server Error");
             console.error(error);
         });
 });
@@ -734,7 +737,7 @@ server.post('/group-add-user', function (req, res) {
                 .then(result => {
                     if (result != null) {
                         //Check if they have access
-                        if (result.private == false || result.creatorID === req.body.userID /* || result.pass === encrypted req.body.pass*/) {
+                        //if (result.private == false || result.creatorID === req.body.userID /* || result.pass === encrypted req.body.pass*/) {
                             //Check if user is already in the list or if group is full
                             var check = 0;
                             var users = result.users;
@@ -786,12 +789,12 @@ server.post('/group-add-user', function (req, res) {
                                 res.send("You are already in this group");
                                 res.end();
                             }
-                        }
+                        /*}
                         else {
                             console.log("Not allowed in");
                             res.send("You cannot join this group");
                             res.end();
-                        }
+                        }*/
                     }
                     else {
                         //Not clear to replace
@@ -917,7 +920,6 @@ server.post('/get-group-users', function (req, res) {
         console.log(err);
     });
 });
-
 server.post('/group_access', function (req, res) {
     const { _id, password } = req.body;
     // console.log("Login Email: " + email);
@@ -1051,6 +1053,161 @@ server.post('/make-post', function (req, res) {
             res.end();
         });
 });
+
+//local functions
+
+server.post('/create-local', function (req, res) {
+    Local.findOne({ creatorID: req.body.creatorID })
+        .then(result1 => {
+            if (result1 == null) {
+                const nLocal = new Local({
+                    creatorID: req.body.creatorID,
+                    name: req.body.name,
+                    genre: req.body.genre,
+                    location: req.body.location,
+                    biography: req.body.biography
+                });
+                nLocal.save()
+                    .then((result2) => {
+                        AList.findOne({ identifier: ID })
+                            .then(r => {
+                                if (r != null) {
+                                    var artists = r.artists;
+                                    console.log(result2);
+                                    var len = artists.length;
+                                    if (len == 2 * MAXPOSTS)
+                                        len -= 1;
+                                    for (var i = len; i > 0; i--) {
+                                        artists[i] = artists[i - 1];
+                                        if (i == 1) {
+                                            artists[0] = "" + result2.creatorID;
+                                            AList.findOneAndUpdate({ identifier: ID }, { artists: artists }, { new: true })
+                                                .then(re => {
+                                                    console.log(result2);
+                                                    res.send(result2);
+                                                    res.end();
+                                                })
+                                                .catch(err => {
+                                                    console.log(err);
+                                                });
+                                        }
+                                    }
+                                    if (len == 0) {
+                                        artists[0] = "" + result2.creatorID;
+                                        AList.findOneAndUpdate({ identifier: ID }, { artists: artists }, { new: true })
+                                            .then(re => {
+                                                console.log(result2);
+                                                res.send(result2);
+                                                res.end();
+                                            })
+                                            .catch(err => {
+                                                console.log(err);
+                                            });
+                                    }
+                                }
+                                else {
+                                    console.log("AList not found: Server");
+                                }
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            })
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
+            }
+            else {
+                console.log("Local with given creator exists");
+                res.send(result1);
+                res.end();
+            }
+        })
+        .catch(err => {
+            console.log("Server error:");
+            console.log(err);
+        });
+});
+server.post('/edit-local', function (req, res) {
+    Local.findOne({ creatorID: req.body.creatorID })
+        .then(result => {
+            if (result != null) {
+                const find = {
+                    creatorID: req.body.creatorID
+                }
+
+                var update = req.body;
+                delete update["creatorID"];
+                console.log(update);
+
+                Local.findOneAndUpdate(find, update, { new: true })
+                    .then(result2 => {
+                        console.log(result2);
+                        res.send(result2);
+                        res.end();
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            }
+            else {
+                //Not clear to replace
+                console.log(result);
+                res.send("Couldnt find them");
+                res.end();
+            }
+        })
+        .catch(error => {
+            console.log("Server Error");
+            console.error(error);
+        });
+});
+server.post('/get-local', function (req, res) {
+    Local.findOne({ creatorID: req.body.creatorID })
+        .then(result1 => {
+            if (result1 == null) {
+                console.log("No artist found");
+                res.send(null);
+                res.end()
+            }
+            else {
+                console.log("Found them");
+                res.send(result1);
+                res.end();
+            }
+        })
+        .catch(err => {
+            console.log("Server error:");
+            console.log(err);
+        });
+});
+
+server.post('/get-list', function (req, res) {
+    AList.findOne({ identifier: ID })
+        .then(result => {
+            if (result != null) {
+                console.log("Got list");
+                res.send(result);
+                res.end();
+            }
+            else {
+                const list = new AList({
+                    identifier: ID,
+                    artists: []
+                });
+                list.save()
+                    .then((result2) => {
+                        console.log(result2);
+                        res.send(result2);
+                        res.end();
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
+            }
+        })
+    
+})
 
 
 

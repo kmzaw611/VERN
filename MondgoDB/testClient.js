@@ -52,7 +52,7 @@ const methods = {
                 return callback(res.data);
             })
             .catch(error => {
-                console.log("butt " + error);
+                console.log(error);
                 return callback("post failed");
             });
     },
@@ -240,6 +240,55 @@ const methods = {
             .catch(error => {
                 return callback("create post failed");
             });
+    },
+
+    //localArtist functions
+
+    create_local: function (callback, data) {
+        rh.post(url + "/create-local", data)
+            .then(res => {
+                return callback(res.data);
+            })
+            .catch(error => {
+                return callback("create thread failed");
+            });
+    },
+    edit_local: function (callback, ndata) {
+        rh.post(url + "/edit-local", ndata)
+            .then(res => {
+                return callback(res.data);
+            })
+            .catch(error => {
+                return callback("create thread failed");
+            });
+    },
+    get_local: function (callback, ndata) {
+        rh.post(url + "/get-local", ndata)
+            .then(res => {
+                return callback(res.data);
+            })
+            .catch(error => {
+                return callback("Get local failed");
+            });
+    },
+    get_list: function (callback, ndata) {
+        rh.post(url + "/get-list", ndata)
+            .then(res => {
+                return callback(res.data.artists);
+            })
+            .catch(error => {
+                return callback("Get local failed");
+            });
+    },
+    publish_top_songs: function (callback, data) {
+        rh.post(url + "/publish_top_songs_playlist", data)
+            .then(res => {
+                return callback(res.data)
+            })
+            .catch(error => {
+                return callback("Error in publish top songs");
+            });
+
     }
 };
 module.exports = methods;

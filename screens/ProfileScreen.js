@@ -1,39 +1,11 @@
 import React, { useState, Component} from 'react';
-import { Text, View, TouchableOpacity, StyleSheet, TextInput, Switch, ScrollView } from 'react-native';
+import { Text, View, TouchableOpacity, StyleSheet, ScrollView, Switch } from 'react-native';
 const methods = require('../MondgoDB/testClient');
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { DarkTheme } from '@react-navigation/native';
 import { Avatar, Button } from 'react-native-elements';
 import { color } from 'react-native-reanimated';
 
-/*
-const ProfileScreen = ({ navigation }) => {
-  const onLogoutPress = () => {
-    const deleteLoginInfo = async() => {
-      try {
-        await AsyncStorage.setItem('isLoggedIn', 'false');
-        await AsyncStorage.setItem('userID', '');
-        console.log("AsyncStorage Logging Out")
-      } catch (err) {
-        console.log(err);
-      }
-    }
-    navigation.navigate("StartScreen");
-  }
-
-  const userData = require("./test_json/fake_user.json")[0];
-  const [darkModeEnabled, setDarkModeEnabled] = useState(false);
-    return (
-      <View style={styles.container}>
-        <View style={styles.nameinfo}>
-          <Text style={styles.name}>{userData.name}</Text>
-          <Text style={styles.infotitle}>Favourite Genre</Text>
-          <Text style={styles.infodata}>{userData.genre}</Text>
-          <Text style={styles.infotitle}>Favourite Song</Text>
-          <Text style={styles.infodata}>{userData.songID}</Text>
-            </View>
-
-            */
 // Ethan code for fetching db info before render
 export default class ProfileScreen extends Component {
     // Defining states and variables
@@ -163,6 +135,20 @@ export default class ProfileScreen extends Component {
         }, data1)
     }
 
+    contButton = () => {
+        if (this.userData.isLocalArtist)
+            this.props.navigation.navigate("ContactInfoScreen");
+    }
+
+    notifButton = () => {
+        if (this.userData.isLocalArtist)
+            this.props.navigation.push("ThreadScreen", {
+                threadID: this.id._id,
+                header: ("Notifications"),
+                permissions: false
+            })
+    }
+
     //Where i put the render function
     render() {
         if (this.state.dataIsReturned === true) {
@@ -170,7 +156,26 @@ export default class ProfileScreen extends Component {
                 //<View style={styles.container}>
                 <ScrollView>
                     <View style={{ flex: 1, alignItems: 'center', backgroundColor: this.state.color }}>
-
+                    <View style={{ width: '100%', justifyContent: 'space-between', flexDirection: 'row', marginTop: '2%', paddingHorizontal: '5%' }}>
+                            {
+                                this.userData.isLocalArtist ?
+                                    <TouchableOpacity
+                                        style={{ textAlign: 'center' }}
+                                        onPress={() => this.notifButton.bind(this)()}>
+                                        <Text>Notifications</Text>
+                                    </TouchableOpacity>
+                                : null
+                            }
+                            {
+                                this.userData.isLocalArtist ?
+                                    <TouchableOpacity
+                                        style={{textAlign: 'center'}}
+                                        onPress={() => this.contButton.bind(this)()}>
+                                        <Text>Manage Page</Text>
+                                    </TouchableOpacity>
+                                : null
+                            }
+                        </View>
 <Avatar
     size="large"
     overlayContainerStyle={{ backgroundColor: this.state.avatarColor }}
@@ -254,7 +259,6 @@ onPress={() => this.props.navigation.navigate("SpotifyAuthenticationScreen")}
     <TouchableOpacity
         style={styles.followButton}
         onPress={() => this.props.navigation.navigate("Playlist", { playlistId: 2, playlistName: "Your Top Songs" })}
-
     >
         <Text style={styles.followText}>Add Favorite Song?</Text>
     </TouchableOpacity>
@@ -279,6 +283,17 @@ onPress={() => this.props.navigation.navigate("SpotifyAuthenticationScreen")}
 </View>
 
 
+                        <TouchableOpacity
+                            style={styles.logoutButton}
+                            onPress={() => {
+                                AsyncStorage.setItem('isLoggedIn', 'false');
+                                AsyncStorage.setItem('userID', '');
+                                console.log("AsyncStorage Logging Out")
+                                this.props.navigation.navigate("StartScreen");
+                            }}
+                        >
+                            <Text style={styles.logoutText}>Logout</Text>
+                        </TouchableOpacity>
 
 <Text>Enable Dark Mode</Text>
 <Switch
