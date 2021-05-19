@@ -11,11 +11,12 @@ Our users can sign up as normal users or local artists with the ability to adver
 Both registration and login are handled with JWT authentication using Express endpoints and with user info and hashed passwords stored in a
 MongoDB database. Users can also link their Spotify accounts to their Vern accounts to provide extra functionality implemented in the app.
 
-![](screenshots/login.png | width=100)
-![](screenshots/register.png | width=100)
+<img src="screenshots/login.png" width="100">
+<img src="screenshots/register.png" width="100">
 
 ## Generated playlists curated from our local user population
 Playlists are automatically curated using statistics and information provided by the Spotify API from users of the app.
 
-![](screenshots/home.png | width=100)
-![](screenshots/playlist.png | width=100)
+<img src="screenshots/home.png" width="100">
+<img src="screenshots/playlist.png" width="100">
+
