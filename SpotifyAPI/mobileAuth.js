@@ -5,8 +5,8 @@ const {authorize, refresh} = 'react-native-app-auth';
 class AuthenticationHandler {
   constructor() {
     this.spotifyAuthConfig = {
-      clientId: '0e8700b7f71d486bbb7c3bd120e892f8',
-      clientSecret: '9ffb3fe2081b414e8c520d19805cbf09',
+      clientId: '',
+      clientSecret: '',
       redirectUrl: 'http://localhost:8888/callback',
       scopes: [
         'playlist-read-private',
